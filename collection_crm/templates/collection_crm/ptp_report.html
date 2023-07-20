@@ -1,0 +1,199 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<div style="padding-left:20px;">
+
+	<h1>Equity PTP Report 2022-08-08 to  2022-08-08</h1>
+</div>
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+				<form id="form1" name="form1" method="get" action=""></form>
+
+
+
+
+			</tr><tr>
+				<td>From:</td>
+				<td><input autocomplete="off" name="fromdate" type="text" id="fromdt" value=""></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr><td height="63">To:</td>
+				<td><input autocomplete="off" name="todate" type="text" id="todt" value=""></td>
+			</tr>
+			<tr>
+				<td>Client: </td>
+				<td>      <select name="client" id="client">
+						<option value="1" selected="selected">Equity</option>
+						<option value="2">Sidian</option>
+						<option value="3">Safaricom</option>
+						<option value="4">NCBA</option>
+					</select></td>
+			</tr>	
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr><td>&nbsp;</td><td><label>
+						<input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+																																	background-color:#F27F22;
+																																	height:25px;
+																																	-webkit-border-radius: 4px;
+																																	-moz-border-radius: 4px;
+																																	border-radius: 4px;
+																																	border:1px #b58530 solid;
+																																	color:#633c15;
+																																	font-size:15px;
+																																	cursor:pointer;
+
+font-weight:bold;">
+					</label> </td>
+
+
+
+					<td>
+						<form action="getCSV.php?custom_file_name=Equity PTP Report 2022-08-08 to  2022-08-08.csv" method="post"> 
+
+							<label>
+								<input type="hidden" name="csv_text" id="csv_text">
+								<input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																																								background-color:#F27F22;
+																																								height:25px;
+																																								-webkit-border-radius: 4px;
+																																								-moz-border-radius: 4px;
+																																								border-radius: 4px;
+																																								border:1px #b58530 solid;
+																																								color:#633c15;
+																																								font-size:15px;
+																																								cursor:pointer;
+																																								font-weight:bold;">
+							</label>
+						</form>
+						<script>
+							function getCSVData() {
+								var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+								$("#csv_text").val(csv_value);
+							}
+						</script>
+					</td>
+
+			</tr>
+		</tbody></table>
+
+</div>
+
+<div class="">
+
+	<div class="clear"></div>
+
+
+	<div class="tablebx" style=" margin-left:10px;margin-right:10px;">
+		<div class="pagecon" style="float:center; margin-left:10px; font-weight:bold;"> Total: 4</div>
+		<div id="files">
+			<table border="0" cellpadding="5" cellspacing="0" class="customers" id="csvdownload">
+				<tbody><tr class="tablebx_topbg">
+						<td width="8">#</td>
+						<td width="100">Date</td>
+						<td width="216">Name</td>
+						<td width="216">Collector</td>
+						<td width="216">Branch</td>
+						<td width="216">Status/Batch</td>
+						<td width="216">phone number</td>
+						<td width="282">Account Number</td>
+						<td width="282">Balance</td>
+						<td width="282">PTP Amount</td>
+						<td width="237">PTP Date</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>08-Aug-2022</td>
+						<td>KIPNGETICH KORIR HILLARY</td>
+						<td>atieno.opidi</td>
+						<td>Nyanza&amp;Western</td>
+						<td>Written off</td>
+						<td>0726576782</td>
+						<td>280598697968</td>
+						<td>21,513</td>
+						<td>15,000</td>
+						<td>2022-08-10 09:00:00</td>
+					</tr>
+
+					<tr>
+						<td>2</td>
+						<td>08-Aug-2022</td>
+						<td>GEORGE GIKANGA KAMAU</td>
+						<td>atieno.opidi</td>
+						<td>Rift_Valley</td>
+						<td>Written off</td>
+						<td>0725602282</td>
+						<td>200592084278</td>
+						<td>60,437</td>
+						<td>5,000</td>
+						<td>2022-08-10 09:00:00</td>
+					</tr>
+
+					<tr>
+						<td>3</td>
+						<td>08-Aug-2022</td>
+						<td>ARNOLI OCHIENG EGESA</td>
+						<td>atieno.opidi</td>
+						<td>Nairobi_W&amp;N_Eastern</td>
+						<td>Written off</td>
+						<td>0726813307</td>
+						<td>170560698986</td>
+						<td>10,365</td>
+						<td>5,000</td>
+						<td>2022-08-10 09:00:00</td>
+					</tr>
+
+					<tr>
+						<td>4</td>
+						<td>08-Aug-2022</td>
+						<td>DANIEL MASILA MAINGI</td>
+						<td>atieno.opidi</td>
+						<td>Nairobi_East</td>
+						<td>Written off</td>
+						<td>0727323012</td>
+						<td>700574808135</td>
+						<td>41,119</td>
+						<td>20,000</td>
+						<td>2022-09-04 08:00:00</td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><strong>133,433</strong></td>
+						<td><strong>45,000</strong></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody></table>
+		</div>
+		<div class="pagecon">
+
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
+
+</div>
+{% endblock content %}

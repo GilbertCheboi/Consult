@@ -1,0 +1,162 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load avatar_tags %} 
+{% load humanize %}
+{% block content %}
+
+{% if twitter_user %}
+<div class="row">
+	<div class="col-md-4">
+		<!-- Widget: user widget style 1 -->
+		<div class="box box-widget widget-user-2">
+			<!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="widget-user-header bg-aqua-active">
+				<div class="widget-user-image">
+					<img class="img-circle" src="{{ twitter_user.profile_image_url_https }}" alt="User Avatar">
+				</div>
+				<!-- /.widget-user-image -->
+				<h3 class="widget-user-username">{{ twitter_user.name }}</h3>
+				<h5 class="widget-user-desc">{{ twitter_user.description }}</h5>
+			</div>
+			<div class="box-footer no-padding">
+				<ul class="nav nav-stacked">
+					<li><a href="#">Cases  <span class="pull-right badge bg-blue">{{twitter_user.statuses_count}}</span></a></li>
+					<li><a href="#">Pending <span class="pull-right badge bg-aqua">{{twitter_user.followers_count}}</span></a></li>
+					<li><a href="#">Closed  <span class="pull-right badge bg-green">{{twitter_user.friends_count}}</span></a></li>
+					<li><a href="#">Escalated <span class="pull-right badge bg-red">{{twitter_user.followers_count}}</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.widget-user -->
+	</div>
+	<!-- /.col -->
+	<div class="col-md-8">
+		<!-- Widget: user widget style 1 -->
+		<div class="box box-widget widget-user">
+			<!-- Add the bg color to the header using any of the bg-* classes -->
+			<div class="widget-user-header" style="background: url('{{ twitter_user.profile_background_image_url_https }}') center center; background-color: #{{ twitter_user.profile_background_color }}; color: #{{ twitter_user.profile_text_color }};">
+				<h3 class="widget-user-username">{{ twitter_user.name }}{% if twitter_user.verified %}<i class="fa fa-check" aria-hidden="true"></i>{% endif %}</h3>
+				<h5 class="widget-user-desc">{{ twitter_user.description }}</h5>
+			</div>
+			<div class="widget-user-image">
+				<img class="img-circle" src="{{ twitter_user.profile_image_url_https }}" alt="User Avatar">
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-4 border-right">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.friends_count|intcomma }}</h5>
+							<span class="description-text">FOLLOWING</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-4 border-right">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.followers_count|intcomma }}</h5>
+							<span class="description-text">FOLLOWERS</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-4">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.statuses_count|intcomma }}</h5>
+							<span class="description-text">TWEETS</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+        <div class="row">
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ twitter_user.location }}</h5>
+              <span class="description-text"><i class="fa fa-map-marker"></i></span>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ twitter_user.created_at|naturalday }}</h5>
+              <span class="description-text"><i class="fa fa-calendar"></i>Joined</span>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">Ticket</button>
+                <button type="button" class="btn btn-default">Contact</button>
+              </div>
+              <h5 class="description-header"></h5>
+              <span class="description-text">Create Contact or Ticket</span>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+        </div>
+			</div>
+		</div>
+		<!-- /.widget-user -->
+	</div>
+	<!-- /.col -->
+</div>
+{% endif %}
+
+{% block statuses %}
+<div class="stream-container">
+
+	<div class="col-md-6">
+		<!-- Box Comment -->
+	{% for s in statuses %}
+		<div class="box box-widget">
+			<div class="box-header with-border">
+				<div class="user-block">
+					<img class="img-circle" src="{{ s.user.profile_image_url_https }}" alt="User Image"> {{ s.profile_image_url_https }}
+					<span class="username"><a href="/helpline/social/twitter/user/{{ s.user.screen_name }}">{{ s.user.name }} <small>@{{ s.user.screen_name }}</small></a></span>
+					<span class="description">Shared publicly - {{ s.created_at|naturaltime }}</span>
+				</div>
+				<!-- /.user-block -->
+				<div class="box-tools">
+					<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
+						<i class="fa fa-circle-o"></i></button>
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+				<!-- /.box-tools -->
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<!-- post text -->
+				<p>{{ s.text|safe }}</p>
+
+				<!-- Social sharing buttons -->
+				<button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+				<button type="button" class="btn btn-default btn-xs"><i class="fa fa-user-plus"></i> Assign To</button>
+				<span class="pull-right text-muted">{{ s.favorite_count }} likes - {{ s.retweet_count }} retweets</span>
+			</div>
+			<!-- /.box-footer -->
+			<div class="box-footer">
+				<form action="#" method="post">
+          {% avatar user 160 class="img-responsive img-circle img-sm" %}
+					<!-- .img-push is used to add margin to elements next to floating images -->
+					<div class="img-push">
+						<input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+					</div>
+				</form>
+			</div>
+			<!-- /.box-footer -->
+		</div>
+		<!-- /.box -->
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endblock statuses %}
+{% block detailspanel %}{% endblock detailspanel %}
+{% endblock content %}

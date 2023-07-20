@@ -1,0 +1,246 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<h1>Equity Collection Summary</h1>
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+
+	<table width="516" border="0">
+		<tbody><tr>
+				<td width="304">Client: <form id="form1" name="form1" method="post" action="">
+						<select name="clients" id="clients" onchange="MM_jumpMenu('parent',this,0)">
+							<option value="collection_summary.php?client=1" selected="selected">Equity</option>
+							<option value="collection_summary.php?client=2">Sidian</option>
+							<option value="collection_summary.php?client=3">Safaricom</option>
+							<option value="collection_summary.php?client=4">NCBA</option>
+						</select>
+					</form></td>
+					<td width="196">
+
+
+
+						<form action="getCSV.php?custom_file_name=Equity Collection Summary Report.csv" method="post">
+
+
+							<label>
+								<input type="hidden" name="csv_text" id="csv_text">
+								<input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																											background-color:#F27F22;
+																											height:25px;
+																											-webkit-border-radius: 4px;
+																											-moz-border-radius: 4px;
+																											border-radius: 4px;
+																											border:1px #b58530 solid;
+																											color:#633c15;
+																											font-size:15px;
+																											cursor:pointer;
+																											font-weight:bold;">
+							</label>
+						</form></td>
+			</tr>
+		</tbody></table>
+		<script>
+			function getCSVData() {
+				var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+				$("#csv_text").val(csv_value);
+			}
+		</script>
+		<!--<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+		<tr>
+		<form id="form1" name="form1" method="get" action="">
+
+
+
+
+		<tr>
+		<td >From:</td>
+		<td ><input autocomplete="off" name='fromdate' type='text'  id="fromdt"  /></td>
+		</tr>
+		<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		</tr><tr><td >To:</td>
+		<td ><input autocomplete="off" name='todate' type='text'  id="todt" /></td>
+		</tr>	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		</tr>
+		<td>&nbsp;</td><td ><label>
+		<input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+								 background-color:#F27F22;
+								 height:25px;
+								 -webkit-border-radius: 4px;
+								 -moz-border-radius: 4px;
+								 border-radius: 4px;
+								 border:1px #b58530 solid;
+								 color:#633c15;
+								 font-size:15px;
+								 cursor:pointer;
+
+font-weight:bold;"/>
+</label> </td></form>
+
+
+
+<td><script>
+		function getCSVData() {
+			var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+			$("#csv_text").val(csv_value);
+		}
+	</script>
+</td>
+
+		</tr>
+		</table>-->
+
+</div>
+
+<div>
+
+
+	<table border="0" cellspacing="0" cellpadding="0" style="font-size:18px;margin-left:20px; margin-bottom:20px; margin-top:20px;">
+		<tbody><tr>
+				<td height="35" id="top_total_amount_collected">Total Amount Collected: 2,101,216.00</td>
+			</tr>
+			<tr>
+				<td height="35" id="top_total_current_PTP_amount">Total Current PTP Amount: 74,000.00</td>
+			</tr>
+			<tr>
+				<td height="35" id="top_outstanding_amount">Outstanding  Amount: 423,053,281.32</td>
+			</tr>
+
+
+
+		</tbody></table>
+
+
+
+</div>
+
+<div class="">
+
+	<div class="clear"></div>
+
+
+	<div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">
+		<div class="pagecon" style="float:center; margin-left:10px; font-weight:bold;"> Total Files: 5265</div>
+
+		<div id="files" style="background-color:#FFF;">
+			<table width="50%" bgcolor="#FFFFFF" border="0" cellpadding="5" cellspacing="0" class="emailtables custom_table" id="csvdownload">
+				<tbody>
+					<tr class="tablebx_topbg">
+						<td width="87">File  ID</td>
+						<td width="87">Client</td>
+						<td width="211">Batch</td>
+						<td width="132">Date Uploaded</td>
+						<td width="132">Call Status</td>
+						<td width="220">Name</td>
+						<td width="220">ID Number</td>
+						<td width="220">CF ID</td>
+						<td width="220">phone number</td>
+						<td width="220">Other Phone Numbers</td>
+						<td width="287">Account Number</td>
+						<td width="287">Branch</td>
+
+
+						<td width="287">Guarantor 1 Name</td>
+						<td width="287">Guarantor 1 Id</td>
+						<td width="287">Guarantor 1 Phone</td>
+
+						<td width="287">Guarantor 2 Name</td>
+						<td width="287">Guarantor 2 Id</td>
+						<td width="287">Guarantor 2 Phone</td>
+
+						<td width="287">Guarantor 3 Name</td>
+						<td width="287">Guarantor 3 Id</td>
+						<td width="287">Guarantor 3 Phone</td>
+
+
+
+
+
+						<td width="287">Spouse</td>
+						<td width="300">Outstanding  Amount</td>
+						<td width="252">Total Amount Collected</td>
+						<td width="300">Current Balance</td>
+						<td width="349">Current PTP Amount</td>
+						<td width="349">PTP Days</td>
+						<td width="349">Last PTP Date</td>
+						<td width="349">Last Disposition</td>
+
+						<td width="349">Last Comment</td>
+						<td width="349">Last Comment Date</td>
+
+						<td width="349">Next Action Days</td>
+						<td width="349">Next Action Date Time</td>
+						<td width="349">Collector</td>
+						<td width="349">Destination</td>
+					</tr>
+
+					<tr>
+						<td>3</td>
+						<td>Equity</td>
+						<td>WRITTEN OFF ACCOUNT</td>
+						<td>23-Feb-2021</td>
+						<td>Reachable</td>
+						<td>JOHN DOE</td>
+						<td>24913425</td>
+						<td>54308725615</td>
+						<td>07XXXXXXXX</td>
+						<td>7XXXXXXXX</td>
+						<td>168XXXXXXX</td>
+						<td>kiserian</td>
+
+						<td></td>
+						<td></td>
+						<td></td>
+
+
+						<td></td>
+						<td></td>
+						<td></td>
+
+
+						<td></td>
+						<td></td>
+						<td></td>
+
+
+
+
+						<td></td>
+						<td>4,907.98</td>
+						<td>1,900.00</td>
+						<td>3,008</td>
+						<td>0.00</td><td>-41</td>
+						<td>2022-06-29</td>
+						<td>PTP Reminder</td>
+
+						<td>did not pick calls. sent him a reminder message to make deposit towards the debt.</td>
+						<td>2022-07-26 11:28:29</td>
+
+
+						<td>-11</td>
+						<td>2022-07-28 09:00:00</td>
+						<td>john.doe</td>
+						<td>Active</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="pagecon">
+
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
+
+</div>
+{% endblock content %}

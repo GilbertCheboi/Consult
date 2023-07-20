@@ -1,0 +1,565 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<h1>Per Collector Allocation </h1>
+
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+
+
+
+
+
+
+
+	Allocation Summary Report 
+	<form action="getCSV.php" method="post">
+		<label>
+			<input type="hidden" name="csv_text" id="csv_text">
+			<input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																																			background-color:#F27F22;
+																																			height:25px;
+																																			-webkit-border-radius: 4px;
+																																			-moz-border-radius: 4px;
+																																			border-radius: 4px;
+																																			border:1px #b58530 solid;
+																																			color:#633c15;
+																																			font-size:15px;
+																																			cursor:pointer;
+																																			font-weight:bold;">
+		</label>
+	</form>
+	<script>
+		function getCSVData() {
+			var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+			$("#csv_text").val(csv_value);
+		}
+	</script>
+	<!--<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+	 <tr>
+	 <form id="form1" name="form1" method="get" action="">
+
+
+
+
+	 <tr>
+	 <td >From:</td>
+	 <td ><input autocomplete="off" name='fromdate' type='text'  id="fromdt"  /></td>
+	 </tr>
+	 <tr>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 </tr><tr><td >To:</td>
+	 <td ><input autocomplete="off" name='todate' type='text'  id="todt" /></td>
+	 </tr>	<tr>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 </tr>
+	 <td>&nbsp;</td><td ><label>
+	 <input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+																												 background-color:#F27F22;
+																												 height:25px;
+																												 -webkit-border-radius: 4px;
+																												 -moz-border-radius: 4px;
+																												 border-radius: 4px;
+																												 border:1px #b58530 solid;
+																												 color:#633c15;
+																												 font-size:15px;
+																												 cursor:pointer;
+
+font-weight:bold;"/>
+</label> </td></form>
+
+
+
+<td><script>
+		function getCSVData() {
+			var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+			$("#csv_text").val(csv_value);
+		}
+	</script>
+</td>
+
+	 </tr>
+	</table>-->
+
+</div>
+
+<div class="">
+
+	<div class="clear"></div>
+
+
+	<div class="" style="float:center; margin-left:10px;margin-right:10px;">
+		<div id="files" style="">
+			<table width="100%" border="1" id="csvdownload2" class="customers">
+				<tbody><tr>
+						<td><strong>Collector</strong></td>
+						<td><strong>Files Allocated</strong></td>
+						<td><strong>File Outstanding Amount</strong></td>
+						<td><strong>Allocation Amount Collected</strong></td>
+						<td><strong>Collector Amount Collected</strong></td>
+						<td><strong>Collector Amount PTP</strong></td>
+						<td><strong>Download Allocation</strong></td>
+						<td><strong>Assign Allocation</strong></td>
+						<td><strong>Targets</strong></td>
+					</tr>
+					<tr>
+						<td>Administrator</td>
+						<td>0</td>
+						<td>0</td>
+						<td></td>
+						<td>0</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=admin&amp;name=Administrator">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="admin">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="178">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Atieno Opidi</td>
+						<td>520</td>
+						<td>151,028,195</td>
+						<td>1,500</td>
+						<td>1,155,822</td>
+						<td>50,500</td>
+						<td><a href="allocation_to_csv.php?call_user=atieno.opidi&amp;name=Atieno Opidi">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="atieno.opidi">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="183">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Austin Kamau</td>
+						<td>382</td>
+						<td>16,530,574</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=austin.kamau&amp;name=Austin Kamau">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="austin.kamau">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="198">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Charles Wasonga</td>
+						<td>193</td>
+						<td>61,313,630</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=charles.wasonga&amp;name=Charles Wasonga">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="charles.wasonga">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="40000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="196">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Christine Onsumu</td>
+						<td>2063</td>
+						<td>206,222,599</td>
+						<td>844,276</td>
+						<td>2,057,121</td>
+						<td>816,182</td>
+						<td><a href="allocation_to_csv.php?call_user=christine.onsumu&amp;name=Christine Onsumu">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="christine.onsumu">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="182">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Hariet Kapkarich</td>
+						<td>590</td>
+						<td>54,790,480</td>
+						<td>13,370</td>
+						<td>13,370</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=hariet.kapkarich&amp;name=Hariet Kapkarich">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="hariet.kapkarich">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="192">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Kelvin Kungu</td>
+						<td>8</td>
+						<td>3,630,143</td>
+						<td>190,788</td>
+						<td>288,307</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=elizabeth.wainaina&amp;name=Kelvin Kungu">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="elizabeth.wainaina">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="184">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Patrick Mithamo</td>
+						<td>0</td>
+						<td>0</td>
+						<td></td>
+						<td>0</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=patrick&amp;name=Patrick Mithamo">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="patrick">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="1000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="10000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="197">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Paul Nyachoti</td>
+						<td>11</td>
+						<td>4,263,493</td>
+						<td>11,000</td>
+						<td>1,815,826</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=paul.nyatochi&amp;name=Paul Nyachoti">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="paul.nyatochi">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="195">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Roman Hinga</td>
+						<td>156</td>
+						<td>73,759,912</td>
+						<td>340,586</td>
+						<td>3,167,761</td>
+						<td>70,000</td>
+						<td><a href="allocation_to_csv.php?call_user=roman.hinga&amp;name=Roman Hinga">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="roman.hinga">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="193">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Stephanie Wainaina</td>
+						<td>350</td>
+						<td>50,460,319</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=stephanie.wainaina&amp;name=Stephanie Wainaina">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="stephanie.wainaina">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="185">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Teresa Amigo</td>
+						<td>1091</td>
+						<td>131,106,829</td>
+						<td>196,922</td>
+						<td>1,609,065</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=rose.ruguru&amp;name=Teresa Amigo">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="rose.ruguru">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="181">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Victoria Maweu</td>
+						<td>944</td>
+						<td>76,612,925</td>
+						<td>19,100</td>
+						<td>276,737</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=victoria.maweu&amp;name=Victoria Maweu">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="victoria.maweu">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="180">
+								</form></td>
+					</tr>
+					<tr>
+						<td>Wanjiru Kibe</td>
+						<td>0</td>
+						<td>0</td>
+						<td></td>
+						<td>17,082</td>
+						<td>0</td>
+						<td><a href="allocation_to_csv.php?call_user=wanjiru.kibe&amp;name=Wanjiru Kibe">Download Allocation File</a></td>
+						<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form2">
+								<input name="call_user" type="hidden" id="call_user" value="wanjiru.kibe">
+								<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+								<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+								<input type="submit" name="button" id="button" value="Submit Allocation File">
+							</form></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="targets" id="targets">
+									<label for="daily_target">Daily</label>
+									<input type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;">
+									<label for="monthly_target">Monthly</label>
+									<input type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;">
+									<input type="submit" name="UpdateTarget" id="UpdateTarget" value="Update Target">
+									<input name="update_target_user_int_id" type="hidden" value="186">
+								</form></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Files Allocated: <strong>6,308</strong></td>
+						<td>Outstanding Amount: <strong>829,719,101</strong></td>
+						<td>&nbsp;</td>
+						<td>Amount Collected: <strong>10,401,091</strong></td>
+						<td>Amount PTP: <strong>936,682</strong></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody></table>
+				<br>
+				<br>
+				<br>
+				<h1>Team Allocation<br>
+
+
+
+
+
+				</h1>
+				<table width="100%" border="1" id="csvdownload" class="customers">
+					<tbody><tr>
+							<td><strong>Collector</strong></td>
+							<td><strong>Files Allocated</strong></td>
+							<td><strong>Outstanding Amount</strong></td>
+							<td><strong>Amount Collected</strong></td>
+							<td><strong>Amount PTP</strong></td>
+							<td><strong>Download Allocation</strong></td>
+							<td><strong>Assign Allocation</strong></td>
+						</tr>
+
+						<tr>
+							<td>ALL</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td><a href="allocation_to_csv.php?call_user=ALL&amp;name=ALL">Download Allocation File</a></td>
+							<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
+									<input name="call_user" type="hidden" id="call_user" value="ALL">
+									<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+									<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+									<input type="submit" name="button" id="button" value="Submit Allocation File">
+								</form></td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>Files Allocated: <strong>0</strong></td>
+							<td>Outstanding Amount: <strong>0</strong></td>
+							<td>Amount Collected: <strong>0</strong></td>
+							<td>Amount PTP: <strong>0</strong></td>
+							<td></td>
+							<td></td>
+						</tr>
+
+					</tbody></table>
+
+
+
+
+
+
+					<!--Archive files start-->
+					<div>
+
+						<br>
+						<br>
+						<h1>Archived Files<br>
+						</h1>
+						<table width="100%" border="1" id="csvdownload" class="customers">
+							<tbody><tr>
+									<td><strong>Total No. Archived Files</strong></td>
+									<td><strong>Archived Files Outstanding Amount</strong></td>
+									<td><strong>Archived Files Amount Collected</strong></td>
+									<td><strong>Archived Files Amount PTP</strong></td>
+									<td><strong>Download Archived Files</strong></td>
+									<td><strong>Upload Files to Archive</strong></td>
+								</tr>
+
+								<tr>
+									<td>4005</td>
+									<td>529,603,786</td>
+									<td>5,516,179</td>
+									<td>5,000</td>
+									<td><a href="allocation_to_csv.php?call_user=ARCHIVED&amp;name=ARCHIVED FILES">Download Archived Files</a></td>
+									<td><form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
+											<input name="call_user" type="hidden" id="call_user" value="ARCHIVED">
+											<input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+											<input type="file" name="filename" id="filename" required="required" onchange="ValidateSingleInput(this);">
+											<input type="submit" name="button" id="button" value="Submit to Archive">
+										</form></td>
+								</tr>
+
+								<tr>
+									<td>Files Allocated: <strong>4,005</strong></td>
+									<td>Outstanding Amount: <strong>529,603,786</strong></td>
+									<td>Amount Collected: <strong>5,516,179</strong></td>
+									<td>Amount PTP: <strong>5,000</strong></td>
+									<td></td>
+									<td></td>
+								</tr>
+
+							</tbody></table>
+
+							<div>                            
+
+
+
+
+
+
+
+							</div>
+							<div class="pagecon">
+
+							</div>
+							<div class="clear"></div>
+					</div>
+
+
+
+		</div>
+
+	</div>
+
+
+</div>
+{% endblock content %}

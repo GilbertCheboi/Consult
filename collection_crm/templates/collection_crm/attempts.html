@@ -1,0 +1,219 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<script type="text/javascript">
+  $(function () {
+    $('#fromdt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+
+    $('#todt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+  });
+</script>
+<h1>Attempts Report</h1>
+
+
+				<div class="formCon" style="float:left; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tbody><tr>
+								<form id="form1" name="form1" method="get" action="{% url "collection_crm:attempts" %}"></form>
+
+
+
+
+							</tr><tr>
+								<td>From:</td>
+								<td><input name="fromdate" type="text" value="" id="fromdt"></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr><td>To:</td>
+								<td><input name="todate" type="text" value="" id="todt"></td>
+							</tr>	<tr>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!--  
+				 <tr><td>Batch:</td>
+				 <td >
+				 <select name='batch' type='text'  id="batch">
+				 <option value=""></option>
+				 <option value="Batch1">Batch1</option>
+				 <option value="Batch2">Batch2</option>
+				 <option value="Batch3">Batch3</option>
+				 </select>
+
+				 </td>
+				 </tr>	<tr>-->
+					 <tr><td>&nbsp;</td>
+						 <td>&nbsp;</td>
+						 <td>&nbsp;</td>
+						 <td>&nbsp;</td>
+						 <td>&nbsp;</td>
+					 </tr>
+					 <tr><td>&nbsp;</td><td><label>
+								 <input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+															background-color:#F27F22;
+															height:25px;
+															-webkit-border-radius: 4px;
+															-moz-border-radius: 4px;
+															border-radius: 4px;
+															border:1px #b58530 solid;
+															color:#633c15;
+															font-size:15px;
+															cursor:pointer;
+
+font-weight:bold;">
+							 </label> </td>
+
+
+
+							 <td>
+								 <form action="getCSV.php" method="post"> <label>
+										 <input type="hidden" name="csv_text" id="csv_text">
+										 <input type="submit" alt="Submit Form" value="Download 2 Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																	background-color:#F27F22;
+																	height:25px;
+																	-webkit-border-radius: 4px;
+																	-moz-border-radius: 4px;
+																	border-radius: 4px;
+																	border:1px #b58530 solid;
+																	color:#633c15;
+																	font-size:15px;
+																	cursor:pointer;
+																	font-weight:bold;">
+									 </label> 	
+								 </form>
+								 <script>
+									 function getCSVData(){
+										 var csv_value=$('#csvdownload').table2CSV({delivery:'value'});
+										 $("#csv_text").val(csv_value);
+									 }
+								 </script>
+							 </td>
+
+					 </tr>
+						</tbody></table>
+
+				</div>
+				<div class="formCon" style="float:right; width:40%; margin-left:0px;margin-right:10px;padding:10px">
+
+					<table width="100%" id="csvdownload" border="0" cellspacing="0" cellpadding="5">
+
+						<tbody><tr class="tablebx_topbg">
+								<td class="tblRB">Date Uploaded</td>
+								<td class="tblRB">Total Leads</td>
+								<td class="tblRB">Completed Leads</td>
+							</tr>
+
+							<tr>
+								<td class="tblR">2021-07-20 08:25:12</td>
+								<td class="tblR">1</td>
+								<td class="tblR">1</td></tr><tr>
+								<td class="tblR">2021-07-20 08:25:12</td>
+								<td class="tblR">1</td>
+								<td class="tblR">1</td></tr><tr>
+								<td class="tblR">2021-07-16 15:44:56</td>
+								<td class="tblR">21</td>
+								<td class="tblR">17</td></tr><tr>
+								<td class="tblR">2021-07-20 08:25:12</td>
+								<td class="tblR">317</td>
+								<td class="tblR">247</td></tr><tr>
+								<td class="tblR">2021-03-31 10:33:43</td>
+								<td class="tblR">22</td>
+								<td class="tblR">21</td></tr><tr>
+								<td class="tblR">2021-02-24 09:44:03</td>
+								<td class="tblR">342</td>
+								<td class="tblR">320</td></tr><tr>
+								<td class="tblR">2022-05-11 11:20:37</td>
+								<td class="tblR">1</td>
+								<td class="tblR">1</td></tr><tr>
+								<td class="tblR">2022-05-19 11:58:49</td>
+								<td class="tblR">3</td>
+								<td class="tblR">0</td></tr><tr>
+								<td class="tblR">2021-08-25 10:05:20</td>
+								<td class="tblR">7908</td>
+								<td class="tblR">5094</td></tr><tr>
+								<td class="tblR">2021-02-23 10:04:50</td>
+								<td class="tblR">443</td>
+								<td class="tblR">383</td>	  </tr>
+						</tbody></table>
+
+
+				</div>
+				<div class="">
+
+					<div class="clear"></div>
+
+
+					<div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">  
+						<div class="pagecon" style="float:center; margin-left:10px;">
+
+						</div>     
+						<div id="files">									  
+							<table width="100%" id="csvdownload" border="0" cellspacing="0" cellpadding="5">
+
+								<tbody><tr class="tablebx_topbg">
+										<td class="tblRB">Phone</td>
+										<td class="tblRB">#</td>
+										<td class="tblRB">Attempt 1</td>
+										<td class="tblRB">Attempt 2</td>
+										<td class="tblRB">Attempt 3</td>
+										<td class="tblRB">Attempt 4</td>
+										<!--		 <td class="tblRB">Attempt 5</td>-->
+
+
+									</tr>
+
+
+								</tbody></table>
+								<!--
+					<div  style="margin-top:100px">
+
+					<table width="100%" class="highchart"  data-graph-container-before="1" data-graph-type="column" style="display:none;">
+					<caption>Graphical Representation</caption>
+					<thead>
+					<tr>
+					<th class="tblRB">Date</th>
+
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+					<td class="tblR">2022-08-08</td>  
+					</tr>
+
+					</tbody>
+
+					</table>
+
+					</div>-->
+						</div>
+						<div class="pagecon">
+
+						</div>
+						<div class="clear"></div>
+					</div>
+
+
+
+				</div>
+{% endblock content %}

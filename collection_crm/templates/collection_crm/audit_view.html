@@ -1,0 +1,861 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+  $(function () {
+    $('#fromdt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+
+    $('#todt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+  });
+</script>
+
+<h1>Audit Logs</h1>
+
+                    <div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <form id="form1" name="form1" method="get" action="audit_view.php"></form>
+
+
+
+
+                                    </tr><tr>
+                                        <td>From:</td>
+                                        <td><input autocomplete="off" name="fromdate" type="text" id="fromdt" value=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                      <tr>
+                                        <td>To:</td>
+                                        <td><input autocomplete="off" name="todate" type="text" id="todt" value=""></td>
+                                      </tr>
+    <tr>
+    <td height="51">&nbsp;</td>
+    <td></td>
+  </tr>
+<tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+              </tr>
+              <tr><td>&nbsp;</td><td><label>
+                                            <input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+                                                   background-color:#F27F22;
+                                                   height:25px;
+                                                   -webkit-border-radius: 4px;
+                                                   -moz-border-radius: 4px;
+                                                   border-radius: 4px;
+                                                   border:1px #b58530 solid;
+                                                   color:#633c15;
+                                                   font-size:15px;
+                                                   cursor:pointer;
+
+                                                   font-weight:bold;">
+                                        </label> </td>
+
+
+
+                                <td>
+                                    <form action="getCSV.php" method="post"> <label>
+                                            <input type="hidden" name="csv_text" id="csv_text">
+                                                <input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+                                                       background-color:#F27F22;
+                                                       height:25px;
+                                                       -webkit-border-radius: 4px;
+                                                       -moz-border-radius: 4px;
+                                                       border-radius: 4px;
+                                                       border:1px #b58530 solid;
+                                                       color:#633c15;
+                                                       font-size:15px;
+                                                       cursor:pointer;
+                                                       font-weight:bold;">
+                                        </label>
+                                    </form>
+                                    <script>
+                                        function getCSVData() {
+                                            var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+                                            $("#csv_text").val(csv_value);
+                                        }
+                                    </script>
+                                </td>
+
+                            </tr>
+                        </tbody></table>
+
+                    </div>
+
+                    <div class="">
+                    <div>
+                      <table border="0" cellpadding="5">
+                        <tbody><tr>
+                          <td></td>
+                          <td></td>
+                          <td>                              <a href="/collection_crm/admin/audit_view.php?pageNum_RecordsetGetAuditLogs=1&amp;totalRows_RecordsetGetAuditLogs=4485">Next</a>
+                              </td>
+                          <td>                              <a href="/collection_crm/admin/audit_view.php?pageNum_RecordsetGetAuditLogs=89&amp;totalRows_RecordsetGetAuditLogs=4485">Last</a>
+                              </td>
+                        </tr>
+                      </tbody></table>
+Records 1 to 50 of 4485 </div>
+<div class="clear"></div>
+
+
+                        <div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">
+                            <div class="pagecon" style="float:center; margin-left:10px;">
+
+                            </div>
+                            <div id="files">
+                                
+                                <table width="100%" id="csvdownload" border="0" cellspacing="0" cellpadding="5">
+                                    <tbody><tr class="tablebx_topbg">
+                                      <td class="tblRB">#</td>
+                                      <td class="tblRB">File</td>
+                                      <td class="tblRB">Call</td>
+                                      <td class="tblRB">Date Time</td>
+                                      <td class="tblRB">Action</td>
+                                      <td class="tblRB">Action Before</td>
+                                      <td class="tblRB">Action After</td>
+                                      <td class="tblRB">User</td>
+                                      <td class="tblRB">IP Address</td>
+                                      <td class="tblRB">Accessed Page</td>
+                                      
+                                      </tr>
+                                    
+                                                                        <tr>
+                                    
+                                      <td class="tblR">4486</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 16:45:27</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">admin</td>
+                                      <td class="tblR">105.163.1.241</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4485</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 15:01:35</td>
+                                      <td class="tblR">LOGOUT</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">roman.hinga</td>
+                                      <td class="tblR">41.90.70.120</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/logout.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4484</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 11:24:37</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4483</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 11:10:36</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">admin</td>
+                                      <td class="tblR">104.28.82.46</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4482</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 08:17:50</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">atieno.opidi</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4481</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 07:49:08</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">roman.hinga</td>
+                                      <td class="tblR">41.90.70.120</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4480</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-08 07:42:57</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">christine.onsumu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4479</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-06 11:07:36</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4478</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-06 09:19:28</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">rose.ruguru</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4477</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-06 09:10:08</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">christine.onsumu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4476</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-05 09:07:25</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4475</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-05 08:37:53</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">atieno.opidi</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4474</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-05 08:12:02</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">rose.ruguru</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4473</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 15:13:29</td>
+                                      <td class="tblR">LOGOUT</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">roman.hinga</td>
+                                      <td class="tblR">41.90.65.62</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/logout.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4472</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 14:57:59</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4471</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 14:07:15</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">stephanie.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4470</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 12:14:21</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4469</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 09:54:51</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4468</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 09:54:02</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4467</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 09:37:28</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">roman.hinga</td>
+                                      <td class="tblR">41.90.67.25</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4466</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 09:35:13</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">victoria.maweu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4465</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 09:12:51</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">rose.ruguru</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4464</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 08:34:02</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">charles.wasonga</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4463</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 08:21:12</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">christine.onsumu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4462</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 08:11:48</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4461</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-04 08:09:36</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">atieno.opidi</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4460</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 16:38:20</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4459</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 16:04:51</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">stephanie.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4458</td>
+                                      
+                                      <td class="tblR">5996</td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 12:55:04</td>
+                                      <td class="tblR">EDIT</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">
+							Customer Name: ESTHER WAHITO WANYEKI,Account Number: 0270595374018,CF ID: 54301075815,Phone Number: 0714054090,ID Number: 22125618,Branch: ,Location: Central&amp;Eastern,Outstanding amount: 27.00,Employer: ,Salary: ,Batch: Written off,Email: ,Other Phone Numbers: ,Guarantor 1 Name: ,Guarantor 1 ID: ,Guarantor 1 Phone: ,Guarantor 2 Name: ,Guarantor 2 ID: ,Guarantor 2 Phone: ,Guarantor 3 Name: ,Guarantor 3 ID: ,Guarantor 3 Phone: ,Spouse Name: ,Spouse ID: ,Spouse Phone: ,Status: ,</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/front/searchUpdate.php?id=5996&amp;msg=saved&amp;</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4457</td>
+                                      
+                                      <td class="tblR">5996</td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 12:54:13</td>
+                                      <td class="tblR">EDIT</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">
+							Customer Name: ESTHER WAHITO WANYEKI,Account Number: 0270595374018,CF ID: 54301075815,Phone Number: 0714054090,ID Number: 22125618,Branch: ,Location: Central&amp;Eastern,Outstanding amount: 63639.38,Employer: ,Salary: ,Batch: Written off,Email: ,Other Phone Numbers: ,Guarantor 1 Name: ,Guarantor 1 ID: ,Guarantor 1 Phone: ,Guarantor 2 Name: ,Guarantor 2 ID: ,Guarantor 2 Phone: ,Guarantor 3 Name: ,Guarantor 3 ID: ,Guarantor 3 Phone: ,Spouse Name: ,Spouse ID: ,Spouse Phone: ,Status: ,</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/front/searchUpdate.php?</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4456</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 10:38:36</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4455</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 10:13:31</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">hariet.kapkarich</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4454</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 10:06:43</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">stephanie.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4453</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 10:06:29</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">victoria.maweu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4452</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 09:55:35</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">austin.kamau</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4451</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 08:09:58</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">christine.onsumu</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4450</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 08:09:38</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">rose.ruguru</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4449</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-03 08:06:56</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">atieno.opidi</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4448</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 21:59:17</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">admin</td>
+                                      <td class="tblR">172.224.230.110</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?msg=error</td>
+                                      
+                                    </tr>                                    <tr style="background-color:#FECDDC">
+                                    
+                                      <td class="tblR">4447</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 21:59:04</td>
+                                      <td class="tblR">LOGIN FAIL</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Username: admin</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Password: a4e7b74f8c75977c752803a94876def4</div></td>
+                                      <td class="tblR">admin</td>
+                                      <td class="tblR">172.224.230.110</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr style="background-color:#FECDDC">
+                                    
+                                      <td class="tblR">4446</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 16:24:34</td>
+                                      <td class="tblR">BATCH DOWNLOAD</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">File ID: 3, 23, 26, 29, 36, 39, 49, 78, 133, 440, 1327, 1410, 1429, 1436, 1443, 1557, 1669, 1671, 1690, 1875, 1916, 2072, 2109, 2120, 2131, 2269, 2334, 2699, 2819, 3194, 4028, 4030, 4036, 4040, 4042, 4043, 4047, 4049, 4053, 4062, 4072, 4074, 4080, 4082, 4115, 4122, 4124, 4145, 4150, 4156, 4162, 4190, 4196, 4207, 4211, 4288, 4299, 4308, 4342, 4397, 4469, 4490, 4512, 4515, 4518, 4612, 4613, 4619, 4622, 4623, 4624, 4627, 4628, 4638, 4639, 4651, 4671, 4678, 4681, 4694, 4696, 4700, 4715, 4716, 4759, 4760, 4783, 4840, 4847, 4850, 4874, 4891, 4898, 4917, 4920, 4961, 4965, 4970, 4983, 4985, 5020, 5090, 5091, 5106, 5107, 5113, 5133, 5136, 5143, 5145, 5163, 5183, 5185, 5206, 5210, 5211, 5215, 5553, 6726, 6943, 6946, 6986, 7059, 7203, 7338, 7480, 7916, 8142, 8287, 9281, 9659, 9712, 9788, 9859, 9878, 9924, 9967, 9986, 10061, 10068, 10073, 10087, 10089, 10095, 10103, 10113, 10122, 10127, 10136, 10142, 10167, 10186, 10189, 10222, 10256, 10259, </div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">No of files downloaded: 156</div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/admin/batch_history_download_print.php</td>
+                                      
+                                    </tr>                                    <tr style="background-color:#FECDDC">
+                                    
+                                      <td class="tblR">4445</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 16:13:38</td>
+                                      <td class="tblR">BATCH DOWNLOAD</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">File ID: 3, 23, 26, 29, 36, 39, 49, 78, 133, 440, 1327, 1410, 1429, 1436, 1443, 1557, 1669, 1671, 1690, 1875, 1916, 2072, 2109, 2120, 2131, 2269, 2334, 2699, 2819, 3194, 4028, 4030, 4036, 4040, 4042, 4043, 4047, 4049, 4053, 4062, 4072, 4074, 4080, 4082, 4115, 4122, 4124, 4145, 4150, 4156, 4162, 4190, 4196, 4207, 4211, 4288, 4299, 4308, 4342, 4397, 4469, 4490, 4512, 4515, 4518, 4612, 4613, 4619, 4622, 4623, 4624, 4627, 4628, 4638, 4639, 4651, 4671, 4678, 4681, 4694, 4696, 4700, 4715, 4716, 4759, 4760, 4783, 4840, 4847, 4850, 4874, 4891, 4898, 4917, 4920, 4961, 4965, 4970, 4983, 4985, 5020, 5090, 5091, 5106, 5107, 5113, 5133, 5136, 5143, 5145, 5163, 5183, 5185, 5206, 5210, 5211, 5215, 5553, 6726, 6943, 6946, 6986, 7059, 7203, 7338, 7480, 7916, 8142, 8287, 9281, 9659, 9712, 9788, 9859, 9878, 9924, 9967, 9986, 10061, 10068, 10073, 10087, 10089, 10095, 10103, 10113, 10122, 10127, 10136, 10142, 10167, 10186, 10189, 10222, 10256, 10259, </div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">No of files downloaded: 156</div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/admin/batch_history_download_print.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4444</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 16:12:55</td>
+                                      <td class="tblR">LOGOUT</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">roman.hinga</td>
+                                      <td class="tblR">41.90.64.217</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/logout.php</td>
+                                      
+                                    </tr>                                    <tr style="background-color:#FECDDC">
+                                    
+                                      <td class="tblR">4443</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 15:56:03</td>
+                                      <td class="tblR">BATCH DOWNLOAD</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">File ID: 3, 23, 26, 29, 36, 39, 49, 78, 133, 440, 1327, 1410, 1429, 1436, 1443, 1557, 1669, 1671, 1690, 1875, 1916, 2072, 2109, 2120, 2131, 2269, 2334, 2699, 2819, 3194, 4028, 4030, 4036, 4040, 4042, 4043, 4047, 4049, 4053, 4062, 4072, 4074, 4080, 4082, 4115, 4122, 4124, 4145, 4150, 4156, 4162, 4190, 4196, 4207, 4211, 4288, 4299, 4308, 4342, 4397, 4469, 4490, 4512, 4515, 4518, 4612, 4613, 4619, 4622, 4623, 4624, 4627, 4628, 4638, 4639, 4651, 4671, 4678, 4681, 4694, 4696, 4700, 4715, 4716, 4759, 4760, 4783, 4840, 4847, 4850, 4874, 4891, 4898, 4917, 4920, 4961, 4965, 4970, 4983, 4985, 5020, 5090, 5091, 5106, 5107, 5113, 5133, 5136, 5143, 5145, 5163, 5183, 5185, 5206, 5210, 5211, 5215, 5553, 6726, 6943, 6946, 6986, 7059, 7203, 7338, 7480, 7916, 8142, 8287, 9281, 9659, 9712, 9788, 9859, 9878, 9924, 9967, 9986, 10061, 10068, 10073, 10087, 10089, 10095, 10103, 10113, 10122, 10127, 10136, 10142, 10167, 10186, 10189, 10222, 10256, 10259, </div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">No of files downloaded: 156</div></td>
+                                      <td class="tblR">wanjiru.kibe</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/admin/batch_history_download_print.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4442</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 15:25:53</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">wanjiru.kibe</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4441</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 15:17:24</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">charles.wasonga</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4440</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 14:58:41</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">elizabeth.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4439</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 14:34:01</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">charles.wasonga</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4438</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 14:10:09</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">stephanie.wainaina</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm/login.php?status=1</td>
+                                      
+                                    </tr>                                    <tr>
+                                    
+                                      <td class="tblR">4437</td>
+                                      
+                                      <td class="tblR"></td>
+                                      <td class="tblR"></td>
+                                      <td class="tblR">2022-08-02 13:12:14</td>
+                                      <td class="tblR">LOGIN SUCCESS</td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;">Login Success</div></td>
+                                      <td class="tblR"><div style="word-wrap: break-word;overflow-wrap: break-word; width:430px; margin:0; padding:0;"></div></td>
+                                      <td class="tblR">austin.kamau</td>
+                                      <td class="tblR">41.90.229.81</td>
+                                      <td class="tblR">https://crm.callcenter.africa/collection_crm//login.php?status=1</td>
+                                      
+                                    </tr>                                    
+                                    
+                                    
+                                  </tbody></table>
+                                  
+                            </div>
+                            <div class="pagecon">
+
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+
+
+                    </div>
+
+{% endblock content %}

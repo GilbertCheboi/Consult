@@ -1,0 +1,476 @@
+{% load i18n %}
+{% load static %}
+{% load i18n two_factor %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Imara Calls Africa | Cloud First Contact Centre Solution</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="{% static "index/images/favicon.ico" %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700,900">
+    <link rel="stylesheet" href="{% static "index/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/fonts.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/style.css" %}" id="main-styles-link">
+    <!--[if lt IE 10]>
+      <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+
+      <header class="section page-header">
+
+        <div class="rd-navbar-wrap rd-navbar-absolute">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-device-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+
+                <div class="rd-navbar-panel">
+
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+
+                  <div class="rd-navbar-brand">
+                                         <a class="brand" href="{% url "dashboard_home" %}"><img class="brand-logo-dark" src="https://zerxis.com/assets/img/logo.png" alt="" width="200" />
+                     img class="brand-logo-light" src="{% static "helpline/zerxis_logo_small.png" %}" alt="" width="200" /></a>
+                  </div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+
+                    <ul class="rd-navbar-nav">
+                      {% if request.user.is_authenticated %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Home</a>
+                      </li>
+                      {% else %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'index' %}">Home</a>
+                      </li>
+                      {% endif %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url "features" %}">Features</a>
+                      </li>
+                      {% if request.user.is_authenticated %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Helpline</a>
+                      </li>
+                      {% else %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'two_factor:login' %}">Login</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+
+                  <div class="rd-navbar-search">
+                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
+                    <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                      <div class="form-wrap">
+                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
+                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
+                      </div>
+                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section swiper-container swiper-slider swiper-slider-2 swiper-bg" data-loop="true" data-autoplay="false" data-simulate-touch="false" data-slide-effect="fade">
+        <div class="swiper-wrapper text-center text-md-left">
+          <div class="swiper-slide position-relative">
+            <div class="swiper-slide-caption">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-9 col-lg-7">
+                    {% url "account_signup" as registration_url %}
+                    <h1 data-caption-animate="fadeInUp" data-caption-delay="100">Powerful, Quick & Secure Call Center<br>Solution</h1><a class="button button-lg button-secondary" href="{% url 'two_factor:login' %}" data-caption-animate="fadeInUp" data-caption-delay="150">Login</a>
+                    <a class="button button-lg button-secondary" href="{{ registration_url }}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up</a>
+                    <a class="button button-lg button-secondary" href="{% provider_login_url "microsoft" %}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up using Microsoft</a><br/>
+                    <a class="button button-lg button-secondary" href="{% provider_login_url "google" %}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up using Google</a>
+                  </div>
+                  <div class="swiper-img-block">
+                    <div class="swiper-img-block-inner">
+                      <div class="img-block-inner-item"><img src="{% static "index/images/main-slide-1.png" %}" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide position-relative">
+            <div class="swiper-slide-caption">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-9 col-lg-7">
+                    <h1 data-caption-animate="fadeInUp" data-caption-delay="100">Total Security<br> & Reliability</h1><a class="button button-lg button-secondary" href="{% url 'two_factor:login' %}" data-caption-animate="fadeInUp" data-caption-delay="150">Login</a>
+                    <a class="button button-lg button-secondary" href="{{ registration_url }}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up</a>
+                  </div>
+                  <div class="swiper-img-block">
+                    <div class="swiper-img-block-inner">
+                      <div class="img-block-inner-item"><img src="{% static "index/images/main-slide-2.png" %}" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide position-relative">
+            <div class="swiper-slide-caption">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-9 col-lg-7">
+                    <h1 data-caption-animate="fadeInUp" data-caption-delay="100">Advanced Call Flow Capabilities</h1><a class="button button-lg button-secondary" href="{% url 'two_factor:login' %}" data-caption-animate="fadeInUp" data-caption-delay="150">Login</a>
+                    <a class="button button-lg button-secondary" href="{{ registration_url }}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up</a>
+                  </div>
+                  <div class="swiper-img-block">
+                    <div class="swiper-img-block-inner">
+                      <div class="img-block-inner-item"><img src="{% static "index/images/main-slide-3.png" %}" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-meta">
+          <ul class="links">
+          </ul>
+          <div class="contacts">
+            <div class="icon mdi mdi-cellphone-iphone"></div>
+            <div class="request"><a href="tel:+254707077707">Call Us</a></div>
+            <div class="tel"><a href="tel:+254707077707">(+254) 0-7002 36628</a></div>
+          </div>
+
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+
+      <section class="section context-dark">
+        <div class="row row-flex no-gutters">
+          <div class="col-md-6 col-lg-3">
+            <div class="blurb-boxed-2">
+              <h6 class="title">Process & Technology</h6>
+              <p class="exeption">Our solutions can be tailor made to solve a multitude of organizational challenges.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="blurb-boxed-2 blurb-boxed-dark">
+              <h6 class="title">Consulting Experience</h6>
+              <p class="exeption">We bring years of contact center expertise to every project – from strategy to planning to execution.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="blurb-boxed-2 blurb-boxed-darker">
+              <h6 class="title">24/7 Phone support </h6>
+              <p class="exeption">Obtain efficient answers to your software questions by calling while working at your computer.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="blurb-boxed-2 blurb-boxed-darkest">
+              <p class="exeption">Reliable call center services since 2018</p>
+              <h5 class="title">We've got the perfect call center plans for you</h5><a class="button button-lg button-primary" href="mailto:info@zerxis.com">Get a Quote</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section-lg">
+        <div class="container">
+          <div class="block-lg text-center">
+            <h5>We are proud to power technology in some of Africa's most exciting companies</h5>
+          </div>
+          <style>
+.common-clients-wrap img {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  transition: all 0.2s ease-in ;
+  -moz-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  object-fit: contain;
+  padding-bottom:30px;
+}
+      .common-clients-wrap img:hover {
+        filter: none;
+        -webkit-filter: grayscale(0%);
+      }
+          </style>
+          <div class="row row-condensed row-offset-3 common-clients-wrap">
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/1.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/7.jpg" %}" alt="" width="100">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/2.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/8.jpg" %}" alt="" width="156">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/3.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/9.jpg" %}" alt="" width="170">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/4.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/33.png" %}" alt="" width="170">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/5.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/11.jpg" %}" alt="" width="185">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/6.jpg" %}" alt="" width="370" height="240">
+              </div>
+              <div class="grid-demonstration-item">
+                <img src="{% static "index/images/clients/44.png" %}" alt="" width="170">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lg section-decorate">
+        <div class="container">
+          <div class="block-lg text-center">
+            <h2>Why Choose Imara Calls Africa  Software?</h2>
+          </div>
+          <div class="row row-30 row-xxl-60">
+            <div class="col-sm-6 col-md-4 wow fadeInLeft">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/full-scale-call-center.png" %}" alt=""></div>
+                <h6 class="title">Full Scale Call Center Features</h6>
+                <p>Take Customer-Agent interactions to the next level with Call Center Africa's feature-rich call center software solution. Be it inbound, outbound, or blended campaigns – call center management was never this easy. Effective Call Routing, Bulk outbound dialing, Real-time monitoring, and 10+ Call Center KPI reports.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 wow fadeInLeft" data-wow-delay="0.1s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/enterprise-grade-security.png" %}" alt=""></div>
+                <h6 class="title">Enterprise-grade Security</h6>
+                <p>Call Center Africa is committed to protecting your customer data and information. To ensure enterprise-grade security, we follow the standards and best practices defined by International Security Frameworks and use PCI-DSS certified Data Centers. This ensures a secure way to process customer information</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 wow fadeInLeft" data-wow-delay="0.2s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/easy-and-flexible-deployment.png" %}" alt=""></div>
+                <h6 class="title">Easy and Flexible Deployment</h6>
+                <p>Call Center Africa offers a number of call center deployment options from a cloud contact center to an on-premise setup or a hybrid solution. Take advantage of Call Center Africa’s flexible and scalable platform to set up a contact center that suits your unique requirements any where in the world</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lg section-decorate">
+        <div class="container">
+          <div class="block-lg text-center">
+            <h2>Key Features of Call Center Africa Center Software</h2>
+          </div>
+          <div class="row row-30 row-xxl-60">
+            <div class="col-sm-6 col-md-3 wow fadeInLeft">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/ivr-icon.png" %}" alt=""></div>
+                <h6 class="title">IVR</h6>
+                <p>Effectively route calls to the right department based on caller input.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.1s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/auto-calling-icon.png" %}" alt=""></div>
+                <h6 class="title">Auto Dialer</h6>
+                <p>Make outbound calling easy with an automated dialing system.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.2s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/dedicated-support.svg" %}" alt=""></div>
+                <h6 class="title">ACD</h6>
+                <p>Auto distribute your calls to the best-suited agent via routing.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.1s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/CTI.png" %}" alt=""></div>
+                <h6 class="title">CTI</h6>
+                <p>Easy access to all the customer information for better conversion.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.2s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/call-monitoring.png" %}" alt=""></div>
+                <h6 class="title">Call Monitoring</h6>
+                <p>Ensure high call quality by monitoring real-time calls.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.3s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/reports-dashboards.png" %}" alt=""></div>
+                <h6 class="title">Reporting and Dashboards</h6>
+                <p>Get better visibility and hold on every metric that matters.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.3s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/recording-icon.png" %}" alt=""></div>
+                <h6 class="title">Call Recording</h6>
+                <p>Recording every call and use these recordings to score your agents.</p>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3 wow fadeInLeft" data-wow-delay="0.3s">
+              <div class="blurb-image">
+                <div class="icon"><img src="{% static "index/images/icons/workflows.png" %}" alt=""></div>
+                <h6 class="title">Automation Rules</h6>
+                <p>Improve the overall productivity with automated workflows.</p>
+              </div>
+            </div>
+            <div class="block-lg text-center">
+              <a class="button button-secondary" href="{% url "features" %}">View All Features</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lg bg-gray-100 bg-light-figure">
+        <div class="container">
+          <div class="row row-20 justify-content-center justify-content-lg-between">
+            <div class="col-md-10 col-lg-6 wow fadeIn"><img class="out-of-container" src="{% static "index/images/index-1-691x452.png" %}" alt="" width="691" height="452" />
+            </div>
+            <div class="col-md-10 col-lg-6">
+              <div class="block-lg text-left">
+                <h2>Why Choose Us</h2>
+                <p class="sup pr-xl-5">We're a world-class call Center technology company who offers a range of services</p>
+              </div>
+              <div class="text-block-2">
+                <p>Call Center Africa services strives to be the model virtual IT Department, for small and mid-size businesses. We are committed to enabling the success of our clients by leveraging our own expertise in ways that help them realize profitable results from their technology initiatives.</p>
+                <div class="progress-linear-wrap">
+
+                  <article class="progress-linear">
+                    <div class="progress-header">
+                      <p>100% Uptime Gurranted</p><span class="progress-value">100</span>
+                    </div>
+                    <div class="progress-bar-linear-wrap">
+                      <div class="progress-bar-linear"></div>
+                    </div>
+                  </article>
+
+                  <article class="progress-linear">
+                    <div class="progress-header">
+                      <p>Commitment to security</p><span class="progress-value">100</span>
+                    </div>
+                    <div class="progress-bar-linear-wrap">
+                      <div class="progress-bar-linear"></div>
+                    </div>
+                  </article>
+
+                  <article class="progress-linear">
+                    <div class="progress-header">
+                      <p>24/7 support</p><span class="progress-value">100</span>
+                    </div>
+                    <div class="progress-bar-linear-wrap">
+                      <div class="progress-bar-linear"></div>
+                    </div>
+                  </article>
+                  <article class="progress-linear">
+                    <div class="progress-header">
+                      <p>Passion for privacy</p><span class="progress-value">100</span>
+                    </div>
+                    <div class="progress-bar-linear-wrap">
+                      <div class="progress-bar-linear"></div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lg">
+        <div class="container text-center">
+          <h2>Pricing</h2>
+          <div class="row no-gutters justify-content-center">
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-decor-top">
+                <div class="title">BASIC</div>
+                <p class="exeption">This option is perfect if you need to start a simple call center for your corporate or personal needs and want to save money on call center solutions.<br>
+                </p>
+                <div class="heading-3 price">
+                  <!--                $10.00
+                    <div style="font-size:14px;"> User/Month</div>-->
+                </div><a class="button button-secondary" href="#">Request Quotation</a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-1-primary">
+                <div class="title">BUSINESS</div>
+                <p class="exeption">This offer provides you with extended support, Reports and API inegration for your future call center as well as fair pricing and more useful features for your call center projects.<br>
+                </p>
+                <div class="heading-3 price">
+                  <!--                $20.00
+                    <div style="font-size:14px;"> User/Month</div>-->
+                </div><a class="button button-inverse" href="#">Request Quotation</a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-decor-bottom">
+                <div class="title">ENTERPRISE</div>
+                <p class="exeption">For partnership, vision and transformation or your organization - choose this plan if you need to operate a powerful call center with lots of features, extended support, and dedicated resources. </p>
+                <a class="button button-secondary" href="#">Request Quotation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% include "helpline/index_footer.html" %}
+
+    </div>
+
+    <div class="snackbars" id="form-output-global"></div>
+
+    <script src="{% static "index/js/core.min.js" %}"></script>
+    <script src="{% static "index/js/script.js" %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-199244690-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-199244690-1');
+    </script>
+  </body>
+</html>

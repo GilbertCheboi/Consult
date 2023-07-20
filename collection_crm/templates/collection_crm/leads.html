@@ -1,0 +1,216 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    </script>
+    </td>
+    </td>
+
+    <td valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top" width="100%">
+              <div id="ajaxLeads">
+                <div style="padding-left:20px; padding-right:10px;">
+                  <div>
+                    <main class="main">
+
+                      <div class="gauge-container">
+                        <div class="gauge_today gauge"></div>
+                        <div class="gauge_month gauge"></div>
+                      </div>
+                    </main>
+
+                    <svg width="0" height="0" version="1.1" class="gradient-mask" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                      <linearGradient id="gradientGauge">
+                      <stop class="color-red" offset="0%"/>
+                      <stop class="color-yellow" offset="10%"/>
+                      <stop class="color-yellow" offset="20%"/>
+                      <stop class="color-yellow" offset="30%"/>
+                      <stop class="color-yellow" offset="40%"/>
+                      <stop class="color-yellow" offset="50%"/>
+                      <stop class="color-yellow" offset="60%"/>
+                      <stop class="color-green" offset="70%"/>
+                      <stop class="color-green" offset="80%"/>
+                      <stop class="color-green" offset="90%"/>
+                      <stop class="color-green" offset="100%"/>
+                      </linearGradient>
+                      </defs>
+                    </svg>
+
+
+                    <script>
+
+                      $(function () {
+
+                        class GaugeChart {
+                          constructor(element, params) {
+                            this._element = element;
+                            this._initialValue = params.initialValue;
+                            this._higherValue = params.higherValue;
+                            this._title = params.title;
+                            this._subtitle = params.subtitle;
+                          }
+
+                          _buildConfig() {
+                            let element = this._element;
+
+                            return {
+                              value: this._initialValue,
+                              valueIndicator: {
+                                color: '#666' },
+
+                              geometry: {
+                                startAngle: 180,
+                                endAngle: 360 },
+
+                              scale: {
+                                startValue: 0,
+                                endValue: this._higherValue,
+                                customTicks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                                tick: {
+                                  length: 8 },
+
+                                label: {
+                                  font: {
+                                    color: '#87959f',
+                                    size: 9,
+                                    family: '"Open Sans", sans-serif' } } },
+
+
+
+                              title: {
+                                verticalAlignment: 'bottom',
+                                text: this._title,
+                                font: {
+                                  family: '"Open Sans", sans-serif',
+                                  color: '#666',
+                                  size: 10 },
+
+                                subtitle: {
+                                  text: this._subtitle,
+                                  font: {
+                                    family: '"Open Sans", sans-serif',
+                                    color: '#666',
+                                    weight: 700,
+                                    size: 28 } } },
+
+
+
+                              onInitialized: function () {
+                                let currentGauge = $(element);
+                                let circle = currentGauge.find('.dxg-spindle-hole').clone();
+                                let border = currentGauge.find('.dxg-spindle-border').clone();
+
+                                currentGauge.find('.dxg-title text').first().attr('y', 48);
+                                currentGauge.find('.dxg-title text').last().attr('y', 28);
+                                currentGauge.find('.dxg-value-indicator').append(border, circle);
+                              } };
+
+
+                          }
+
+                          init() {
+                            $(this._element).dxCircularGauge(this._buildConfig());
+                          }}
+
+
+                        $(document).ready(function () {
+
+                          $('.gauge_today').each(function (index, item) {
+                            let params = {
+                              initialValue: 70,
+                              higherValue: 100,
+                              title: "Daily Target {{ collection_user.daily_target }}",
+                              subtitle: '70%' };
+
+
+                            let gauge = new GaugeChart(item, params);
+                            gauge.init();
+                          });
+
+                          $('.gauge_month').each(function (index, item) {
+                            let params = {
+                              initialValue: 0,
+                              higherValue: 100,
+                              title: "Monthly Target 0",
+                              subtitle: '0%' };
+
+
+                            let gauge = new GaugeChart(item, params);
+                            gauge.init();
+                          });
+
+                        });
+
+                      });
+
+                    </script>
+
+                  </div>
+
+                  <div style="width:auto; justify-content: space-around;display: flex; margin-top:30px; margin-bottom:50px;">
+                    <div style="background-color:#C0C; width:250px; color:#FFF; padding:20px; float:left;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">No. of Files Allocated</div>
+                      <div style=" font-size:26px; text-align:center;">0</div>
+                    </div>
+                    <div style="background-color:#C0C; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Amount Collected Today</div>
+                      <div style=" font-size:26px; text-align:center;">0 / 0</div>
+                    </div>
+                    <div style="background-color:#C0C; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Amount Collected August</div>
+                      <div style=" font-size:26px; text-align:center;">0 / 0</div>
+                    </div>
+                    <div style="background-color:#C0C; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Balance of Files Allocated</div>
+                      <div style=" font-size:26px; text-align:center;">0</div>
+                    </div>
+                  </div>
+
+                  <div style="width:auto; justify-content: space-around;display: flex; margin-top:30px; margin-bottom:50px;">
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Files</div>
+                      <div style=" font-size:26px; text-align:center;">10313</div>
+                    </div>
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Amount Collected Today</div>
+                      <div style=" font-size:26px; text-align:center;">22,975</div>
+                    </div>
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Amount Collected August</div>
+                      <div style=" font-size:26px; text-align:center;">354,400</div>
+                    </div>
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Balance of Files</div>
+                      <div style=" font-size:26px; text-align:center;">1,348,749,303</div>
+                    </div>
+                  </div>
+                  <div style="width:auto; justify-content: space-around;display: flex; margin-top:30px; margin-bottom:50px;">
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Calls Out August</div>
+                      <div style=" font-size:26px; text-align:center;">0calls - 0min</div>
+                    </div>
+                    <div style="background-color:#73bd44; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                      <div style="font-size:18px; text-align:center; margin-bottom:20px;">Total Calls In August</div>
+                      <div style=" font-size:26px; text-align:center;">0calls - 0min</div>
+                    </div>
+                    <div style="background-color:#FFF; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+
+                    </div>
+                    <div style="background-color:#FFF; width:250px; color:#FFF; padding:20px; float:left; margin-left:30px;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </td>
+        </tr>
+      </table><!--Second Last table-->
+    </td>
+  </tr>
+</table><!--Last Table-->
+{{ amount_paid_sum }}
+{% endblock content %}

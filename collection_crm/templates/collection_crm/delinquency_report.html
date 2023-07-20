@@ -1,0 +1,242 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<h1>Equity Collection Report 2022-08-08 to  2022-08-08</h1>
+
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+
+
+
+	<form id="form1" name="form1" method="get" action="">
+		<table width="500" border="0" cellspacing="0" cellpadding="0">
+			<tbody><tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>Filter</td>
+				</tr>
+				<tr>
+					<td height="46">From</td>
+					<td><input autocomplete="off" name="fromdate" type="text" id="fromdt" value=""></td>
+					<td rowspan="2"><label for="with_amount_collected"><input name="with_amount_collected" type="checkbox" id="with_amount_collected" value="1" checked="checked">With Amount Collected
+						</label><br>
+						<label for="with_amount_ptp"><input name="with_amount_ptp" type="checkbox" id="with_amount_ptp" value="1">With Amount PTP
+						</label>
+
+					</td>
+				</tr>
+				<tr>
+					<td height="45">To:</td>
+					<td><input autocomplete="off" name="todate" type="text" id="todt" value=""></td>
+				</tr>
+				<tr>
+					<td height="51">Client</td>
+					<td><select name="client" id="client">
+							<option value="1" selected="selected">Equity</option>
+							<option value="2">Sidian</option>
+							<option value="3">Safaricom</option>
+							<option value="4">NCBA</option>
+						</select></td>
+						<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+																																		background-color:#F27F22;
+																																		height:25px;
+																																		-webkit-border-radius: 4px;
+																																		-moz-border-radius: 4px;
+																																		border-radius: 4px;
+																																		border:1px #b58530 solid;
+																																		color:#633c15;
+																																		font-size:15px;
+																																		cursor:pointer;
+
+font-weight:bold;">
+
+
+					</td>
+					<td>
+
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</tbody></table>
+	</form>
+	<div style="text-align:right;">
+		<form action="getCSV.php?custom_file_name=Equity Collection Report 2022-08-08 to  2022-08-08.csv" method="post">
+			<label>
+				<input type="hidden" name="csv_text" id="csv_text">
+				<input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																																				background-color:#F27F22;
+																																				height:25px;
+																																				-webkit-border-radius: 4px;
+																																				-moz-border-radius: 4px;
+																																				border-radius: 4px;
+																																				border:1px #b58530 solid;
+																																				color:#633c15;
+																																				font-size:15px;
+																																				cursor:pointer;
+																																				font-weight:bold;">
+			</label>
+		</form>
+		<script>
+			function getCSVData() {
+				var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+				$("#csv_text").val(csv_value);
+			}
+		</script>
+	</div>
+
+
+
+</div>
+
+<table border="0" cellspacing="0" cellpadding="0" style="font-size:18px;margin-left:20px; margin-bottom:20px; margin-top:20px;">
+	<tbody><tr>
+			<td height="35" id="top_total_amount_collected">Total Amount Collected: 11,095.00</td>
+		</tr>
+		<tr>
+			<td height="35" id="top_total_current_PTP_amount">Total PTP Amount: 0.00</td>
+		</tr>
+
+
+	</tbody></table>
+
+	<div class="">
+
+		<div class="clear"></div>
+
+
+		<div class="tablebx" style=" margin-left:10px;margin-right:10px;">
+			<div class="pagecon" style="float:center; margin-left:10px; font-weight:bold;"> Total Files: 3</div>
+			<div id="files">
+				<table border="0" cellpadding="5" cellspacing="0" class="custom_table" id="csvdownload">
+					<tbody><tr class="tablebx_topbg">
+							<td width="8">#</td>
+							<td width="17">Client</td>
+							<td width="17">Date</td>
+							<td width="216">Name</td>
+							<td width="216">Collector</td>
+							<td width="216">Branch</td>
+							<td width="216">Status/Batch</td>
+							<td width="216">phone number</td>
+							<td width="282">Account Number</td>
+							<td width="282">Outstanding Amount</td>
+							<td width="282">Amount Collected</td>
+							<td width="282">Current Balance</td>
+							<td width="282">PTP Amount</td>
+							<td width="58">Reacheable</td>
+							<td width="237">System Remarks</td>
+							<td width="237">PTP Date</td>
+							<td width="132">Comment</td>
+						</tr>
+
+						<tr>
+							<td>1</td>
+							<td>Equity</td>
+							<td>08-Aug-2022</td>
+							<td>JOHN DOE</td>
+							<td>user.doe</td>
+							<td>Rift_Valley</td>
+							<td>Written Off</td>
+							<td>07XXXXX</td>
+							<td>690XXXXXX</td>
+							<td>90,424.75</td>
+
+
+							<td>4,975.00</td>
+
+							<td>25,000</td>
+
+							<td>0.00</td>
+							<td>Yes</td>
+							<td>PTP Reminder</td>
+							<td>2022-08-03</td>
+							<td>deposited 4975/- REF QH38KJ7BOC deposit to account 0130100252240.</td>
+						</tr>
+
+						<tr>
+							<td>2</td>
+							<td>Equity</td>
+							<td>08-Aug-2022</td>
+							<td>JOSPHAT KIANGI KALELI</td>
+							<td>christine.onsumu</td>
+							<td>Nairobi_East</td>
+							<td>Written off</td>
+							<td>2547XXXXXXXX</td>
+							<td>777016</td>
+							<td>1,131.29</td>
+
+
+							<td>120.00</td>
+
+							<td>1,011</td>
+
+							<td>0.00</td>
+							<td>Yes</td>
+							<td>PTP Reminder</td>
+							<td>2022-08-03</td>
+							<td>QH30LBBGKG</td>
+						</tr>
+
+						<tr>
+							<td>3</td>
+							<td>Equity</td>
+							<td>08-Aug-2022</td>
+							<td>JANE DOE CLIENT</td>
+							<td>janedoe.user</td>
+							<td>Nairobi_East</td>
+							<td>LIVE</td>
+							<td>25479XXXXXXX</td>
+							<td>9005XXX</td>
+							<td>9,715.16</td>
+
+
+							<td>6,000.00</td>
+
+							<td>3,715</td>
+
+							<td>0.00</td>
+							<td>Yes</td>
+							<td>PTP Reminder</td>
+							<td>2022-06-22</td>
+							<td>the client noted that he had made the payment in June </td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+
+
+							<td><strong id="bottom_total_amount_collected">Total Amount Collected: 11,095.00</strong></td>
+							<td></td>
+							<td><strong id="bottom_total_current_PTP_amount">Total PTP Amount: 0.00</strong></td>
+							<td></td>
+
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody></table>
+			</div>
+			<div class="pagecon">
+
+			</div>
+			<div class="clear"></div>
+		</div>
+
+
+
+	</div>
+{% endblock content %}

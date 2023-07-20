@@ -1,0 +1,22 @@
+{% extends "helpline/helpline_base.html" %}
+{% load static %}
+{% block title %}Goodbye{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-12">
+      <div class="login-box">
+
+        <div class="login-logo">
+          <a href="#"><img src="{% static 'helpline/images/logo.png' %}" height="150" /></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+          <p class="login-box-msg">Logged Out.</p>
+          <h1>You are logged out</h1><a href="{% url 'two_factor:login' %} ">Log back in</a>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,257 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% load static %}
+{% load avatar_tags %}
+{% load user_sessions i18n %}
+{% load socialaccount %}
+{% load hijack %}
+
+{% block content %}
+<style type="text/css">
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.checkmark {
+    display:inline-block;
+    width: 22px;
+    height:22px;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+}
+
+.checkmark_circle {
+    position: absolute;
+    width:22px;
+    height:22px;
+    background-color: green;
+    border-radius:11px;
+    left:0;
+    top:0;
+}
+
+.checkmark_stem {
+    position: absolute;
+    width:3px;
+    height:9px;
+    background-color:#fff;
+    left:11px;
+    top:6px;
+}
+
+.checkmark_kick {
+    position: absolute;
+    width:3px;
+    height:3px;
+    background-color:#fff;
+    left:8px;
+    top:12px;
+}
+</style>
+
+<div class="box-body">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          {% if is_owner %}
+          <a  href="{% url 'avatar_change' %}">{% avatar content_user 128 class="profile-user-img img-responsive img-circle" %}</a>
+          {% else %}
+          {% avatar content_user 128 class="profile-user-img img-responsive img-circle" %}
+          {% endif %}
+          <h3 class="profile-username text-center">{{ content_user.get_full_name }}</h3>
+          <p class="text-muted text-center">{% trans "Member Since" %}, {{ request.user.date_joined|date:"M Y" }}</p>
+          <ul class="list-group list-group-unbordered">
+						<li class="list-group-item"><b>{% trans "Name" %}</b> {{ content_user.get_full_name }}
+              {% if is_owner %}
+							<small class="pull-right">
+								<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#user-modal"><i class="fa fa-edit"></i>{% trans "Edit" %}</a>
+							</small>
+              {% endif %}
+						</li>
+            {% if is_owner %}
+            <li class="list-group-item">
+              <b>{% trans "Email" %}</b> {{ content_user.email }}
+							{% if email_verified %}
+							<small class="pull-right">
+								<span class="checkmark">
+									<div class="checkmark_circle"></div>
+									<div class="checkmark_stem"></div>
+									<div class="checkmark_kick"></div>
+								</span>
+							</small>
+							{% endif %}
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Plan" %}</b>
+              <a href="#">Current Plan</a>
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Organization" %}</b>
+              {% for schedule in request.user.HelplineUser.get_schedule %}
+              <span class="label label-success">{{ schedule.service.name }}</span>
+              {% endfor %}
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Services" %}</b>
+              {% for schedule in request.user.HelplineUser.get_schedule %}
+              <span class="label label-success">{{ schedule.service.name }}</span>
+              {% endfor %}
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Connected apps" %}</b>
+                {% get_social_accounts user as accounts %}
+                {% for account in accounts %}
+                <a class="btn btn-social-icon btn-{{ account }}"><i class="fa fa-{{ account }}"></i></a>
+              {% endfor %}
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Your applications" %}</b>
+              <div class="block-center">
+                  {% if applications %}
+                  <ul>
+                      {% for application in applications %}
+                      <li><a href="{{ application.get_absolute_url }}">{{ application.name }}</a></li>
+                      {% endfor %}
+                  </ul>
+
+                  <a class="btn btn-success" href="{% url "oauth2_provider:register" %}">New Application</a>
+                  {% else %}
+                  <p>{% trans "No applications defined" %}. <a href="{% url 'oauth2_provider:register' %}">{% trans "Click here" %}</a> {% trans "if you want to register a new one" %}</p>
+                  {% endif %}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <b>{% trans "Social" %}</b>
+              <a href="{% url "socialaccount_connections" %}">Manage Social Accounts</a>
+            </li>
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+      {% if user.is_superuser %}
+      {% if request.user|can_hijack:another_user %}
+      <form action="{% url 'hijack:acquire' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="user_pk" value="{{ another_user.pk }}">
+          <button type="submit">hijack {{ another_user }}</button>
+          <input type="hidden" name="next" value="{{ request.path }}">
+      </form>
+      {% endif %}
+      {% endif %}
+
+      {% if is_owner %}
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">{% trans "Security" %}</h3>
+        </div>
+        <table class="table table-bordered table-striped"><tr><th colspan="2">{% trans "Two-Factor Authentication" %}</th></tr>
+          <tr>
+            <td>{% trans "Use two-factor authentication" %} </td>
+						<td class="text-primary">
+							<!-- Rounded switch -->
+							<label class="switch">
+								<a href="{% url 'two_factor:profile' %}">
+									<input type="checkbox" {% if tfa_enabled %}checked{% endif %} >
+									<span class="slider round"></span>
+								</a>
+							</label> 
+						</td>
+          </tr>
+          <tr>
+            <td>{% trans "Password" %} </td>
+						<td class="text-primary">
+                            <a href="{% url 'account_change_password' %}">{% trans "Change Password" %}</a>
+						</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">{% trans "Active Sessions" %}</h3>
+        </div>
+
+        {% trans "<em>unknown on unknown</em>" as unknown_on_unknown %}
+        {% trans "<em>unknown</em>" as unknown %}
+
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>{% trans "Location" %}</th>
+              <th>{% trans "Device" %}</th>
+              <th>{% trans "Last Activity" %}</th>
+            </tr>
+          </thead>
+          {% for object in request.user.session_set.all|slice:":5"  %}
+          <tr {% if object.session_key == session_key %}class="active"{% endif %}>
+            <td>{{ object.ip|location|default_if_none:unknown|safe }} <small>({{ object.ip }})</small></td>
+            <td>{{ object.user_agent|device|default_if_none:unknown_on_unknown|safe }}</td>
+            <td>
+              {% if object.session_key == session_key %}
+              {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago (this session){% endblocktrans %}
+              {% else %}
+              {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago{% endblocktrans %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        {% if request.user.session_set.all.count > 1 %}
+        <form method="post" action="{% url 'user_sessions:session_delete_other' %}">
+          {% csrf_token %}
+          <p>{% blocktrans %}You can also end all other sessions but the current.
+            This will log you out on all other devices.{% endblocktrans %}</p>
+          <button type="submit" class="btn btn-default btn-warning btn-xs">{% trans "End All Other Sessions" %}</button>
+        </form>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div><!-- /.col (LEFT) -->
+
+    <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-envelope-o"></i>{% trans "Update" %}</h4>
+          </div>
+          <form id="frmUpdate" action="{% url "helpline_user_profile" user %}" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+              <div class="form-group">
+                {{ form|crispy  }}
+              </div>
+              <div class="modal-footer clearfix">
+
+                <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal"><i class="fa fa-times"></i>{% trans "Discard" %}</button>
+
+                <button type="submit" id="updateUser" name="updateUser" class="btn btn-primary btn-lg pull-left"><i class="fa fa-save"></i> {% trans "Save" %}</button>
+              </div>
+              {% csrf_token %} 
+            </div><!-- /.modal-content -->
+          </form>
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block additional-javascript %}
+<script type="text/javascript">
+if(window.location.hash) {
+  var hash = window.location.hash.substring(1);
+  if (hash === 'new=True'){
+    $('#user-modal').modal('show');
+  }
+}
+</script>
+
+{% endblock %}

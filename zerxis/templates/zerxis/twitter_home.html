@@ -1,0 +1,55 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load avatar_tags %} 
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+{% load socialaccount %}
+
+{% block content %}
+<section class="content-header">
+  <h1>
+    Twitter 
+    <small>Home</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{% url 'social_dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Social</a></li>
+    <li class="active">{% trans "Twitter" %}</li>
+  </ol>
+</section>
+<div class="row">
+  {% include 'zerxis/twitter_tweet_row.html' %}
+</div>
+<div class="row">
+  <div class="stream-container">
+
+    <div class="col-md-4" id="twitter_home_timeline">
+    </div>
+
+    <div class="col-md-4" id="twitter_mentions_timeline">
+    </div>
+
+    <div class="col-md-4" id="twitter_user_timeline">
+    </div>
+  </div>
+</div>
+{% include 'zerxis/twitter_js.html' %}
+{% endblock content %}
+{% block script_end %}
+
+<script type="text/javascript">
+
+  /*
+  * Custom Label formatter
+   * ----------------------
+   */
+function labelFormatter(label,series) {
+  return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+    + label
+    + "<br>"
+    + Math.round(series.percent) + "%</div>";
+}
+</script>
+{% endblock script_end %}

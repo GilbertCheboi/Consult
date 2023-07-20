@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kreait/firebase-php": "^0.6.2",
+        "textalk/websocket": "^1.3"
+    }
+}

@@ -1,0 +1,429 @@
+{% extends "helpline/base.html"|pjax:request  %}
+{% load i18n %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+
+{% block content %}
+<script type='text/javascript'>
+$(function(){
+  // called when the scheme field changes from initial value
+  $('select[name=scheme]').change(function(){
+
+    if($("#id_scheme option:selected").text() == 'Other') {
+        scheme_name = $('select[name=scheme]').val();
+          $('#div_id_partner').show();
+        document.getElementById("id_partner").required = true;
+    } else {
+          $('#div_id_partner').hide();
+    }
+  })
+
+  // called when category field changes from initial value
+  $('select[name=category]').change(function(){
+
+    if($("#id_category option:selected").text()) {
+    category_id = $('select[name=category]').val();
+
+    request_url = '/helpline/ajax/get_subcategory/' + category_id + '/';
+      $.ajax({
+        url: request_url,
+        type: "GET",
+        success: function(data){
+          $('select[name=sub_category]').empty();
+          $.each(data.data, function(key, value){
+            $('select[name=sub_category]').append('<option value="' + value.hl_subcategory+ '">' + value.hl_subcategory+ '</option>');
+          });
+        }
+      })
+    }
+  })
+  $('select[name=sub_category]').change(function(){
+
+    if($("#id_sub_category option:selected").text()) {
+    sub_category_id = $('select[name=sub_category]').val();
+
+    request_url = '/helpline/ajax/get_sub_subcategory/' + sub_category_id + '/';
+      $.ajax({
+        url: request_url,
+        type: "GET",
+        success: function(data){
+          $('select[name=sub_sub_category]').empty();
+          $.each(data.data, function(key, value){
+            $('select[name=sub_sub_category]').append('<option value="' + value.hl_subsubcat+ '">' + value.hl_subsubcat+ '</option>');
+          });
+        }
+      })
+    }
+  })
+});
+</script>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+          <h3 class="box-title">{% trans "Case" %}: {{ case }}</h3>
+          {% if  report.service.id == 50 or report.service.id == 37 or report.service.id == 54  %}
+          <button type="button" class="btn btn-primary pull-right" onclick="getCustomerDetails('{{ case }}', '{{ report.hl_unique }}');">{% trans "Customer Details" %}</button>
+          {% endif %}
+      </div>
+      <div class="box-body">
+        <div id="contact-search" class="{% if form_name == 'call' %} hidden {% endif %}">
+          <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6 col-md-12 contact-search">
+              <p class="lead">{% trans "Contact Search" %}:</p>
+              <div class="text-muted well well-sm no-shadow">
+                <!-- form start -->
+                {% crispy contact_search_form contact_search_form.helper %}
+                <!-- /.box-body -->
+
+                <div class="box-footer" style="background-color: transparent;">
+                  <button type="button" class="btn btn-primary" onclick="contactSearch();$('.contact-search').removeClass('col-md-12');$('.contact-results').removeClass('hidden');">{% trans "Search Contact" %}</button>
+                  <button type="button" class="btn btn-primary pull-right" onclick="$('#contact-search').addClass('hidden');$('.contact-cases').removeClass('hidden');">{% trans "New Reporter" %}</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-6 contact-results hidden">
+              <p class="lead">{% trans "Contact Search Results" %}</p>
+
+              <div class="table-responsive text-muted well well-sm no-shadow" style="min-height: 242px;">
+                <div id="contact-search-results"></div>
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <!-- Case form -->
+            <div class="{% if form_name == 'walkin' %} hidden {% endif %}">
+              {% crispy contact_form contact_form.helper %}
+              {% crispy case_detail_form %}
+              {% crispy case_action_form case_action_form.helper %}
+              <button class="btn btn-info" onclick="saveContact();saveCaseDetail();saveCaseAction();">
+                {% trans "Save" %}
+              </button>
+              <!-- Case form -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 {% if form_name == 'walkin' %} hidden {% endif %}">
+          {% crispy disposition_form %}
+          {% if case_history_table and user_schedule %}
+          {% render_table case_history_table %}
+          {% endif %}
+          <div id="call_script">
+          {{ report.service.script|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript'>
+  $(function(){
+    // called when category field changes from initial value
+    $('select[name=category]').change(function(){
+
+      if($("#id_category option:selected").text()) {
+        category_id = $('select[name=category]').val();
+
+        request_url = '/helpline/ajax/get_subcategory/' + category_id + '/';
+        $.ajax({
+          url: request_url,
+          type: "GET",
+          success: function(data){
+            $('select[name=sub_category]').empty();
+            $.each(data.data, function(key, value){
+              $('select[name=sub_category]').append('<option value="' + value.hl_subcategory + '">' + value.hl_subcategory + '</option>');
+            });
+          }
+        })
+      }
+    })
+    $('select[name=sub_category]').change(function(){
+
+      if($("#id_sub_category option:selected").text()) {
+        sub_category_id = $('select[name=sub_category]').val();
+
+        request_url = '/helpline/ajax/get_sub_subcategory/' + sub_category_id + '/';
+        $.ajax({
+          url: request_url,
+          type: "GET",
+          success: function(data){
+            $('select[name=sub_sub_category]').empty();
+            $.each(data.data, function(key, value){
+              $('select[name=sub_sub_category]').append('<option value="' + value.hl_subsubcat + '">' + value.hl_subsubcat + '</option>');
+            });
+          }
+        })
+      }
+    })
+  });
+</script>
+
+<script type="text/javascript">
+  function createCase(contact_id){
+    var values = {
+      'csrfmiddlewaretoken': '{{ csrf_token }}',
+      'contact_id': contact_id
+    }
+    $.ajax({
+      url: "{% url 'contact_create_case' %}",
+      type: "POST",
+      data: values,
+      success: function(data) {
+        if (!(data['success'])) {
+          // Here we replace the form, for the
+          $(contact_form).replaceWith(data['form_html']);
+        }
+        else {
+          toastr.success("Case created");
+          // PJAX wasnt' working here
+          document.getElementById('dashboard_home_link').click();
+          //$.pjax({url : "{% url "dashboard_home"  %}", container: '#pjax-container', timeout: 10000});
+
+
+        }
+      },
+      error: function () {
+        toastr.error("Could not create case");
+      }
+    });
+  }
+
+function callContact(contact_id){
+  var values = {
+    'csrfmiddlewaretoken': '{{ csrf_token }}',
+    'contact_id': contact_id
+  }
+  $.ajax({
+    url: "{% url 'call' %}",
+    type: "POST",
+    data: values,
+    success: function(data) {
+      if (!(data['success'])) {
+        // Here we replace the form, for the
+        $(contact_form).replaceWith(data['backend']);
+      }
+      else {
+        // Here you can show the user a success message or do whatever you need
+        //$(example_form).find('.success-message').show();
+        $("#success-message").html("Success");
+
+      }
+    },
+    error: function () {
+      //$(case_form).find('.error-message').show()
+      $("#error-message").html("Error");
+    }
+  });
+}
+
+
+function contactSearch(){
+  var contact_search_form = '#contact-search-form';
+
+  $.ajax({
+    url: "{% url 'contact_search_form' %}",
+    type: "POST",
+    data: $("#contact-search-form").serialize(),
+    success: function(data) {
+      if (!(data['success'])) {
+        // Here we replace the form, for the
+        $("#contact-search-form").html(data['form_html']);
+      }
+      else {
+        // Here you can show the user a success message or do whatever you need
+        //$(example_form).find('.success-message').show();
+        $("#success-message").html("Success");
+        $("#contact-search-results").html(data['table_html']);
+
+      }
+    },
+    error: function () {
+      //$(case_form).find('.error-message').show()
+      $("#error-message").html("Error");
+    }
+  });
+}
+
+function saveContact(){
+  var contact_form = $('#contactDet');
+
+  $.ajax({
+    url: "{% url 'save_contact_form' %}",
+    type: "POST",
+    data: $("#contactDet").serialize(),
+    success: function(data) {
+      if (!(data['success'])) {
+        // Here we replace the form, for the
+        toastr.error("Error saving contact.");
+        $(contact_form).replaceWith(data['form_html']);
+      }
+      else {
+        // Here you can show the user a success message or do whatever you need
+        $('.contact-search').removeClass('col-md-12');
+        $('#frame-contact').addClass('hidden');
+        $('#frame_iframe').removeClass('hidden');
+        $("input[name='case_number']").val(data['case_number']);
+        toastr.success("Contact Saved", "Success");
+
+      }
+    },
+    error: function () {
+      //$(case_form).find('.error-message').show()
+      $("#error-message").html("Error");
+      toastr.error(xhr.status, "Error saving contact.");
+    }
+  });
+}
+
+function saveCaseDetail(){
+  var case_detail_form = $('#caseDet');
+    if($("#id_scheme option:selected").text() == 'Other') {
+        if ($("#id_partner").val() == "" ){
+        toastr.error("Please enter a scheme name!");
+        return;
+        }
+    }
+
+  $.ajax({
+    url: "{% url 'save_case_detail' %}",
+    type: "POST",
+    data: $("#caseDet").serialize(),
+    success: function(data) {
+      if (!(data['success'])) {
+        // Here we replace the form, for the
+        toastr.error("Error saving case details.");
+        $(case_detail_form).replaceWith(data['form_html']);
+      }
+      else {
+        // Here you can show the user a success message or do whatever you need
+        toastr.success("Case details saved", "Success");
+      }
+    },
+    error: function () {
+      toastr.error("Error saving case detail.");
+    }
+  });
+}
+
+function saveCaseAction(){
+  var case_action_form = '#caseAction';
+
+  $.ajax({
+    url: "{% url 'save_case_action' %}",
+    type: "POST",
+    data: $("#caseAction").serialize(),
+    success: function(data) {
+      if (!(data['success'])) {
+        // Here we replace the form, for the
+        // $(case_action_form).replaceWith(data['form_html']);
+          toastr.error("Error saving case action");
+      }
+      else {
+          toastr.success("Saved case status");
+
+      }
+    },
+    error: function () {
+      $("#error-message").html("Error");
+    }
+  });
+}
+
+function disposeCase(param){
+  var dispose_form = '#disposeDet';
+
+  $.ajax({
+    url: "{% url 'save_disposition_form' %}",
+    type: "POST",
+    data: $("#disposeDet").serialize(),
+    success: function(data) {
+      if (!(data['success'])) {
+        $(dispose_form).replaceWith(data['form_html']);
+      }
+      else{
+        toastr.success("Disposition saved.");
+        $.pjax({url : "{% url "dashboard_home"  %}", container: '#pjax-container', timeout: 10000});
+
+      }
+    },
+    error: function() {
+      $("#error-message").html("Error");
+    }
+  });
+}
+
+function closeOverlay(){
+  window.history.go(-2);
+}
+
+</script>
+
+<script type="text/javascript">
+  window.addEventListener("message", receiveMessage, false);
+
+function receiveMessage(event){
+  if (event.origin !== "{{ enketo_url }}")
+    return;
+  var resp = JSON.parse(event.data)
+  if(resp.enketoEvent == 'submissionsuccess'){
+    // Show case action form after successful case submission
+    $('#frame-case-action').removeClass('hidden');
+    $('#frame_iframe').addClass('hidden');
+    $('#frame-contact').addClass('hidden');
+  }
+}
+</script>
+
+          {% if  report.service.id == 50 or report.service.id == 37 or report.service.id == 54  %}
+    <script type="text/javascript">
+        function getCustomerDetails(caseid,uniqueid){
+            console.log(caseid);
+            var values = {
+               // 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'caseid': caseid ,
+                'uniqueid': uniqueid,
+            }
+            get_customer_accountdetails = '{% url "imab_customer_account_details" "bidiicredit" %}';
+            $.ajax({
+                url: get_customer_accountdetails,
+                type: "GET",
+                data: values,
+                success: function(data){
+                    if (data){
+                        if (typeof(data.customer_details.data.results)  === 'object' ){
+                            var message = '<table class="table"><tbody>';
+                            var customer_details_results = data.customer_details.data.results;
+                            customer_details_results.forEach(customer_details_result => {
+                                for (let key in customer_details_result) {
+                                    message = message + "<tr>" + "<td><b>" + `${key}</b> </td><td>${customer_details_result[key]}</td>` +"</tr>";
+                                }
+                            });
+                            message = message + "</tbody></table>"
+                            bootbox.alert({
+                                title: "{% trans 'Customer Account Details' %}",
+                                message: message,
+                                backdrop: true,
+                            });
+                        } else {
+                            bootbox.alert("NO DATA");
+                        }
+                    } else {
+                        toastr.error("FAILED");
+                    }
+                }
+            });
+        }
+    </script>
+    {% endif %}
+
+{% endblock content %}

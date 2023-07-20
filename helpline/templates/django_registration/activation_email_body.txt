@@ -1,0 +1,9 @@
+Hello {{ user }},
+
+Please activate your account by visiting the link below:
+{{ scheme }}://{{ site }}/accounts/activate/{{ activation_key }}
+
+
+Kind regards,
+--
+Support

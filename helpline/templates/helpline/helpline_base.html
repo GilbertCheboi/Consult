@@ -1,0 +1,106 @@
+{% load i18n %}
+{% load static %}
+{% load recaptcha3 %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{% block head_title %}Call Center Africa{% endblock %}</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<!-- Bootstrap 3.3.7 -->
+		<link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
+		<!-- Ionicons -->
+		<link rel="stylesheet" href="{% static "Ionicons/css/ionicons.min.css" %}">
+		<!-- jvectormap -->
+		<link rel="stylesheet" href="{% static "AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css" %}">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="{% static "AdminLTE/dist/css/AdminLTE.min.css" %}">
+		<!-- AdminLTE Skins. Choose a skin from the css/skins
+			folder instead of downloading all of them to reduce the load. -->
+			<link rel="stylesheet" href="{% static "AdminLTE/dist/css/skins/_all-skins.min.css" %}">
+
+			<link rel="stylesheet" href="{% static "helpline/css/style.css" %}">
+			{% block head %}
+			<style>
+.bg {
+	/* The image used */
+	background-image: url("https://elloe.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F31f3d8e8-5eda-45c0-a26e-8302f8348bb1%2FUse_AI_Chat_to_empower_your_Customer_Service_(4).png?table=block&id=5846c8f3-6c2c-4000-9e15-167b427c953f&spaceId=b3c546cd-2619-43ea-8d2b-779c16695a72&width=2000&userId=&cache=v2");
+
+	/* Full height */
+	height: 100%;
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+			</style>
+			{% endblock head %}
+
+
+			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			<!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<![endif]-->
+
+			<script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+			<script type="text/javascript" src="/jsi18n/"></script>
+
+			{% recaptcha_init %}
+			{% recaptcha_ready action_name='homepage' %}
+
+			<!-- Google tag (gtag.js) -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138420386-1"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+
+				gtag('config', 'UA-138420386-1');
+			</script>
+	</head>
+	<body class="skin-white sidebar-mini bg" style="height: auto; min-height: 100%;">
+		<div class="wrapper" style="height: auto; min-height: 100%;">
+			<header class="main-header">
+				<nav class="navbar navbar-static-top">
+					<div class="container-fluid">
+						<div class="navbar-header">
+
+						</div>
+						<!--
+						<div id="navbar" class="navbar-collapse collapse pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="{% url "index" %}">About</a></li>
+								<li><a href="{% url "features" %}">Features</a></li>
+								<li><a href="/tos/">Terms Of Service</a></li>
+								<li><a href="/privacy/">Privacy</a></li>
+								<li><a href="https://status.callcenter.africa">Status</a></li>
+								<li><a href="https://zerxis.com/#contact" target="_blank">Request Demo</a></li>
+							</ul>
+						</div>
+						-->
+					</div>
+				</nav>
+			</header>
+
+			<div class="row">
+				{% block content %}
+				{% endblock %}
+			</div>
+
+			{% block javascript %}
+			{% endblock %}
+
+			<!-- Bootstrap 3.3.6 -->
+			<script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+		</div>
+	</body>
+</html>

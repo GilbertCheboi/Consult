@@ -1,0 +1,129 @@
+"""myhelpline URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.8/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  re_path(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  re_path(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Add an import:  from blog import urls as blog_urls
+    2. Add a URL to urlpatterns:  re_path(r'^blog/', include(blog_urls))
+"""
+from django.conf.urls import include
+from django.contrib import admin
+from django.conf import settings
+from django.contrib.auth import views as auth_views
+
+from django.contrib.auth.views import PasswordResetView,\
+    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
+from django.conf.urls.static import static
+from django.urls import path
+from django.urls import re_path
+from django.views.generic import TemplateView
+from django.views.static import serve
+from django.views.i18n import JavaScriptCatalog
+
+from two_factor.urls import urlpatterns as tf_urls
+from user_sessions import urls as user_sessions_urls
+
+from collection_crm import urls as collection_crm_urls
+from helpline import urls as helpline_urls
+from helpline import views as helpline_views
+from registration import auth_urls
+
+
+from imab import urls as imab_urls
+
+from zerxis import urls as zerxis_urls
+
+admin.site.site_header = 'Helpline'
+admin.site.site_title = 'Helpline'
+
+def trigger_error(request):
+    """Sentry and error handling debug funtion
+    Will raise a ZeroDivisionError error"""
+    division_by_zero = 1 / 0
+
+urlpatterns = [
+    # Auth and registration URLs
+    path('accounts/', include('allauth.urls')),
+    re_path(r'^accounts/', include(auth_urls)),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('tos/', TemplateView.as_view(template_name="tos.html")),
+    path('tos/update/', TemplateView.as_view(template_name="CallCenterAfricaTermsOfService.html")),
+    path('privacy/', TemplateView.as_view(template_name="privacy.html")),
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
+    re_path(r'^admin_tools/', include('admin_tools.urls')),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^api/v1/', include('api.urls')),
+    re_path(r'^helpline/', include(helpline_urls)),
+    re_path(r'^imab/', include(imab_urls)),
+    re_path(r'^collection_crm/',
+            include(
+                collection_crm_urls,
+                namespace='collection_crm'
+            )),
+    re_path(r'^zerxis/', include(zerxis_urls)),
+    re_path(r'^tellme/', include("tellme.urls")),
+    re_path(r'^openid/', include('oidc_provider.urls', namespace='oidc_provider')),
+    re_path(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+
+    re_path(r'^invitations/', include('invitations.urls',
+                                      namespace='invitations')),
+    re_path(r'^avatar/', include('avatar.urls')),
+    re_path(r'^hijack/', include('hijack.urls', namespace='hijack')),
+    re_path('^logout/$', helpline_views.helpline_logout, name='logout'),
+    re_path('^login/$', helpline_views.helpline_login, name='login'),
+    re_path(r'', include(tf_urls)),
+    re_path(r'', include(user_sessions_urls)),
+    re_path('^$', helpline_views.index, name='helpline_index'),
+    re_path('i18n/', include('django.conf.urls.i18n')),
+    path('tinymce/', include('tinymce.urls')),
+    re_path('^report-cybersecurity-issue/$', helpline_views.report_cybersecurity_issue,
+            name='index_report_cybersecurity_issue'),
+    re_path('^enrollment-sylk-mobile.phtml$', helpline_views.enrollment_mobile,
+            name='index_enrollment_mobile'),
+    path('sentry-debug_trigger_error/', trigger_error),
+
+]
+
+if settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^static/(?P<path>.*)$', serve),
+    ]
+else:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
+
+urlpatterns += [
+    re_path(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+]
+
+urlpatterns += [
+    re_path('admin/doc/', include('django.contrib.admindocs.urls'))
+]
+
+urlpatterns += [
+    re_path(r'^@(?P<username>[^/]+)/$', helpline_views.profile,
+            name='helpline_user_profile')
+]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
+
+admin.site.site_header = settings.ADMIN_SITE_HEADER

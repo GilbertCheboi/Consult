@@ -1,0 +1,69 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody><tr>
+                       
+                        <td valign="top">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tbody><tr>
+                                    <td valign="top" width="75%"><div style="padding-left:20px; padding-right:10px;">
+                                            <h1>Batch Upload Files to Get History</h1>
+
+
+
+
+                                            <div class="formCon">
+
+                                                <div class="formConInner">
+
+                                                  
+                                                    <form action="batch_history_download_print.php" method="POST" enctype="multipart/form-data" name="form1" target="_blank" id="form1">
+                                                        <table width="80%" border="0" style="margin-left:40px;" cellspacing="0" cellpadding="0">
+    
+                                                                <tbody><tr>
+                                                                    <td height="54" valign="bottom" style="padding-bottom:3px;"><label>Select CSV File to Upload 
+                                                                      <input name="filename" required="required" type="file" id="csv" onchange="ValidateSingleInput(this);">
+                                                                      <input name="submit_allocaion_file" type="hidden" id="submit_allocaion_file" value="---">
+                                                                    </label></td>
+                                                                    <td>&nbsp;</td>
+                                                                </tr>
+
+                                                                <tr><td height="41">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td></tr>
+                                                                <tr>
+                                                                    <td><input name="submit" type="submit" id="save" style=" padding:0px 20px;
+                                                                               background:url(../../imgs/fbut-bg.png) repeat-x;
+                                                                               height:37px;
+                                                                               -webkit-border-radius: 4px;
+                                                                               -moz-border-radius: 4px;
+                                                                               border-radius: 4px;
+                                                                               border:1px #b58530 solid;
+                                                                               color:#633c15;
+                                                                               font-size:13px;
+                                                                               cursor:pointer;
+                                                                               " value="Upload File"></td>
+                                                                </tr>
+
+                                                        </tbody></table>
+                                                        
+                                                    </form>
+                                                      </div></div></div></td></tr><tr>
+
+                                              
+                                            
+
+
+                                          
+                                  
+
+                                </tr>
+
+                            </tbody></table>
+                        </td>
+                    </tr>
+
+                </tbody></table>
+{% endblock content %}

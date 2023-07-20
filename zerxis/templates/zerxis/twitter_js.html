@@ -1,0 +1,172 @@
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% load i18n %}
+
+    <div class="modal fade" id="create-ticket-from-tweet-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-envelope-o"></i>{% trans "Submit a Ticket" %}</h4>
+          </div>
+          <div id="create-ticket-form-html"></div>
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+
+<script type="text/javascript">
+  // Get and render home, mentions and user twitter timelines
+  $(document).ready(function(){
+    $('#twitter_home_timeline').html("Loading..");
+    $('#twitter_mentions_timeline').html("Loading..");
+    $('#twitter_user_timeline').html("Loading..");
+    setTimeout(() => { getTwitterHomeTimeline(); }, 2000);
+    setTimeout(() => { getTwitterMentionsTimeline(); }, 4000);
+    setTimeout(() => { getTwitterUserTimeline(); }, 5000);
+    //  getTwitterHomeTimeline();
+    //  getTwitterMentionsTimeline();
+    //  getTwitterUserTimeline();
+  });
+
+function getTwitterHomeTimeline() {
+  $.get("{% url "twitter_home_timeline" uid %}",function(data){
+    if(data.timeline_html){
+      $('#twitter_home_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#twitter_home_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    } else if (data.timeline_html == 'Connect a twitter account..') {
+      $('#twitter_home_timeline').html('<a href="{% provider_login_url "twitter" %}">Twitter</a>');
+    }
+  });
+}
+
+function getTwitterMentionsTimeline(){
+  $.get("{% url "twitter_mentions_timeline" uid %}",function(data){
+    if(data.timeline_html){
+      $('#twitter_mentions_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#twitter_mentions_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    } else if (data.timeline_html == 'Connect a twitter account..') {
+      $('#twitter_home_timeline').html('<a href="{% provider_login_url "twitter" %}">Twitter</a>');
+    }
+  });
+}
+
+function getTwitterUserTimeline(){
+  $.get("{% url "twitter_user_timeline" uid %}",function(data){
+    if(data.timeline_html){
+      $('#twitter_user_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#twitter_user_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    } else if (data.timeline_html == 'Connect a twitter account..') {
+      $('#twitter_home_timeline').html('<a href="{% provider_login_url "twitter" %}">Twitter</a>');
+    }
+  });
+}
+
+function updateCount() {
+  var remaining = 280 - document.getElementById("id_status").value.length;
+  document.getElementById("remaining").innerHTML = remaining;
+  if(remaining < 0) {
+    var colour = "#FF0000";
+    var weight = "bold";
+    $('#id_post_tweet_btn').attr('disabled', 'true');
+
+
+  } else {
+    var colour = "";
+    var weight = "";
+    $('#id_post_tweet_btn').removeAttr('disabled');
+
+  }
+  document.getElementById("remaining").style.color = colour;
+  document.getElementById("remaining").style.fontWeight = weight;
+  setTimeout(updateCount, 400);
+}
+updateCount();
+</script>
+
+<script type="text/javascript">
+  function postTweet(){
+    var twitter_status = $('#status');
+    $.ajax({
+      url: "{% url 'post_tweet' uid %}",
+      type: "POST",
+      data: $("#status").serialize(),
+      success: function(data) {
+        if (!(data['success'])) {
+          $(twitter_status).replaceWith(data['update_form_html']);
+          console.log("Error sending tweet");
+
+        }
+        else{
+          toastr.success("Tweet sent.");
+          $('#id_status').attr('disabled','disabled');
+          $('#id_status').val("");
+          getTwitterUserTimeline();
+          $('#id_status').removeAttr('disabled');
+
+        }
+      },
+      error: function() {
+        $("#error-message").html("Error");
+      }
+    });
+  }
+  function toggleTweetLike(tweet_link){
+    var twitter_status_like = tweet_link.id
+    tweet_link.classList.toggle("fa-thumbs-down");
+    $.ajax({
+      url: "{% url 'like_tweet' uid %}",
+      type: "POST",
+      data: {'id': tweet_id},
+      success: function(data) {
+        if (!(data['success'])) {
+          $(twitter_status_like).replaceWith(data['success']);
+          console.log("Error liking tweet");
+
+        }
+        else{
+          toastr.success("Tweet liked.");
+          twitter_status_like.attr('disabled','disabled');
+          twitter_status_like.css("background-color", "red");
+          twitter_status.removeAttr('disabled');
+
+        }
+      },
+      error: function() {
+        $("#error-message").html("Error");
+      }
+    });
+  }
+
+function replyToTweetID(tweet_id=null, user_mentions=null){
+  if (tweet_id){
+    $('#id_in_reply_to').val(tweet_id);
+    $('#id_status').val(user_mentions);
+    $('#div_id_status label').html("Reply-to:");
+    $('#id_post_tweet_btn').html("Reply");
+  }
+}
+
+function createTcketFromTweet(tweet_id=null, user_mentions=null) {
+  console.log("Sending to helpdesk!");
+  request_url = '{% url "ajax_get_helpdesk_queues" %}';
+  $.ajax({
+    url: request_url,
+    type: "GET",
+    success: function(data){
+      if (data['create_ticket_form_html']) {
+        screen_name = $('#tweet_box_' + tweet_id + ' .username').text();
+        tweet_text  = $('#tweet_text_' + tweet_id).text();
+        $('#create-ticket-form-html').html(data['create_ticket_form_html']);
+        $('#create-ticket-form-html #id_title').val(screen_name + " Tweeted");
+        $('#create-ticket-form-html #id_body').val(
+           tweet_text + "\n\n" +"https://twitter.com/twitter/statuses/"+tweet_id
+        );
+        $('#create-ticket-from-tweet-modal').modal('show');
+      }
+    }
+  })
+}
+</script>

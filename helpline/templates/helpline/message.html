@@ -1,0 +1,26 @@
+{% if message %}
+<div class="alert alert-dismissable alert-{{ message.type }} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <h4><i class="icon fa fa-{{ message.type }}"></i>{{ message.tags|title }}</h4>
+  <p>{{ message.text|safe }}</p>
+</div>
+{% else %}
+{% if message_list %}
+{% for message in message_list %}
+<div class="alert alert-dismissable alert-{{ message.type}} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <h4><i class="icon fa fa-{{ message.type }}"></i>{{ message.tags|title }}</h4>
+  <p>{{ message.text|safe }}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-dismissable alert-{{ message.tags}} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <h4><i class="icon fa fa-{{ message.type }}"></i>{{ message.tags|title }}</h4>
+  {{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+{% endif %}

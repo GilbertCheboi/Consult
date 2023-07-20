@@ -1,0 +1,1956 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<div class="container" style=" min-height:500px; background-image:none;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+
+			</td>
+
+			<td valign="top">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td valign="top" width="100%">
+
+
+							<div id="ajaxLeads">
+
+								<div style="padding-left:20px; padding-right:10px;">
+									<div>
+										<h1>Search</h1>
+									</div>
+
+
+
+
+
+									<div id="atlasFrame">
+										<div> Records 1 to 5 of 6308<br />
+											<br />
+
+											<table width="205" border="0">
+												<tr>
+													<td width="28">                                </td>
+													<td width="56">                                </td>
+													<td width="24">                                    <a href="/collection_crm/front/search.php?pageNum_RecordsetGetLeadsDone=1">Next</a>
+													</td>
+													<td width="28">                                    <a href="/collection_crm/front/search.php?pageNum_RecordsetGetLeadsDone=1261">Last</a>
+													</td>
+												</tr>
+											</table>
+										</div>
+
+
+
+
+										<br />
+										<table width="99%" id="customers" style=" border-bottom:2px #666 solid;">
+											<form id="search_form" name="search_form" method="get" action="search.php">
+
+												<tr>
+													<td bgcolor="#CCCCCC"><input name="search_bar" type="hidden" id="search_bar" value="1" />
+														<input name="search_file_id" type="text" id="search_file_id" autocomplete="off" value="" size="7" />
+														<br />
+														<input name="action_file_id" type="submit" id="action_file_id" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_account_name" type="text" id="search_account_name" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action3" type="submit" id="action3" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_account_no" type="text" id="search_account_no" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action" type="submit" id="action2" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_cf_id" type="text" id="search_cf_id" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action5" type="submit" id="action5" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_phone" type="text" id="search_phone" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action2" type="submit" id="action" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_id_number" type="text" id="search_id_number" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action6" type="submit" id="action6" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+														<input name="search_branch" type="text" id="search_branch" autocomplete="off" value="" size="11" />
+														<br />
+														<input name="action4" type="submit" id="action4" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">&nbsp;</td>
+													<td bgcolor="#CCCCCC">
+														<label for="BalanceOrderBy"></label>
+														<select name="ballance_order_by" id="ballance_order_by">
+															<option  selected="selected" ></option>
+															<option  value="Descending">High to low </option>
+															<option  value="Ascending">Low to high</option>
+														</select>
+														<br />
+														<input type="submit" name="button3" id="button3" value="Sort" />
+													</td>
+													<td bgcolor="#CCCCCC">&nbsp;</td>
+													<td bgcolor="#CCCCCC">&nbsp;</td>
+													<td bgcolor="#CCCCCC">&nbsp;</td>
+													<td bgcolor="#CCCCCC">
+
+
+														<label for="client"></label>
+														<select name="client" id="client">
+															<option value="" selected="selected">Select</option>
+															<option value="1" >Equity</option>
+															<option value="2" >Sidian</option>
+															<option value="3" >Safaricom</option>
+															<option value="4" >NCBA</option>
+														</select>
+														<br />
+														<input type="submit" name="btn_search_client" id="btn_search_client" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+
+														<select name="status" id="status">
+															<option value="" selected="selected">-</option>
+															<option value="Active" >Active</option>
+															<option value="Closed" >Closed</option>
+														</select>
+														<br />
+														<input type="submit" name="button2" id="button2" value="Search" />
+													</td>
+													<td bgcolor="#CCCCCC">
+
+														<select name="collector" id="collector">
+															<option value="" selected="selected">Select</option>
+															<option value="admin" >Administrator</option>
+															<option value="atieno.opidi" >Atieno Opidi</option>
+															<option value="austin.kamau" >Austin Kamau</option>
+															<option value="charles.wasonga" >Charles Wasonga</option>
+															<option value="christine.onsumu" >Christine Onsumu</option>
+															<option value="elizabeth.wainaina" >Kelvin Kungu</option>
+															<option value="hariet.kapkarich" >Hariet Kapkarich</option>
+															<option value="patrick" >Patrick Mithamo</option>
+															<option value="paul.nyatochi" >Paul Nyachoti</option>
+															<option value="roman.hinga" >Roman Hinga</option>
+															<option value="rose.ruguru" >Teresa Amigo</option>
+															<option value="stephanie.wainaina" >Stephanie Wainaina</option>
+															<option value="victoria.maweu" >Victoria Maweu</option>
+															<option value="wanjiru.kibe" >Wanjiru Kibe</option>
+														</select>
+														<br />
+														<input type="submit" name="button4" id="button4" value="Search" />
+
+
+													</td>
+												</tr>
+
+
+											</form>
+
+											<tr>
+												<td bgcolor="#CCCCCC">
+
+
+													<strong>File ID</strong>
+												</td>
+												<td bgcolor="#CCCCCC"><strong>Customer Name</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Account Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>CF ID</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Phone Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>ID Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Branch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Location</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Balance</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Employer </strong></td>
+												<td bgcolor="#CCCCCC"><strong>Salary</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Batch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Client</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Status</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Collector</strong></td>
+											</tr>
+
+											<tr>
+												<td>10433</td>
+												<td>K-GROUP COMPANY LIMITED</td>
+												<td>0150292219076</td>
+												<td>54302711015</td>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td>
+																0737571240                                        <a href="sip:0737571240@local" title="Call: 0737571240"><strong>CALL</strong></a>
+																<div>
+																	-    <a title="Call:  -   " href="sip: -   @local"><strong>CALL</strong></a><br />
+
+																</div>
+															</td>
+
+														</tr>
+													</table>
+												</td>
+												<td>C153303</td>
+												<td></td>
+												<td></td>
+												<td>412,760</td>
+												<td></td>
+												<td></td>
+												<td>LIVE</td>
+												<td>Equity</td>
+												<td></td>
+												<td>stephanie.wainaina</td>
+											</tr>
+											<tr bgcolor="#CCCCCC">
+												<td><strong>Email</strong></td>
+												<td><strong>Guarantor 1</strong></td>
+												<td><strong>Guarantor 2</strong></td>
+												<td><strong>Guarantor 3</strong></td>
+												<td><strong>Spouse</strong></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong>Next Action Days</strong></td>
+												<td><strong>Next Action Date Time</strong></td>
+											</tr>
+											<tr>
+												<td>0</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>                                </td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td  style='background-color:#FFE6CA;' >
+													8                                </td>
+												<td>2022-08-16 11:00:00</td>
+											</tr>
+
+											<!-- START OF SMS PLACEHOLDER -->  
+											<tr><td colspan="100"><h3>SMS INTERACTIONS</h3></td></tr>
+											<tr>
+												<td colspan="15">
+													<div style="background:#FF9; margin:10px 0; padding:10px;">No SMS log found for this record!</div>
+												</td>
+											</tr>
+											<!-- END OF SMS PLACEHOLDER -->    
+
+
+											<tr>
+												<td colspan="15">
+
+
+													<table width="100%" border="1" class="custom_table">
+														<tr bgcolor="#A3E0E0">
+															<td></td>
+															<td><strong>SurveyID</strong></td>
+															<td><strong>Call Status</strong></td>
+															<td><strong>Call Start Time</strong></td>
+															<td><strong>Call End Time</strong></td>
+															<td><strong>System Remarks</strong></td>
+															<td><strong>Batch</strong></td>
+															<td><strong>Amount Paid</strong></td>
+															<td><strong>Date Of Payment</strong></td>
+															<td><strong>PTP Amount</strong></td>
+															<td><strong>PTP Date</strong></td>
+															<td><strong>PTP Time</strong></td>
+															<td><strong>Comments</strong></td>
+															<td><strong>Next Action Date</strong></td>
+															<td><strong>Agent</strong></td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51810">Edit</a>
+																1
+															</td>
+															<td>51810</td>
+															<td>Reachable</td>
+															<td>2022-07-12 08:15:59</td>
+															<td>2022-07-12 08:16:25</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td></td>
+															<td>ringing no response</td>
+															<td>2022-07-25 10:00:00</td>
+															<td>elizabeth.wainaina</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52815">Edit</a>
+																2
+															</td>
+															<td>52815</td>
+															<td>Reachable</td>
+															<td>2022-07-20 09:24:44</td>
+															<td>2022-07-20 09:31:17</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>ongoing talks with the bank</td>
+															<td>2022-08-17 08:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54010">Edit</a>
+																3
+															</td>
+															<td>54010</td>
+															<td>Unreachabl</td>
+															<td>2022-07-28 11:01:26</td>
+															<td>2022-07-28 11:04:45</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>12:00:00</td>
+															<td>phone busy</td>
+															<td>2022-07-28 12:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54021">Edit</a>
+																4
+															</td>
+															<td>54021</td>
+															<td>Reachable</td>
+															<td>2022-07-28 11:20:06</td>
+															<td>2022-07-28 11:22:25</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>12:00:00</td>
+															<td>phone busy</td>
+															<td>2022-07-28 12:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54022">Edit</a>
+																5
+															</td>
+															<td>54022</td>
+															<td>Reachable</td>
+															<td>2022-07-28 11:20:06</td>
+															<td>2022-07-28 11:22:25</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>12:00:00</td>
+															<td>phone busy</td>
+															<td>2022-07-28 12:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54068">Edit</a>
+																6
+															</td>
+															<td>54068</td>
+															<td>Reachable</td>
+															<td>2022-07-28 12:02:55</td>
+															<td>2022-07-28 12:08:08</td>
+															<td>Promise To Pay</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>09:00:00</td>
+															<td>promised to start paying after the general election</td>
+															<td>2022-08-15 09:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54251">Edit</a>
+																7
+															</td>
+															<td>54251</td>
+															<td>Reachable</td>
+															<td>2022-08-01 10:07:43</td>
+															<td>2022-08-01 10:08:49</td>
+															<td>Promise To Pay</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td>2022-08-01</td>
+															<td>10:00:00</td>
+															<td>promised to pay after election</td>
+															<td>2022-08-16 11:00:00</td>
+															<td>stephanie.wainaina</td>
+														</tr>
+														<tr>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td><strong>Total Amount Paid: 0</strong></td>
+															<td>&nbsp;</td>
+															<td><strong>Total PTP Amount: 0</strong></td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														</tr>
+
+
+
+
+
+
+													</table>
+
+													<form id="search_lid_form" name="search_lid_form" method="post" action="searchUpdate.php" style="border-bottom:1px #666 solid; margin-bottom:40px;">
+														<input type="submit" name="button" id="button" value="UPDATE FILE" />
+														<input name="search_lid" type="hidden" id="search_lid" value="10433" />
+													</form>
+
+
+
+
+
+												</td>
+											</tr>
+											<tr>
+												<td bgcolor="#CCCCCC">
+
+
+													<strong>File ID</strong>
+												</td>
+												<td bgcolor="#CCCCCC"><strong>Customer Name</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Account Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>CF ID</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Phone Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>ID Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Branch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Location</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Balance</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Employer </strong></td>
+												<td bgcolor="#CCCCCC"><strong>Salary</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Batch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Client</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Status</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Collector</strong></td>
+											</tr>
+
+											<tr>
+												<td>10432</td>
+												<td>ENNEDY NYAWIRA NJIRU</td>
+												<td>0140195223674</td>
+												<td>54304825144</td>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td>
+																254713680409                                        <a href="sip:254713680409@local" title="Call: 254713680409"><strong>CALL</strong></a>
+																<div>
+																	254764624990D1  <a title="Call:  254764624990D1 " href="sip: 254764624990D1 @local"><strong>CALL</strong></a><br />
+
+																</div>
+															</td>
+
+														</tr>
+													</table>
+												</td>
+												<td>27569495</td>
+												<td></td>
+												<td></td>
+												<td>35,802</td>
+												<td></td>
+												<td></td>
+												<td>LIVE</td>
+												<td>Equity</td>
+												<td></td>
+												<td>rose.ruguru</td>
+											</tr>
+											<tr bgcolor="#CCCCCC">
+												<td><strong>Email</strong></td>
+												<td><strong>Guarantor 1</strong></td>
+												<td><strong>Guarantor 2</strong></td>
+												<td><strong>Guarantor 3</strong></td>
+												<td><strong>Spouse</strong></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong>Next Action Days</strong></td>
+												<td><strong>Next Action Date Time</strong></td>
+											</tr>
+											<tr>
+												<td>0</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>                                </td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td  style='background-color:#FFE6CA;' >
+													23                                </td>
+												<td>2022-08-31 08:00:00</td>
+											</tr>
+
+											<!-- START OF SMS PLACEHOLDER -->  
+											<tr><td colspan="100"><h3>SMS INTERACTIONS</h3></td></tr>
+											<tr>
+												<td colspan="15">
+													<div style="background:#FF9; margin:10px 0; padding:10px;">No SMS log found for this record!</div>
+												</td>
+											</tr>
+											<!-- END OF SMS PLACEHOLDER -->    
+
+
+											<tr>
+												<td colspan="15">
+
+
+													<table width="100%" border="1" class="custom_table">
+														<tr bgcolor="#A3E0E0">
+															<td></td>
+															<td><strong>SurveyID</strong></td>
+															<td><strong>Call Status</strong></td>
+															<td><strong>Call Start Time</strong></td>
+															<td><strong>Call End Time</strong></td>
+															<td><strong>System Remarks</strong></td>
+															<td><strong>Batch</strong></td>
+															<td><strong>Amount Paid</strong></td>
+															<td><strong>Date Of Payment</strong></td>
+															<td><strong>PTP Amount</strong></td>
+															<td><strong>PTP Date</strong></td>
+															<td><strong>PTP Time</strong></td>
+															<td><strong>Comments</strong></td>
+															<td><strong>Next Action Date</strong></td>
+															<td><strong>Agent</strong></td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51287">Edit</a>
+																1
+															</td>
+															<td>51287</td>
+															<td>Reachable</td>
+															<td>2022-07-05 12:55:23</td>
+															<td>2022-07-05 12:56:35</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>promise to pay 10k every month,</td>
+															<td>2022-07-11 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52269">Edit</a>
+																2
+															</td>
+															<td>52269</td>
+															<td>Reachable</td>
+															<td>2022-07-15 11:58:32</td>
+															<td>2022-07-15 11:59:01</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-18 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52597">Edit</a>
+																3
+															</td>
+															<td>52597</td>
+															<td>Unreachabl</td>
+															<td>2022-07-18 17:01:11</td>
+															<td>2022-07-18 17:04:56</td>
+															<td>Phone Switched Off</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone switched off</td>
+															<td>2022-07-19 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52742">Edit</a>
+																4
+															</td>
+															<td>52742</td>
+															<td>Reachable</td>
+															<td>2022-07-19 17:00:08</td>
+															<td>2022-07-19 17:03:33</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>16:00:00</td>
+															<td>promise to pay something small tomorrow morning </td>
+															<td>2022-07-20 16:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52983">Edit</a>
+																5
+															</td>
+															<td>52983</td>
+															<td>Reachable</td>
+															<td>2022-07-21 07:44:07</td>
+															<td>2022-07-21 07:45:10</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>10:00:00</td>
+															<td>ringing but there is no response, will call back later</td>
+															<td>2022-07-21 10:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53108">Edit</a>
+																6
+															</td>
+															<td>53108</td>
+															<td>Reachable</td>
+															<td>2022-07-21 13:01:04</td>
+															<td>2022-07-21 13:01:40</td>
+															<td>Sick</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-22 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53272">Edit</a>
+																7
+															</td>
+															<td>53272</td>
+															<td>Unreachabl</td>
+															<td>2022-07-22 12:31:50</td>
+															<td>2022-07-22 12:32:33</td>
+															<td>Phone Switched Off</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone switched off</td>
+															<td>2022-07-23 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53459">Edit</a>
+																8
+															</td>
+															<td>53459</td>
+															<td>Reachable</td>
+															<td>2022-07-25 09:13:29</td>
+															<td>2022-07-25 09:14:01</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-29 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53785">Edit</a>
+																9
+															</td>
+															<td>53785</td>
+															<td>Reachable</td>
+															<td>2022-07-26 15:01:25</td>
+															<td>2022-07-26 15:02:24</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td></td>
+															<td>ringing no response</td>
+															<td>2022-07-29 13:00:00</td>
+															<td>elizabeth.wainaina</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53962">Edit</a>
+																10
+															</td>
+															<td>53962</td>
+															<td>Reachable</td>
+															<td>2022-07-28 08:40:42</td>
+															<td>2022-07-28 08:45:37</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>10:00:00</td>
+															<td>ringing no response</td>
+															<td>2022-07-28 10:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54012">Edit</a>
+																11
+															</td>
+															<td>54012</td>
+															<td>Reachable</td>
+															<td>2022-07-28 11:04:56</td>
+															<td>2022-07-28 11:06:50</td>
+															<td>Debtor Hung Up</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>debtor hung up</td>
+															<td>2022-07-29 08:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54217">Edit</a>
+																12
+															</td>
+															<td>54217</td>
+															<td>Reachable</td>
+															<td>2022-08-01 09:35:32</td>
+															<td>2022-08-01 09:37:02</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>12:00:00</td>
+															<td>ringing no response</td>
+															<td>2022-08-01 12:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55305">Edit</a>
+																13
+															</td>
+															<td>55305</td>
+															<td>Reachable</td>
+															<td>2022-08-03 08:12:51</td>
+															<td>2022-08-03 08:13:22</td>
+															<td>Debtor Hung Up</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>debtor hung up</td>
+															<td>2022-08-31 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td><strong>Total Amount Paid: 0</strong></td>
+															<td>&nbsp;</td>
+															<td><strong>Total PTP Amount: 0</strong></td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														</tr>
+
+
+
+
+
+
+													</table>
+
+													<form id="search_lid_form" name="search_lid_form" method="post" action="searchUpdate.php" style="border-bottom:1px #666 solid; margin-bottom:40px;">
+														<input type="submit" name="button" id="button" value="UPDATE FILE" />
+														<input name="search_lid" type="hidden" id="search_lid" value="10432" />
+													</form>
+
+
+
+
+
+												</td>
+											</tr>
+											<tr>
+												<td bgcolor="#CCCCCC">
+
+
+													<strong>File ID</strong>
+												</td>
+												<td bgcolor="#CCCCCC"><strong>Customer Name</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Account Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>CF ID</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Phone Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>ID Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Branch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Location</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Balance</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Employer </strong></td>
+												<td bgcolor="#CCCCCC"><strong>Salary</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Batch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Client</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Status</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Collector</strong></td>
+											</tr>
+
+											<tr>
+												<td>10431</td>
+												<td>AUTOM PAINTS</td>
+												<td>0290266946068</td>
+												<td>54310105313</td>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td>
+																0                                        <a href="sip:0@local" title="Call: 0"><strong>CALL</strong></a>
+																<div>
+																	-    <a title="Call:  -   " href="sip: -   @local"><strong>CALL</strong></a><br />
+
+																</div>
+															</td>
+
+														</tr>
+													</table>
+												</td>
+												<td>0</td>
+												<td></td>
+												<td></td>
+												<td>117,350</td>
+												<td></td>
+												<td></td>
+												<td>LIVE</td>
+												<td>Equity</td>
+												<td></td>
+												<td>stephanie.wainaina</td>
+											</tr>
+											<tr bgcolor="#CCCCCC">
+												<td><strong>Email</strong></td>
+												<td><strong>Guarantor 1</strong></td>
+												<td><strong>Guarantor 2</strong></td>
+												<td><strong>Guarantor 3</strong></td>
+												<td><strong>Spouse</strong></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong>Next Action Days</strong></td>
+												<td><strong>Next Action Date Time</strong></td>
+											</tr>
+											<tr>
+												<td>0</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>                                </td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td  style='background-color:#FFE6CA;' >
+													9                                </td>
+												<td>2022-08-17 08:00:00</td>
+											</tr>
+
+											<!-- START OF SMS PLACEHOLDER -->  
+											<tr><td colspan="100"><h3>SMS INTERACTIONS</h3></td></tr>
+											<tr>
+												<td colspan="15">
+													<div style="background:#FF9; margin:10px 0; padding:10px;">No SMS log found for this record!</div>
+												</td>
+											</tr>
+											<!-- END OF SMS PLACEHOLDER -->    
+
+
+											<tr>
+												<td colspan="15">
+
+
+													<table width="100%" border="1" class="custom_table">
+														<tr bgcolor="#A3E0E0">
+															<td></td>
+															<td><strong>SurveyID</strong></td>
+															<td><strong>Call Status</strong></td>
+															<td><strong>Call Start Time</strong></td>
+															<td><strong>Call End Time</strong></td>
+															<td><strong>System Remarks</strong></td>
+															<td><strong>Batch</strong></td>
+															<td><strong>Amount Paid</strong></td>
+															<td><strong>Date Of Payment</strong></td>
+															<td><strong>PTP Amount</strong></td>
+															<td><strong>PTP Date</strong></td>
+															<td><strong>PTP Time</strong></td>
+															<td><strong>Comments</strong></td>
+															<td><strong>Next Action Date</strong></td>
+															<td><strong>Agent</strong></td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51820">Edit</a>
+																1
+															</td>
+															<td>51820</td>
+															<td>Reachable</td>
+															<td>2022-07-12 08:25:48</td>
+															<td>2022-07-12 08:26:15</td>
+															<td>No Contacts Provided</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td></td>
+															<td>no contacts provided</td>
+															<td>2022-08-31 12:00:00</td>
+															<td>elizabeth.wainaina</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55443">Edit</a>
+																2
+															</td>
+															<td>55443</td>
+															<td>Reachable</td>
+															<td>2022-08-03 11:25:54</td>
+															<td>2022-08-03 11:26:40</td>
+															<td>No Contacts Provided</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>no contacts provided</td>
+															<td>2022-08-17 08:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td><strong>Total Amount Paid: 0</strong></td>
+															<td>&nbsp;</td>
+															<td><strong>Total PTP Amount: 0</strong></td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														</tr>
+
+
+
+
+
+
+													</table>
+
+													<form id="search_lid_form" name="search_lid_form" method="post" action="searchUpdate.php" style="border-bottom:1px #666 solid; margin-bottom:40px;">
+														<input type="submit" name="button" id="button" value="UPDATE FILE" />
+														<input name="search_lid" type="hidden" id="search_lid" value="10431" />
+													</form>
+
+
+
+
+
+												</td>
+											</tr>
+											<tr>
+												<td bgcolor="#CCCCCC">
+
+
+													<strong>File ID</strong>
+												</td>
+												<td bgcolor="#CCCCCC"><strong>Customer Name</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Account Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>CF ID</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Phone Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>ID Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Branch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Location</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Balance</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Employer </strong></td>
+												<td bgcolor="#CCCCCC"><strong>Salary</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Batch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Client</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Status</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Collector</strong></td>
+											</tr>
+
+											<tr>
+												<td>10430</td>
+												<td>RUMCEE ENTERPRISES LIMITED</td>
+												<td>0280290058664</td>
+												<td>54300025912</td>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td>
+																0722732656                                        <a href="sip:0722732656@local" title="Call: 0722732656"><strong>CALL</strong></a>
+																<div>
+																	-    <a title="Call:  -   " href="sip: -   @local"><strong>CALL</strong></a><br />
+
+																</div>
+															</td>
+
+														</tr>
+													</table>
+												</td>
+												<td>11080671</td>
+												<td></td>
+												<td></td>
+												<td>292,691</td>
+												<td></td>
+												<td></td>
+												<td>LIVE</td>
+												<td>Equity</td>
+												<td></td>
+												<td>rose.ruguru</td>
+											</tr>
+											<tr bgcolor="#CCCCCC">
+												<td><strong>Email</strong></td>
+												<td><strong>Guarantor 1</strong></td>
+												<td><strong>Guarantor 2</strong></td>
+												<td><strong>Guarantor 3</strong></td>
+												<td><strong>Spouse</strong></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong>Next Action Days</strong></td>
+												<td><strong>Next Action Date Time</strong></td>
+											</tr>
+											<tr>
+												<td>rumcee@gmail.com</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>                                </td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td  style='background-color:#FFE6CA;' >
+													7                                </td>
+												<td>2022-08-15 09:00:00</td>
+											</tr>
+
+											<!-- START OF SMS PLACEHOLDER -->  
+											<tr><td colspan="100"><h3>SMS INTERACTIONS</h3></td></tr>
+											<tr>
+												<td colspan="15">
+													<div style="background:#FF9; margin:10px 0; padding:10px;">No SMS log found for this record!</div>
+												</td>
+											</tr>
+											<!-- END OF SMS PLACEHOLDER -->    
+
+
+											<tr>
+												<td colspan="15">
+
+
+													<table width="100%" border="1" class="custom_table">
+														<tr bgcolor="#A3E0E0">
+															<td></td>
+															<td><strong>SurveyID</strong></td>
+															<td><strong>Call Status</strong></td>
+															<td><strong>Call Start Time</strong></td>
+															<td><strong>Call End Time</strong></td>
+															<td><strong>System Remarks</strong></td>
+															<td><strong>Batch</strong></td>
+															<td><strong>Amount Paid</strong></td>
+															<td><strong>Date Of Payment</strong></td>
+															<td><strong>PTP Amount</strong></td>
+															<td><strong>PTP Date</strong></td>
+															<td><strong>PTP Time</strong></td>
+															<td><strong>Comments</strong></td>
+															<td><strong>Next Action Date</strong></td>
+															<td><strong>Agent</strong></td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51129">Edit</a>
+																1
+															</td>
+															<td>51129</td>
+															<td>Reachable</td>
+															<td>2022-07-04 12:50:10</td>
+															<td>2022-07-04 12:50:41</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there id no response</td>
+															<td>2022-07-05 09:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51757">Edit</a>
+																2
+															</td>
+															<td>51757</td>
+															<td>Reachable</td>
+															<td>2022-07-09 09:41:10</td>
+															<td>2022-07-09 09:41:48</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-11 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52268">Edit</a>
+																3
+															</td>
+															<td>52268</td>
+															<td>Reachable</td>
+															<td>2022-07-15 11:57:10</td>
+															<td>2022-07-15 11:57:30</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone busy</td>
+															<td>2022-07-19 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52740">Edit</a>
+																4
+															</td>
+															<td>52740</td>
+															<td>Reachable</td>
+															<td>2022-07-19 16:56:59</td>
+															<td>2022-07-19 16:57:32</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-23 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52817">Edit</a>
+																5
+															</td>
+															<td>52817</td>
+															<td>Reachable</td>
+															<td>2022-07-20 09:31:49</td>
+															<td>2022-07-20 09:35:21</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>negotiation in progress</td>
+															<td>2022-07-29 08:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52818">Edit</a>
+																6
+															</td>
+															<td>52818</td>
+															<td>Reachable</td>
+															<td>2022-07-20 09:35:22</td>
+															<td>2022-07-20 09:37:47</td>
+															<td>PTP Reminder</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>292,691</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>ptp reminder</td>
+															<td>2022-07-29 08:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53643">Edit</a>
+																7
+															</td>
+															<td>53643</td>
+															<td>Reachable</td>
+															<td>2022-07-26 09:32:47</td>
+															<td>2022-07-26 09:34:36</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>11:00:00</td>
+															<td>phone busy </td>
+															<td>2022-07-26 11:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53753">Edit</a>
+																8
+															</td>
+															<td>53753</td>
+															<td>Reachable</td>
+															<td>2022-07-26 13:02:58</td>
+															<td>2022-07-26 13:03:27</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response </td>
+															<td>2022-07-29 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53960">Edit</a>
+																9
+															</td>
+															<td>53960</td>
+															<td>Reachable</td>
+															<td>2022-07-28 08:32:55</td>
+															<td>2022-07-28 08:39:43</td>
+															<td>PTP Reminder</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>292,691</td>
+															<td>2022-08-01</td>
+															<td>12:00:00</td>
+															<td>promised to pay the full amount on 1/8/2022</td>
+															<td>2022-08-01 12:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54485">Edit</a>
+																10
+															</td>
+															<td>54485</td>
+															<td>Reachable</td>
+															<td>2022-08-01 14:14:51</td>
+															<td>2022-08-01 14:15:17</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>PHONE BUSY</td>
+															<td>2022-08-02 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54503">Edit</a>
+																11
+															</td>
+															<td>54503</td>
+															<td>Unreachabl</td>
+															<td>2022-08-01 13:41:59</td>
+															<td>2022-08-01 14:25:10</td>
+															<td>Phone Busy</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>09:00:00</td>
+															<td>phone busy</td>
+															<td>2022-08-02 09:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54839">Edit</a>
+																12
+															</td>
+															<td>54839</td>
+															<td>Reachable</td>
+															<td>2022-08-02 09:57:27</td>
+															<td>2022-08-02 10:00:18</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>11:00:00</td>
+															<td>negotiation in progress</td>
+															<td>2022-08-03 11:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55361">Edit</a>
+																13
+															</td>
+															<td>55361</td>
+															<td>Reachable</td>
+															<td>2022-08-03 10:07:15</td>
+															<td>2022-08-03 10:11:06</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>11:00:00</td>
+															<td>ringing no response</td>
+															<td>2022-08-03 11:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55445">Edit</a>
+																14
+															</td>
+															<td>55445</td>
+															<td>Reachable</td>
+															<td>2022-08-03 11:26:55</td>
+															<td>2022-08-03 11:29:21</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>292,691</td>
+															<td></td>
+															<td>14:00:00</td>
+															<td>in a meeting call later</td>
+															<td>2022-08-03 14:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55685">Edit</a>
+																15
+															</td>
+															<td>55685</td>
+															<td>Reachable</td>
+															<td>2022-08-04 09:35:45</td>
+															<td>2022-08-04 09:42:17</td>
+															<td>Promise To Pay</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>09:00:00</td>
+															<td>promise to pay after election</td>
+															<td>2022-08-15 09:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td><strong>Total Amount Paid: 0</strong></td>
+															<td>&nbsp;</td>
+															<td><strong>Total PTP Amount: 878,073</strong></td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														</tr>
+
+
+
+
+
+
+													</table>
+
+													<form id="search_lid_form" name="search_lid_form" method="post" action="searchUpdate.php" style="border-bottom:1px #666 solid; margin-bottom:40px;">
+														<input type="submit" name="button" id="button" value="UPDATE FILE" />
+														<input name="search_lid" type="hidden" id="search_lid" value="10430" />
+													</form>
+
+
+
+
+
+												</td>
+											</tr>
+											<tr>
+												<td bgcolor="#CCCCCC">
+
+
+													<strong>File ID</strong>
+												</td>
+												<td bgcolor="#CCCCCC"><strong>Customer Name</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Account Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>CF ID</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Phone Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>ID Number</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Branch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Location</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Balance</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Employer </strong></td>
+												<td bgcolor="#CCCCCC"><strong>Salary</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Batch</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Client</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Status</strong></td>
+												<td bgcolor="#CCCCCC"><strong>Collector</strong></td>
+											</tr>
+
+											<tr>
+												<td>10429</td>
+												<td>FESTUS MUSYOKI MUTUKU</td>
+												<td>0940579802688</td>
+												<td>54302471124</td>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td>
+																0723151994                                        <a href="sip:0723151994@local" title="Call: 0723151994"><strong>CALL</strong></a>
+																<div>
+																	-    <a title="Call:  -   " href="sip: -   @local"><strong>CALL</strong></a><br />
+
+																</div>
+															</td>
+
+														</tr>
+													</table>
+												</td>
+												<td>24078043</td>
+												<td></td>
+												<td></td>
+												<td>37,544</td>
+												<td></td>
+												<td></td>
+												<td>LIVE</td>
+												<td>Equity</td>
+												<td></td>
+												<td>rose.ruguru</td>
+											</tr>
+											<tr bgcolor="#CCCCCC">
+												<td><strong>Email</strong></td>
+												<td><strong>Guarantor 1</strong></td>
+												<td><strong>Guarantor 2</strong></td>
+												<td><strong>Guarantor 3</strong></td>
+												<td><strong>Spouse</strong></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong>Next Action Days</strong></td>
+												<td><strong>Next Action Date Time</strong></td>
+											</tr>
+											<tr>
+												<td>0</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>
+												</td>
+												<td>                                </td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td  style='background-color:#CFC;'  class='blink-bg-green-red' >
+													Today 10:00 AM                                </td>
+												<td>2022-08-08 10:00:00</td>
+											</tr>
+
+											<!-- START OF SMS PLACEHOLDER -->  
+											<tr><td colspan="100"><h3>SMS INTERACTIONS</h3></td></tr>
+											<tr>
+												<td colspan="15">
+													<div style="background:#FF9; margin:10px 0; padding:10px;">No SMS log found for this record!</div>
+												</td>
+											</tr>
+											<!-- END OF SMS PLACEHOLDER -->    
+
+
+											<tr>
+												<td colspan="15">
+
+
+													<table width="100%" border="1" class="custom_table">
+														<tr bgcolor="#A3E0E0">
+															<td></td>
+															<td><strong>SurveyID</strong></td>
+															<td><strong>Call Status</strong></td>
+															<td><strong>Call Start Time</strong></td>
+															<td><strong>Call End Time</strong></td>
+															<td><strong>System Remarks</strong></td>
+															<td><strong>Batch</strong></td>
+															<td><strong>Amount Paid</strong></td>
+															<td><strong>Date Of Payment</strong></td>
+															<td><strong>PTP Amount</strong></td>
+															<td><strong>PTP Date</strong></td>
+															<td><strong>PTP Time</strong></td>
+															<td><strong>Comments</strong></td>
+															<td><strong>Next Action Date</strong></td>
+															<td><strong>Agent</strong></td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=51284">Edit</a>
+																1
+															</td>
+															<td>51284</td>
+															<td>Reachable</td>
+															<td>2022-07-05 12:30:47</td>
+															<td>2022-07-05 12:36:25</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>promise to start partial payment anytime soon</td>
+															<td>2022-07-18 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52595">Edit</a>
+																2
+															</td>
+															<td>52595</td>
+															<td>Reachable</td>
+															<td>2022-07-18 16:58:42</td>
+															<td>2022-07-18 16:59:22</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>promise to activate his account tomorrow</td>
+															<td>2022-07-19 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52739">Edit</a>
+																3
+															</td>
+															<td>52739</td>
+															<td>Reachable</td>
+															<td>2022-07-19 16:54:01</td>
+															<td>2022-07-19 16:56:07</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>18:00:00</td>
+															<td>ask to be called later</td>
+															<td>2022-07-19 16:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52767">Edit</a>
+																4
+															</td>
+															<td>52767</td>
+															<td>Reachable</td>
+															<td>2022-07-20 07:56:37</td>
+															<td>2022-07-20 07:58:04</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>16:00:00</td>
+															<td>promise to pay before the end of the day</td>
+															<td>2022-07-20 16:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=52982">Edit</a>
+																5
+															</td>
+															<td>52982</td>
+															<td>Reachable</td>
+															<td>2022-07-21 07:42:20</td>
+															<td>2022-07-21 07:42:55</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-07-23 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=53456">Edit</a>
+																6
+															</td>
+															<td>53456</td>
+															<td>Reachable</td>
+															<td>2022-07-25 09:11:40</td>
+															<td>2022-07-25 09:12:17</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing ringing but there is no response</td>
+															<td>2022-07-29 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=54253">Edit</a>
+																7
+															</td>
+															<td>54253</td>
+															<td>Reachable</td>
+															<td>2022-08-01 10:09:22</td>
+															<td>2022-08-01 10:11:30</td>
+															<td>Negotiation in Progress</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>11:00:00</td>
+															<td>asked to be called later</td>
+															<td>2022-08-01 11:00:00</td>
+															<td>victoria.maweu</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55290">Edit</a>
+																8
+															</td>
+															<td>55290</td>
+															<td>Reachable</td>
+															<td>2022-08-02 16:15:46</td>
+															<td>2022-08-02 16:16:11</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td>08:00:00</td>
+															<td>phone ringing but there is no response</td>
+															<td>2022-08-04 08:00:00</td>
+															<td>rose.ruguru</td>
+														</tr>
+														<tr>
+															<td>
+
+																<a href="my_cases_edit.php?id=55758">Edit</a>
+																9
+															</td>
+															<td>55758</td>
+															<td>Reachable</td>
+															<td>2022-08-04 10:33:51</td>
+															<td>2022-08-04 10:35:29</td>
+															<td>Ringing No Response</td>
+															<td>0</td>
+															<td>0</td>
+															<td></td>
+															<td>0</td>
+															<td></td>
+															<td></td>
+															<td>no response.</td>
+															<td>2022-08-08 10:00:00</td>
+															<td>atieno.opidi</td>
+														</tr>
+														<tr>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td><strong>Total Amount Paid: 0</strong></td>
+															<td>&nbsp;</td>
+															<td><strong>Total PTP Amount: 0</strong></td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														</tr>
+
+
+
+
+
+
+													</table>
+
+													<form id="search_lid_form" name="search_lid_form" method="post" action="searchUpdate.php" style="border-bottom:1px #666 solid; margin-bottom:40px;">
+														<input type="submit" name="button" id="button" value="UPDATE FILE" />
+														<input name="search_lid" type="hidden" id="search_lid" value="10429" />
+													</form>
+
+
+
+
+
+												</td>
+											</tr>
+											<tr>
+												<td colspan="15">
+												</td>
+											</tr>
+										</table>
+
+
+
+										<div> Records 1 to 5 of 6308<br />
+											<br />
+
+											<table width="205" border="0">
+												<tr>
+													<td width="28">                                </td>
+													<td width="56">                                </td>
+													<td width="24">                                    <a href="/collection_crm/front/search.php?pageNum_RecordsetGetLeadsDone=1&totalRows_RecordsetGetLeadsDone=6308">Next</a>
+													</td>
+													<td width="28">                                    <a href="/collection_crm/front/search.php?pageNum_RecordsetGetLeadsDone=1261&totalRows_RecordsetGetLeadsDone=6308">Last</a>
+													</td>
+												</tr>
+											</table>
+										</div>
+
+
+									</div>
+								</div>
+
+							</div>
+						</td>
+					</tr>
+				</table>
+				<!--Second Last table-->
+
+			</td>
+
+		</tr>
+
+
+
+	</table>
+	<!--Last Table-->
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load socialaccount %}
+{% load avatar_tags %} 
+{% load humanize %}
+
+        <li class="time-label">
+        </li>
+        <li>
+          <i class="fa fa-twitter bg-blue"></i>
+          <div class="timeline-item">
+
+<div class="box box-widget" id="tweet_box_{{ s.id }}">
+  <div class="box-header with-border">
+    <div class="user-block">
+      <img class="img-circle" src="{{ s.user.profile_image_url_https }}" alt="User Image"> {{ s.profile_image_url_https }}
+      <span class="username"><a href="{% url 'twitter_user_stream' s.user.screen_name uid %}">{{ s.user.name }} <small>@{{ s.user.screen_name }}</small></a></span>
+      <span class="description">Shared publicly - <a href="https://twitter.com/twitter/statuses/{{ s.id }}" target="_blank">{{ s.created_at|naturaltime }}</a></span>
+    </div>
+    <!-- /.user-block -->
+    <div class="box-tools">
+    </div>
+    <!-- /.box-tools -->
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <!-- post text -->
+    <p id="tweet_text_{{ s.id }}">{{ s.full_text|safe }}</p>
+
+    {# There has to be a better way to do this, but for now... Oh, well #}
+    {% for media_entity in s.extended_entities.media %}
+    {% if media_entity.type == "video" %}
+    <video class="social-video" controls>
+      {% for variant in media_entity.video_info.variants %}
+      <source src="{{ variant.url }}" type="{{ variant.content_type }}">
+      {% endfor %}
+    </video>
+    {% else %}
+    <img src="{{ media_entity.media_url_https }}" class="img-thumbnail">
+    {% endif %}
+    {% endfor %}
+    
+    <ul class="list-inline">
+      <li><a href="#" class="link-black text-sm" onclick="replyToTweetID(tweet_id='{{ s.id }}', user_mentions='@{{ s.user.screen_name }}');"><i class="fa fa-reply margin-r-5"></i> Reply</a></li>
+      <li><a href="#" class="link-black text-sm" onclick="replyToTweetID(tweet_id='{{ s.id }}', user_mentions='@{{ s.user.screen_name }} {% for mention in s.entities.user_mentions %}@{{ mention.screen_name }} {% endfor %}');"><i class="fa fa-reply-all margin-r-5"></i> Reply-all</a></li>
+      <li><a href="#" class="link-black text-sm"><i class="fa fa-envelope-o margin-r-5"></i> DM</a></li>
+      <li>
+        <a href="#" onclick="toggleTweetLike(this);" class="link-black text-sm {% if s.favorited %}unlike{% else %}like{% endif %}" id="tweet_like_{{ s.id }}">
+          <i class="fa fa-heart-o margin-r-5"></i>{% if s.favorited %}Unlike{% else %}Like{% endif %}
+        </a>
+      </li>
+      <li><a href="#" class="link-black text-sm"><i class="fa fa-retweet margin-r-5"></i> Retweet</a></li>
+    </ul>
+
+    <!-- Social sharing buttons -->
+    <button type="button" class="btn btn-default btn-xs" value="" data-clipboard-target="#tw_{{ s.id }}" id="tw_{{ s.id }}">
+      <i class="fa fa-link"></i> Copy Link
+    </button>
+    <button type="button" onclick="createTcketFromTweet(tweet_id='{{ s.id }}', user_mentions='@{{ s.user.screen_name }}');" class="btn btn-default btn-xs" data-sharer="email" data-subject="{{ s.user.name }} (@{{ s.user.screen_name }}) Tweeted" >
+      <i class="fa fa-envelope"></i> Create Ticket
+    </button>
+    <span class="pull-right text-muted">{{ s.favorite_count|intcomma }} likes - {{ s.retweet_count|intcomma }} retweets</span>
+  </div>
+</div>
+          </div>
+        </li>
+<!-- /.box -->

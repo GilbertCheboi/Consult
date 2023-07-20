@@ -1,0 +1,460 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<script type="text/javascript">
+  $(function () {
+    $('#fromdt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+
+    $('#todt').datepicker({
+      dateFormat: 'yy-mm-dd ',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+  });
+</script>
+<h1>Agent Productivity - Christine Onsumu</h1>
+
+
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+				<form id="form1" name="form1" method="get" action=""></form>
+
+
+
+
+			</tr><tr>
+				<td>From:</td>
+				<td><input autocomplete="off" name="fromdate" type="text" id="fromdt" value=""></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr><tr><td>To:</td>
+				<td><input autocomplete="off" name="todate" type="text" id="todt" value=""></td>
+			</tr>	
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Collector</td>
+				<td><label for="call_user"></label>
+					<select name="call_user" id="call_user">
+						<option value="admin">Administrator</option>
+						<option value="atieno.opidi">Atieno Opidi</option>
+						<option value="austin.kamau">Austin Kamau</option>
+						<option value="charles.wasonga">Charles Wasonga</option>
+						<option value="christine.onsumu" selected="selected">Christine Onsumu</option>
+						<option value="elizabeth.wainaina">Kelvin Kungu</option>
+						<option value="hariet.kapkarich">Hariet Kapkarich</option>
+						<option value="patrick">Patrick Mithamo</option>
+						<option value="paul.nyatochi">Paul Nyachoti</option>
+						<option value="roman.hinga">Roman Hinga</option>
+						<option value="rose.ruguru">Teresa Amigo</option>
+						<option value="stephanie.wainaina">Stephanie Wainaina</option>
+						<option value="victoria.maweu">Victoria Maweu</option>
+						<option value="wanjiru.kibe">Wanjiru Kibe</option>
+					</select></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+			</tr>
+			<tr><td>&nbsp;</td><td><br>
+
+					<label>
+						<input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+																							background-color:#F27F22;
+																							height:25px;
+																							-webkit-border-radius: 4px;
+																							-moz-border-radius: 4px;
+																							border-radius: 4px;
+																							border:1px #b58530 solid;
+																							color:#633c15;
+																							font-size:15px;
+																							cursor:pointer;
+
+font-weight:bold;">
+					</label> </td>
+
+
+
+					<td>
+						<form action="getCSV.php?custom_file_name=Christine Onsumu - Agent Productivity Report 2022-08-01 to 2022-08-09.csv" method="post"> <label>
+								<input type="hidden" name="csv_text" id="csv_text">
+								<input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																											background-color:#F27F22;
+																											height:25px;
+																											-webkit-border-radius: 4px;
+																											-moz-border-radius: 4px;
+																											border-radius: 4px;
+																											border:1px #b58530 solid;
+																											color:#633c15;
+																											font-size:15px;
+																											cursor:pointer;
+																											font-weight:bold;">
+							</label>
+						</form>
+						<script>
+							function getCSVData() {
+								var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+								$("#csv_text").val(csv_value);
+							}
+						</script>
+					</td>
+
+			</tr>
+		</tbody></table>
+
+</div>
+
+<div class="">
+
+	<div class="clear"></div>
+
+
+	<div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">
+		<div class="pagecon" style="float:center; margin-left:10px; font-weight:bold;"> Total Entries: 16 From: 2022-08-01 TO 2022-08-09</div>
+		<div id="files" style="width:100%;">
+
+
+
+
+
+
+
+			<br>
+			<table border="0" cellpadding="0" cellspacing="0" class="custom_table" id="csvdownload">
+				<tbody><tr>
+						<td bgcolor="#E0E0E0"></td>
+						<td bgcolor="#E0E0E0"><strong>Collector</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Client</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Amount Collected</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Date Collected</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Allocated to</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Customer Name</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Account Number</strong></td>
+						<td bgcolor="#E0E0E0"><strong>ID Number</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Branch</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Location</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Phone</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Other Phone</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Call Time</strong></td>
+						<td bgcolor="#E0E0E0"><strong>Comment</strong></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>1,000</td>
+						<td>2022-08-01</td>
+						<td>christine.onsumu</td>
+						<td>SIMON KANAI KASAINE</td>
+						<td>690597333294</td>
+						<td>21816800</td>
+						<td>Limuru</td>
+						<td>Rift_Valley</td>
+						<td>0729998457</td>
+						<td></td>
+						<td>2022-08-01 15:20:09</td>
+						<td>REF NO. 221313914674</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>600</td>
+						<td>2022-07-18</td>
+						<td>christine.onsumu</td>
+						<td>EZEKIEL ONDIGO NYAMIEL</td>
+						<td>0980579229458</td>
+						<td>22138919</td>
+						<td></td>
+						<td></td>
+						<td>254714540967</td>
+						<td> 254764540969D1 </td>
+						<td>2022-08-02 08:50:00</td>
+						<td>confirmed by the bank </td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>600</td>
+						<td>2022-07-30</td>
+						<td>christine.onsumu</td>
+						<td>EZEKIEL ONDIGO NYAMIEL</td>
+						<td>0980579229458</td>
+						<td>22138919</td>
+						<td></td>
+						<td></td>
+						<td>254714540967</td>
+						<td> 254764540969D1 </td>
+						<td>2022-08-02 08:52:20</td>
+						<td>confirmed by the bank </td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>1,100</td>
+						<td>2022-07-12</td>
+						<td>christine.onsumu</td>
+						<td>BERNARD KARIGE NDONGA</td>
+						<td>0950579290237</td>
+						<td>3392129</td>
+						<td></td>
+						<td></td>
+						<td>0723313356</td>
+						<td> 254766976792D1 </td>
+						<td>2022-08-03 12:25:54</td>
+						<td>CONFIRMED BY THE BANK </td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>800</td>
+						<td>2022-07-16</td>
+						<td>christine.onsumu</td>
+						<td>CIVO LIQOUR STORE</td>
+						<td>0950582040534</td>
+						<td>0</td>
+						<td></td>
+						<td></td>
+						<td>0</td>
+						<td> -   </td>
+						<td>2022-08-03 12:28:46</td>
+						<td>CONFIRMED BY THE BANK </td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>550</td>
+						<td>2022-07-12</td>
+						<td>christine.onsumu</td>
+						<td>GEORGE ODHIAMBO ONJE</td>
+						<td>0980579532659</td>
+						<td>13518883</td>
+						<td></td>
+						<td></td>
+						<td>254712927595</td>
+						<td> 254764533529 </td>
+						<td>2022-08-03 12:31:19</td>
+						<td>CONFIRMED BY THE BANK </td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>500</td>
+						<td>2022-07-04</td>
+						<td>christine.onsumu</td>
+						<td>BERNARD KARIGE NDONGA</td>
+						<td>0950579290237</td>
+						<td>3392129</td>
+						<td></td>
+						<td></td>
+						<td>0723313356</td>
+						<td> 254766976792D1 </td>
+						<td>2022-08-03 12:59:46</td>
+						<td>CONFIRMED BY THE BANK </td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>500</td>
+						<td>2022-08-06</td>
+						<td>christine.onsumu</td>
+						<td>BERNARD KARIGE NDONGA</td>
+						<td>0950579290237</td>
+						<td>3392129</td>
+						<td></td>
+						<td></td>
+						<td>0723313356</td>
+						<td> 254766976792D1 </td>
+						<td>2022-08-03 13:02:29</td>
+						<td>CONFIRMED BY THE BANK </td>
+					</tr>
+					<tr>
+						<td>9</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>120</td>
+						<td>2022-08-03</td>
+						<td>christine.onsumu</td>
+						<td>JOSPHAT KIANGI KALELI</td>
+						<td>7770165590959</td>
+						<td>30462725</td>
+						<td></td>
+						<td>Nairobi_East</td>
+						<td>254722973385</td>
+						<td></td>
+						<td>2022-08-08 15:35:17</td>
+						<td>QH30LBBGKG</td>
+					</tr>
+					<tr>
+						<td>10</td>
+						<td>christine.onsumu</td>
+						<td>Equity</td>
+						<td>6,000</td>
+						<td>2022-06-22</td>
+						<td>christine.onsumu</td>
+						<td>COSMAS M MUINDE</td>
+						<td>900580939447</td>
+						<td>34031204</td>
+						<td>90</td>
+						<td>Nairobi_East</td>
+						<td>254795280914</td>
+						<td></td>
+						<td>2022-08-08 15:52:05</td>
+						<td>the client noted that he had made the payment in June </td>
+					</tr>
+					<tr>
+						<td>11</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>7,000</td>
+						<td>2022-08-01</td>
+						<td>christine.onsumu</td>
+						<td> WILSON OGONY OUKO </td>
+						<td>6745750015</td>
+						<td>20223979</td>
+						<td></td>
+						<td>Overdrafts</td>
+						<td>254721917488</td>
+						<td>2.55E+11</td>
+						<td>2022-08-01 14:44:53</td>
+						<td>QH16G02E7W, He paid 7k, he always claim that the credit card  debt is cleared, confirming with the bank </td>
+					</tr>
+					<tr>
+						<td>12</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>38,022</td>
+						<td>2022-08-01</td>
+						<td>christine.onsumu</td>
+						<td>DAMARIS KATHAMBI</td>
+						<td>3773860047</td>
+						<td>22973739</td>
+						<td></td>
+						<td>Overdrafts</td>
+						<td>254722715798</td>
+						<td></td>
+						<td>2022-08-03 16:19:29</td>
+						<td>claimed that the debt was already cleared </td>
+					</tr>
+					<tr>
+						<td>13</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>13</td>
+						<td>2022-08-01</td>
+						<td>hariet.kapkarich</td>
+						<td> DAMARIS KATHAMBI </td>
+						<td>3773860068</td>
+						<td>22973739</td>
+						<td></td>
+						<td>Asset Finance Loans</td>
+						<td>254722715798</td>
+						<td>2.55E+11</td>
+						<td>2022-08-03 16:20:48</td>
+						<td>debt cleared </td>
+					</tr>
+					<tr>
+						<td>14</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>1,000</td>
+						<td>2022-08-02</td>
+						<td>christine.onsumu</td>
+						<td>DUNCAN MWANDAGHA MLECHA</td>
+						<td>6753530022</td>
+						<td>11310343</td>
+						<td></td>
+						<td>Personal Unsecured Loans</td>
+						<td>0791676771</td>
+						<td>254711443328-wrong</td>
+						<td>2022-08-04 08:25:10</td>
+						<td>QH261TC3UY</td>
+					</tr>
+					<tr>
+						<td>15</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>1,000</td>
+						<td></td>
+						<td>christine.onsumu</td>
+						<td> WILLIAM CHIKWATA KARISA </td>
+						<td>6552420037</td>
+						<td>22533730</td>
+						<td></td>
+						<td>Personal Unsecured Loans</td>
+						<td>254792202645</td>
+						<td>2.55E+11</td>
+						<td>2022-08-06 10:34:48</td>
+						<td>QH53PH1HP3 </td>
+					</tr>
+					<tr>
+						<td>16</td>
+						<td>christine.onsumu</td>
+						<td>NCBA</td>
+						<td>8,000</td>
+						<td>2022-08-05</td>
+						<td>christine.onsumu</td>
+						<td> SUSAN WANJA NJUKI </td>
+						<td>2039970088</td>
+						<td>A106787</td>
+						<td></td>
+						<td>Personal Unsecured Loans</td>
+						<td>254711538010</td>
+						<td></td>
+						<td>2022-08-08 07:48:08</td>
+						<td>QH50QLSNIY, She paid 8k</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><strong>Total Amount Collected: 66,805</strong></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+				</tbody></table>
+
+		</div>
+		<div class="pagecon">
+
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
+
+</div>
+

@@ -1,0 +1,53 @@
+{% extends "helpline/helpline_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+    <div class="col-md-5">
+      <div class="login-box">
+
+        <div class="login-logo">
+          <a href="#"><img src="{% static 'helpline/images/logo.png' %}" height="150" /></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Request for Permission</p>
+
+        <p>Client <strong>{{ client.name }}</strong> would like to access this information of you ...</p>
+
+        <form method="post" action="{% url 'oidc_provider:authorize' %}">
+
+            {% csrf_token %}
+
+            {{ hidden_inputs }}
+
+            <ul>
+            {% for scope in scopes %}
+                <li><strong>{{ scope.name }}</strong><br><i>{{ scope.description }}</i></li>
+            {% endfor %}
+            </ul>
+
+            <input type="submit" value="Decline" />
+            <input name="allow" type="submit" value="Authorize" />
+
+        </form>
+
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}
+{% block javascript %}
+
+
+<script>
+{% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}

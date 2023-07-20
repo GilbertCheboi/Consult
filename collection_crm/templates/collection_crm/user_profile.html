@@ -1,0 +1,236 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+{% load avatar_tags %}
+{% load user_sessions i18n %}
+{% load socialaccount %}
+{% load hijack %}
+{% block content %}
+
+<style type="text/css">
+input {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+}
+.checkmark {
+	display:inline-block;
+	width: 22px;
+	height:22px;
+	-ms-transform: rotate(45deg); /* IE 9 */
+	-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+	transform: rotate(45deg);
+}
+
+.checkmark_circle {
+	position: absolute;
+	width:22px;
+	height:22px;
+	background-color: green;
+	border-radius:11px;
+	left:0;
+	top:0;
+}
+
+.checkmark_stem {
+	position: absolute;
+	width:3px;
+	height:9px;
+	background-color:#fff;
+	left:11px;
+	top:6px;
+}
+
+.checkmark_kick {
+	position: absolute;
+	width:3px;
+	height:3px;
+	background-color:#fff;
+	left:8px;
+	top:12px;
+}
+</style>
+
+<div class="box-body">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-8">
+			<div class="box box-primary">
+				<div class="box-body box-profile">
+					{% if is_owner %}
+					<a  href="{% url 'avatar_change' %}">{% avatar content_user 128 class="profile-user-img img-responsive img-circle" %}</a>
+					{% else %}
+					{% avatar content_user 128 class="profile-user-img img-responsive img-circle" %}
+					{% endif %}
+					<h3 class="profile-username text-center">{{ content_user.get_full_name }}</h3>
+					<p class="text-muted text-center">{% trans "Member Since" %}, {{ request.user.date_joined|date:"M Y" }}</p>
+					<ul class="list-group list-group-unbordered">
+						<li class="list-group-item"><b>{% trans "Name" %}</b> {{ content_user.get_full_name }}
+							{% if is_owner %}
+							<small class="pull-right">
+                <a class="btn btn-primary btn-xs" href="{% url "helpline_user_profile" content_user.username %}"><i class="fa fa-edit"></i>{% trans "Edit" %}</a>
+							</small>
+							{% endif %}
+						</li>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div><!-- /.col (LEFT) -->
+	</div>
+</div>
+
+
+
+<form action="user_create_new.php" method="POST" enctype="multipart/form-data" name="form_create_new" id="form_create_new">
+	<div class="formCon" style="width:90%; margin-left:10px;margin-right:10px;padding:10px;">
+
+		<h3>Update User Details</h3>
+
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tbody><tr>
+					<td></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><p><br>
+						</p></td>
+				</tr>
+				<tr>
+					<td><strong>User Level</strong><br>
+						<select class="" required="required" name="level">
+							<option value="">--Select Level--</option>
+							<option value="Agent" selected="selected">Agent</option>
+							<option value="Supervisor">Supervisor</option>
+							<option value="Supervisor 1">Supervisor 1</option>
+							<option value="Admin">Admin</option>
+
+						</select>
+					</td>
+					<td><table width="235" border="0" cellspacing="0" cellpadding="0">
+							<tbody><tr>
+									<td colspan="2"><strong>Targets</strong></td>
+								</tr>
+								<tr>
+									<td width="122">Daily Target Ksh</td>
+									<td width="113"><input required="required" type="number" name="daily_target" id="daily_target" value="20000" style="width:100px;"></td>
+								</tr>
+								<tr>
+									<td><label>Monthly Target Ksh</label></td>
+									<td><input required="required" type="number" name="monthly_target" id="monthly_target" value="400000" style="width:100px;"></td>
+								</tr>
+							</tbody></table></td>
+							<td>
+								<strong>Account Status</strong><br>
+
+								<label>
+									<input name="account_status" type="radio" id="account_status_0" value="Active" checked="checked">
+									Active</label>
+								<br>
+								<label>
+									<input type="radio" name="account_status" value="Suspend" id="account_status_1">
+									Suspend</label>
+							</td>
+				</tr>
+				<tr>
+					<td><p>
+						<strong>Telephony </strong><br>
+
+						<label>
+							<input name="telephony" type="radio" required="required" id="telephony_0" value="Web Phone Limited" checked="checked">
+							Web Phone Limited Access</label>
+						<br>
+						<label>
+							<input type="radio" required="required" name="telephony" value="Web Phone Full Access" id="telephony_00">
+							Web Phone Full Access</label><br>
+
+						<label>
+							<input type="radio" required="required" name="telephony" value="Soft Phone" id="telephony_1">
+							Soft Phone / Desk Phone</label>
+						<br>
+						<label>
+							<input type="radio" required="required" name="telephony" value="Both Web Phone and Soft Phone" id="telephony_2">
+							Both Web Phone and Soft Phone / Desk Phone</label>
+						<br>
+						<label>
+							<input type="radio" required="required" name="telephony" value="No Phone Access" id="telephony_3">
+							No Phone Access</label>
+						<br>
+						<label>
+							<input type="radio" required="required" name="telephony" value="Suspend Phone Access" id="telephony_suspend">
+							Suspend Phone Access</label>
+
+						</p></td>
+						<td><p>
+							<strong>Systems Access</strong><br>
+
+							<label>
+								<input type="radio" name="systems_access" value="CRM and Telephony" id="system_access_0" checked="checked">
+								CRM and Telephony</label>
+							<br>
+							<label>
+								<input type="radio" name="systems_access" value="CRM Only" id="system_access_1">
+								CRM Only</label>
+							<br>
+							<label>
+								<input type="radio" name="systems_access" value="Telephony Only" id="system_access_2">
+								Telephony Only</label>
+							<br>
+							</p></td>
+							<td><p><strong>Email:</strong><br>        
+								{{ content_user.email }}
+								<br></p></td>
+							<td><p><strong>Assign Queue</strong><br>
+								<label>
+									<input type="checkbox" name="assigned_queue[]" id="assigned_queue_1" value="Queue 1">
+									Queue 1</label><br>
+								<label>
+									<input type="checkbox" name="assigned_queue[]" id="assigned_queue_2" value="Queue 2">
+									Queue 2</label><br>
+								<label>
+									<input type="checkbox" name="assigned_queue[]" id="assigned_queue_3" value="Queue 3">
+									Queue 3</label>
+
+
+								</p>
+							</td>
+							<td>&nbsp;</td>
+							<td>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>        <input type="submit" name="submit" value="Update" style=" padding:0px 20px;
+																	 background:url({% static "images/fbut-bg.png" %}) repeat-x;
+																	 height:37px;
+																	 margin-left:50px;
+																	 -webkit-border-radius: 4px;
+																	 -moz-border-radius: 4px;
+																	 border-radius: 4px;
+																	 border:1px #b58530 solid;
+																	 color:#633c15;
+																	 font-size:15px;
+																	 cursor:pointer;
+																	 text-shadow: 0.1em 0.1em #fdbd59;
+																	 font-weight:bold;">
+						<input name="user_id" type="hidden" id="user_id" value="198"></td>
+				</tr>
+			</tbody></table>
+	</div>
+
+	<input type="hidden" name="MM_update" value="form_create_new">
+
+
+</form>
+{% endblock content %}

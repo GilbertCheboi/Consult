@@ -1,0 +1,89 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load django_tables2 %}
+{% load account %}
+{% load socialaccount %}
+
+{% block content %}
+{% get_social_accounts user as accounts %}
+<div class="box-body">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row home-pallete">
+        <div class="color-palette-set">
+          <h3>Connected accounts</h3>
+          {% for base_account in accounts %}
+          <div class="col-md-12 col-sm-12 col-xs-12" id="social_account_{{ base_account.id }}">
+            <div class="info-box">
+              <span class="info-box-icon btn-{{ base_account }}"><i class="ion ion-social-{{ base_account }}"></i></span>
+
+              <div class="info-box-content">
+                <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
+                {% if base_account == "twitter" %}
+
+                {% for twitter_account in accounts.twitter %}
+                <p>
+                  @{{ twitter_account.extra_data.screen_name }}
+                  FOLLOWING
+                  {{ twitter_account.extra_data.friends_count|intcomma }}
+                  {{ twitter_account.extra_data.followers_count|intcomma }}
+                  FOLLOWERS
+                  {{ twitter_account.extra_data.statuses_count|intcomma }}
+                  TWEETS
+                </p>
+                {% endfor %}
+
+                {% elif base_account == "facebook" %}
+                PAGES
+                {% endif %}
+
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h2>{% trans 'Add social network' %}</h2>
+
+      {% get_providers as socialaccount_providers %}
+      {% for provider in  socialaccount_providers %}
+      {% with provider.name|lower as provider_name %}
+      <div class="text-center">
+        <a class="btn btn-block btn-social btn-{{ provider_name }}" href="{% provider_login_url provider_name process="connect" %}">
+          <i class="fa fa-{{ provider_name }}"></i>{% trans "Connect with " %} {{ provider_name }}
+        </a>
+      </div>
+      {% endwith %}
+      {% endfor %}
+    </div>
+
+  </div>
+
+</div>
+
+
+{% endblock content %}
+{% block script_end %}
+
+<script type="text/javascript">
+
+  /*
+  * Custom Label formatter
+   * ----------------------
+   */
+function labelFormatter(label,series) {
+  return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+    + label
+    + "<br>"
+    + Math.round(series.percent) + "%</div>";
+}
+</script>
+{% endblock script_end %}

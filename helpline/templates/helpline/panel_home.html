@@ -1,0 +1,92 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load static %}
+
+{% block content %}
+<script>
+  dataGraph = Array();
+graph = Array();
+</script>
+
+<!--main content start-->
+<section id="main-content" class="content" style="margin-left: 0px;">
+  <div class="row">
+    <div class="col-lg-12 main-chart">
+
+      <div class="row"><!-- row general data-->
+        {% include 'helpline/row_general_data.html' %}
+      </div><!-- /row general data-->
+
+      <div class="row">
+
+        <div class="border-head">
+          <h1><i class="fa fa-angle-right"></i> {{ _('Queues') }}</h1>
+        </div>
+        {% for queue in queues %}
+        <div class="col-md-4">
+          <div class="box box-default" onclick="">
+            <div class="box-header with-border">
+              <h3 class="box-title"><a href="{% url 'queue' queue %}">{{ queue }}</a></h3> <span id="strategy"></span>
+                <div class="box-tools pull-right">
+                  <i class="fa fa-users fa-2x"> <span id="queue_{{ queue }}_queue_users">{{ queue.members | length }} </span></i>
+                </div>
+            </div>
+
+            <div class="box-body">
+              <div class="row data" id="data-{{ queue }}">
+
+                <div class="col-sm-6 col-xs-6">
+                  <h5>{{ _('Answered') }}: <span id="queue_completed">{{ queue.Completed }}</span></h5>
+                  <h5>{{ _('Abandoned') }}: <span id="queue_abandoned">{{ queue.Abandoned }} </span></h5>
+                  <h5>{{ _('Incoming') }}: <span id="queue_incoming">{{ queue.Calls }} </span></h5>
+                  {% if show_service_level %}
+                  <h5>{{ _('Service Level') }}: <span id="queue_servicelevel">{{ queue.ServicelevelPerf }}%</span></h5>
+                  {% endif %}
+                </div>
+                <div class="col-sm-6 col-xs-6">
+                    <h5><span id="queue_unavailable"></h5>
+                    <h5><span id="queue_busy"></h5>
+                    <h5><span id="queue_free"></h5>
+                </div>
+              </div>
+              <div class="row centered"  style="margin-top: -20px;">
+                <h2>{{ _('Abandoned:') }} <span id="{{ queue }}-percent_abandoned">0</span>%</h2>
+              </div>
+
+
+            </div>
+          </div><!--/col-md-4 -->
+        </div>
+        {% endfor %}
+      </div><!-- /row -->
+    </div><!-- /row -->
+  </div><!-- /row -->
+</section>
+
+{% endblock %}
+
+
+{% block script_end %}
+{% include 'helpline/panel_global_js.html' %}
+<script type="text/javascript">
+
+var optionsNoAnimation = {
+  animation : false,
+}
+function updateGraph(name, data_queue) {
+  dataGraph[name] = [
+    {
+      value: parseInt(data_queue.Abandoned),
+      color: "#FF6B6B",
+      label: LABELS.Abandoned
+    },
+    {
+      value: parseInt(data_queue.Completed),
+      color: "#5cb85c",
+      label: LABELS.Answered
+    }
+  ];
+}
+
+</script>
+{% endblock%}
+

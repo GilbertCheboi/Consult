@@ -1,0 +1,22 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load avatar_tags %} 
+{% load humanize %}
+{% block content %}
+
+{% block statuses %}
+<div class="row">
+
+  <div class="col-md-8">
+    <ul class="timeline">
+	{% for s in statuses %}
+        {% include 'zerxis/twitter_tweet.html' %}
+		{% endfor %}
+    </ul>
+    <!-- Box Comment -->
+  </div>
+
+</div>
+
+{% endblock statuses %}
+{% block detailspanel %}{% endblock detailspanel %}
+{% endblock content %}

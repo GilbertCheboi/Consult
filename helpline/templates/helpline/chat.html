@@ -1,0 +1,169 @@
+{% extends "helpline/base.html" %}
+{% load static %}
+{% load avatar_tags %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style type="text/css">
+
+#myInput {
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#chat-contacts-table {
+  border-collapse: collapse; /* Collapse borders */
+  width: 100%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+}
+
+#chat-contacts-table th, #chat-contacts-table td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#chat-contacts-table tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd; 
+}
+
+#chat-contacts-table tr.header, #chat-contacts-table tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+</style>
+
+<div class="row">
+	<div class="col-md-4">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+{% if chat_contact_table %}
+{% render_table chat_contact_table %}
+{% endif %}
+
+	</div>
+
+
+
+  <div class="col-md-8">
+
+
+    <!-- DIRECT CHAT PRIMARY -->
+    <div class="box box-primary direct-chat direct-chat-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Direct Chat</h3>
+
+        <div class="box-tools pull-right">
+          <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="3 New Messages">3</span>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+            <i class="fa fa-comments"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <!-- Conversations are loaded here -->
+        <div class="direct-chat-messages">
+          <!-- Message. Default to the left -->
+          <div class="direct-chat-msg">
+            <div class="direct-chat-info clearfix">
+              <span class="direct-chat-name pull-left">Alexander Pierce</span>
+              <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+            </div>
+            <!-- /.direct-chat-info -->
+            <img class="direct-chat-img" src="" alt="Message User Image"><!-- /.direct-chat-img -->
+            <div class="direct-chat-text">
+              Is this template really for free? That's unbelievable!
+            </div>
+            <!-- /.direct-chat-text -->
+          </div>
+          <!-- /.direct-chat-msg -->
+
+          <!-- Message to the right -->
+          <div class="direct-chat-msg right">
+            <div class="direct-chat-info clearfix">
+              <span class="direct-chat-name pull-right">Sarah Bullock</span>
+              <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+            </div>
+            <!-- /.direct-chat-info -->
+            <img class="direct-chat-img" src="" alt="Message User Image"><!-- /.direct-chat-img -->
+            <div class="direct-chat-text">
+              You better believe it!
+            </div>
+            <!-- /.direct-chat-text -->
+          </div>
+          <!-- /.direct-chat-msg -->
+        </div>
+        <!--/.direct-chat-messages-->
+
+        <!-- Contacts are loaded here -->
+        <div class="direct-chat-contacts">
+          <ul class="contacts-list">
+            <li>
+              <a href="#">
+                <img class="contacts-list-img" src="" alt="User Image">
+
+                <div class="contacts-list-info">
+                  <span class="contacts-list-name">
+                    Count Dracula
+                    <small class="contacts-list-date pull-right">2/28/2015</small>
+                  </span>
+                  <span class="contacts-list-msg">How have you been? I was...</span>
+                </div>
+                <!-- /.contacts-list-info -->
+              </a>
+            </li>
+            <!-- End Contact Item -->
+          </ul>
+          <!-- /.contatcts-list -->
+        </div>
+        <!-- /.direct-chat-pane -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <form action="#" method="post">
+          <div class="input-group">
+            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary btn-flat">Send</button>
+            </span>
+          </div>
+        </form>
+      </div>
+      <!-- /.box-footer-->
+    </div>
+    <!--/.direct-chat -->
+  </div>
+</div>
+<script type="text/javascript">
+function myFunction() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("chat-contacts-table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+{% endblock content %}

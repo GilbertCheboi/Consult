@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click 2 Call</title>
+    <style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+    </style>
+</head>
+<body>
+    {% if res.Response == "Success" %}
+    Call successfully queued. Please wait...
+    <script type="text/javascript">
+        setTimeout(function(){ window.close(); }, 2000);
+    </script>
+    {% else %}
+    Error queing call. Retry? <input type="button" value="Try Again" onClick="window.location.reload(true)">
+    {{ res.Message }}
+    {% endif %}
+</body>
+</html>

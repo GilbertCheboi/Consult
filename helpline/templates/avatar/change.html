@@ -1,0 +1,37 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n avatar_tags %}
+
+{% block content %}
+
+<div class="box-body">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+
+          <p>{% trans "Your current avatar: " %}</p>
+          <a  href="{% url 'avatar_change' %}">{% avatar content_user 128 class="profile-user-img img-responsive img-circle" %}</a>
+          {% if not avatars %}
+          <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+          {% else %}
+          <form method="POST" action="{% url 'avatar_change' %}">
+            <ul>
+              {{ primary_avatar_form.as_ul }}
+            </ul>
+            <p>{% csrf_token %}<input type="submit" value="{% trans "Choose new Default" %}" /></p>
+          </form>
+          {% endif %}
+          <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+            {{ upload_avatar_form.as_p }}
+            <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Image" %}" /></p>
+          </form>
+
+        </div>
+      </div>
+    </div><!-- /.col (LEFT) -->
+
+  </div>
+</div>
+
+{% endblock %}

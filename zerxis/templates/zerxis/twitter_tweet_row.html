@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+{% load i18n %}
+  <div class="col-md-8">
+    <div class="form-group">
+      {% crispy update_form %}
+    </div>
+    <div class="form-group pull-right">
+      <span id="remaining" style="">280</span>
+      <a href="#" onclick="$('#id_status').val('#id_in_reply_to').val('');$('#div_id_status label').html('{% trans 'Status' %}');$('#id_post_tweet_btn').html('Tweet');">Cancel</a>
+      <button id="id_post_tweet_btn" onclick="postTweet();" type="button" class="btn btn-primary" disabled>{% trans 'Tweet' %}</button> 
+    </div>
+  </div>

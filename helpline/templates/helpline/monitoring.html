@@ -1,0 +1,201 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load static %}
+
+{% block content %}
+<script>
+  dataGraph = Array();
+graph = Array();
+</script>
+<!--main content start-->
+<section id="main-content" class="content" style="margin-left: 0px;">
+  <div class="row">
+    <div class="col-lg-12 main-chart">
+
+      <!-- CDR Data -->
+      <div class="row">
+        <div class="border-head">
+          <h1><i class="fa fa-angle-right"></i> {{ _('Call Recordings') }}</h1>
+        </div>
+
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">{{ _('Call Recordings') }}</h3>
+							<div class="box-tools">
+								<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+									<input type="text" id="cdr_table_search" name="cdr_table_search" class="form-control pull-right" placeholder="Search">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="box-body table-responsive no-padding">
+							<table id="cdr_table" class="table table-hover display nowrap dataTable dtr-inline collapsed">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Date</th>
+										<th>Time</th>
+										<th>Source</th>
+										<th>Destination</th>
+										<th>Duration</th>
+										<th>Type</th>
+										<th>Action</th>
+										<th>Disposition</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{% for cdr in cdr_data.calldetails  %}
+									<tr>
+										<td class="details-control" id="{{ campaign.uniqueid }}"></td>
+										<td>
+                      <a href="#" onclick="window.open('/helpline/get_recording/?uniqueid={{ cdr.uniqueid }}')"  target="_blank">
+                      {{ cdr.calldate|date:'d-m-Y' }}
+                      </a>
+                    </td>
+                    <td><a href="#">{{ cdr.calldate|time:'H:i'}}<a></td>
+										<td>{{ cdr.src }}</td>
+										<td>{{ cdr.dst }}</td>
+										<td>{{ cdr.duration }}</td>
+										<td>{{ cdr.type }}</td>
+										<td>{{ cdr.action }}</td>
+                    <td>
+                      <span class="label label-{% if cdr.disposition == "Answered" %}success{% else %}warning{% endif %}">
+                        {% if cdr.disposition == "ANSWERED" %}
+                        Answered
+                        {% elif cdr.disposition == "CANCELLED" %}
+                        Cancelled
+                        {% elif cdr.disposition == "NO ANSWER" %}
+                        No Answer
+                        {% elif cdr.disposition == "BUSY" %}
+                        Busy
+                        {% elif cdr.disposition == "FAILED" %}
+                        Failed
+                        {% elif cdr.disposition == "CONGENSTION" %}
+                        NA
+                        {% endif %}
+                      </span>
+                    </td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</div>
+              Generated in: {{ cdr.execution_time }} sec
+
+
+      </div><!-- /row -->
+      
+    </div><!-- /row -->
+  </div><!-- /row -->
+</section>
+
+{% endblock %}
+
+
+{% block script_end %}
+{% include 'helpline/panel_global_js.html' %}
+<script type="text/javascript">
+
+  var optionsNoAnimation = {
+    animation : false,
+  }
+function updateGraph(name, data_queue) {
+  dataGraph[name] = [
+    {
+      value: parseInt(data_queue.Abandoned),
+      color: "#FF6B6B",
+      label: LABELS.Abandoned
+    },
+    {
+      value: parseInt(data_queue.Completed),
+      color: "#5cb85c",
+      label: LABELS.Answered
+    }
+  ];
+}
+
+</script>
+
+<script type="text/javascript">
+	var table = $('#campaigns_table').DataTable({
+    retrieve: true,
+		order: [[1, 'desc']],
+    dom: 'Blrtip',
+    stateSave: true,
+	});
+
+function format ( key ) {
+    var div = $('<div/>')
+        .addClass( 'loading' )
+        .text( 'Loading...' );
+
+    $.ajax( {
+        url: '{% url "ajax_campaign_json" %}',
+        data: {
+            key: key,
+        },
+        dataType: 'json',
+        success: function ( json ) {
+          queue_card_id =  '#queue_card_' + json.data.campaign.queue;
+          var queue_card = $(queue_card_id).detach();
+            div
+                .append( queue_card )
+                .removeClass( 'loading' );
+        }
+    } );
+
+    return div;
+}
+
+$('#campaigns_table tbody').on('click', 'td.details-control', function () {
+	var tr = $(this).closest('tr');
+	var row = table.row( tr );
+  var key = $(this).attr('id');
+
+	if ( row.child.isShown() ) {
+		row.child.hide();
+		tr.removeClass('shown');
+	}
+	else {
+		row.child( format(key) ).show();
+		tr.addClass('shown');
+	}
+} );
+
+function filterGlobal() {
+	$('#campaigns_table')
+		.DataTable()
+		.search($('#cdr_table_search').val())
+		.draw();
+}
+
+$('#cdr_table_search').on('keyup click', function () {
+	filterGlobal();
+});
+
+$('#cdr_table_search tbody').on('click', 'td.details-control', function () {
+  var tr = $(this).closest('tr');
+	var row = table.row( tr );
+  var key = $(this).attr('id');
+
+	if ( row.child.isShown() ) {
+		row.child.hide();
+		tr.removeClass('shown');
+	}
+	else {
+		row.child( format(key) ).show();
+		tr.addClass('shown');
+	}
+} );
+
+</script>
+{% endblock%}
+

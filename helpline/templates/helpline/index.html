@@ -1,0 +1,134 @@
+{% load i18n %}
+{% load static %}
+{% load i18n two_factor %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Elloe Consult</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="https://elloe.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbc862982-7dac-4695-87b6-5f0368dba6bc%2FLogo_main.png?table=block&id=b503bff9-76be-424d-9b63-7a1065f0cce6&spaceId=b3c546cd-2619-43ea-8d2b-779c16695a72&width=2000&userId=&cache=v2" %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700,900">
+    <link rel="stylesheet" href="{% static "index/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/fonts.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/style.css" %}" id="main-styles-link">
+    <!--[if lt IE 10]>
+      <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+	<header class="section page-header">
+	<div class="rd-navbar-wrap rd-navbar-absolute">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-device-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+          <div class="rd-navbar-panel">
+            <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+            <div class="rd-navbar-brand">
+              <a class="brand" href="{% url "dashboard_home" %}">
+                <img class="brand-logo-dark" src="https://elloe.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd2a3dd81-d88d-4323-aae8-11c6d1314c7f%2FUntitled_design_(21).png?table=block&id=556c99f0-633d-4d42-ac51-93bd2adfb9b9&spaceId=b3c546cd-2619-43ea-8d2b-779c16695a72&width=2000&userId=&cache=v2" alt="" width="200" />
+		<img class="brand-logo-light" src="https://elloe.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd2a3dd81-d88d-4323-aae8-11c6d1314c7f%2FUntitled_design_(21).png?table=block&id=556c99f0-633d-4d42-ac51-93bd2adfb9b9&spaceId=b3c546cd-2619-43ea-8d2b-779c16695a72&width=2000&userId=&cache=v2" alt="" width="90" style="max-height: 40px" />
+              </a>
+            </div>
+          </div>
+          <div class="rd-navbar-main-element">
+            <div class="rd-navbar-nav-wrap">
+              <ul class="rd-navbar-nav">
+                {% if request.user.is_authenticated %}
+                <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Home</a></li>
+                {% else %}
+                <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'index' %}">Home</a></li>
+                {% endif %}
+                <li class="rd-nav-item"><a class="rd-nav-link">Features</a></li>
+                {% if request.user.is_authenticated %}
+                <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Helpline</a></li>
+                {% else %}
+                <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'two_factor:login' %}">Login</a></li>
+                {% endif %}
+              </ul>
+            </div>
+            <div class="rd-navbar-search">
+              <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
+              <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                <div class="form-wrap">
+                  <label class="form-label" for="rd-navbar-search-form-input">Search</label>
+                  <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                  <div class="rd-search-results-live" id="rd-search-results-live"></div>
+                </div>
+                <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
+              </form>
+		</div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+</header>
+<section class="section swiper-container swiper-slider swiper-slider-2 swiper-bg" data-loop="true" data-autoplay="false" data-simulate-touch="false" data-slide-effect="fade">
+        <div class="swiper-wrapper text-center text-md-left">
+          <div class="swiper-slide position-relative">
+            <div class="swiper-slide-caption">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-9 col-lg-7">
+                    {% url "account_signup" as registration_url %}
+                    <h1 data-caption-animate="fadeInUp" data-caption-delay="100">Powerful, Quick & Secure Call Center<br>Solution</h1>
+		    <a class="button button-lg button-secondary" style="background-color: #27165b;" href="{% url 'two_factor:login' %}" data-caption-animate="fadeInUp" data-caption-delay="150">Login</a>
+                    <a class="button button-lg button-secondary" style="background-color: #27165b;" href="{{ registration_url }}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up</a>
+		    <!--
+                    <a class="button button-lg button-secondary" href="{% provider_login_url "microsoft" %}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up using Microsoft</a><br/>
+		    <a class="button button-lg button-secondary" href="{% provider_login_url "google" %}" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Sign up using Google</a>--
+                  </div>
+
+                  <div class="swiper-img-block">
+                    <div class="swiper-img-block-inner">
+                      <div class="img-block-inner-item"><img src="{% static "index/images/main-slide-1.png" %}" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-meta">
+          <ul class="links">
+          </ul>
+	  <!--
+          <div class="contacts">
+            <div class="icon mdi mdi-cellphone-iphone"></div>
+            <div class="request"><a href="tel:+254707077707">Call Us</a></div>
+            <div class="tel"><a href="tel:+254707077707">(+254) 0-7070 777 07</a></div>
+          </div>
+	  -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+	                                                                                                                                                                            {% include "helpline/index_footer.html" %}                                                                                                                                                                                                                                                                                                        </div>                                                                                                                                                                                                                                                                                                                                              <div class="snackbars" id="form-output-global"></div>                                                                                                                                                                                                                                                                                               <script src="{% static "index/js/core.min.js" %}"></script>   
+    <script src="{% static "index/js/script.js" %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-199244690-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-199244690-1');
+    </script>
+  </body>
+</html>

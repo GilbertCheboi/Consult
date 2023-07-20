@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RabbitMQ STOMP Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <h1>RabbitMQ STOMP TESTING</h1>
+    <div id="messages"></div>
+
+    <script>
+        const stompClient = Stomp.client('wss://callcenter.africa/ws');
+        stompClient.connect('guest', 'guest', onConnected, onError);
+        stompClient.heartbeat.outgoing = 20000;
+        let reconnect_trials = 0;
+        let reconnect_max_trial = 7
+        // Set a random connect interval
+        // For now you're stuck with what you get
+        // Select a random interval to try and reconnect
+        let reconnect_interval = Math.floor(Math.random() * 10000) + 2000;
+        console.log("Reconnect interval " + reconnect_interval);
+        console.log("Reconnect trial " + reconnect_trials + " of " + reconnect_max_trial);
+        stompClient.reconnect_delay = reconnect_interval;
+
+        function onConnected() {
+            console.log('Connected to RabbitMQ');
+                    stompClient.subscribe('/queue/{{ hotdesk.extension }}', onMessageReceived);
+        }
+
+        function onError(error) {
+            console.error('Error:', error);
+        }
+
+        function onMessageReceived(message) {
+            console.log('Received message:', message.body);
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += '<p>' + message.body + '</p>';
+        }
+    </script>
+</body>
+</html>
+

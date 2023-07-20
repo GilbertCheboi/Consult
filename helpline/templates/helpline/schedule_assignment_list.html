@@ -1,0 +1,11 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load django_tables2 %}
+
+{% block content %}
+{% if schedule_assignment_table %}
+{% render_table schedule_assignment_table %}
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load avatar_tags %} 
+{% load humanize %}
+{% block content %}
+<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+<div class="stream-container">
+
+	<div class="col-md-6">
+		<!-- Box Comment -->
+	{% for s in statuses %}
+		<div class="box box-widget">
+			<div class="box-header with-border">
+				<div class="user-block">
+					<img class="img-circle" src="{{ s.user.profile_image_url_https }}" alt="User Image"> {{ s.profile_image_url_https }}
+					<span class="username"><a href="/helpline/social/twitter/user/{{ s.user.screen_name }}">{{ s.user.name }} <small>@{{ s.user.screen_name }}</small></a></span>
+					<span class="description">Shared publicly - {{ s.created_at|naturaltime }}</span>
+				</div>
+				<!-- /.user-block -->
+				<div class="box-tools">
+					<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
+						<i class="fa fa-circle-o"></i></button>
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+				<!-- /.box-tools -->
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<!-- post text -->
+				<p>{{ s.text|safe }}</p>
+
+				<!-- Social sharing buttons -->
+				<button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+				<button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+				<span class="pull-right text-muted">{{ s.favorite_count }} likes - {{ s.retweet_count }} retweets</span>
+			</div>
+			<!-- /.box-footer -->
+			<div class="box-footer">
+				<form action="#" method="post">
+          {% avatar user 160 class="img-responsive img-circle img-sm" %}
+					<!-- .img-push is used to add margin to elements next to floating images -->
+					<div class="img-push">
+						<input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+					</div>
+				</form>
+			</div>
+			<!-- /.box-footer -->
+		</div>
+		<!-- /.box -->
+		{% endfor %}
+	</div>
+
+
+</div>
+
+{% endblock content %}

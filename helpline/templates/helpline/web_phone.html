@@ -1,0 +1,474 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+<!-- Web Phone -->
+<div class="box box-primary" style="min-height: 406px;">
+  <div class="box-header with-border">
+    <i id="phone-status" class="badge fa fa-plug"></i>
+
+    <h3 class="box-title">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" id="you">{% trans "Offline" %}</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu" id="hotdesk_list">
+        </ul>
+      </div>
+    </h3>
+
+    <div class="box-tools pull-right" id="phone_action">
+      {% trans "Auto-Answer" %}:
+      <button class="btn" id="toggle_auto_answer_btn">
+        Off
+      </button>
+      {% trans "Auto-Dialer" %}:
+      <button class="btn" id="toggle_auto_dialer_btn">
+        Off
+      </button>
+      <button class="btn" id="toggle_dialer_config">
+        <i class="fa fa-cog"></i>
+      </button>
+
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="container" id="details">
+      <div class="center">
+        <div class="form-dial" id="phone">
+          <div style="padding-left: 1%" id="timer"></div>
+          <div class="form-group uri-input" style="padding-left: 1%">
+            <span class="algolia-autocomplete" style="position: relative; display: inline-block; direction: ltr;">
+              <input type="text" id="peer" ondblclick="doRedial();" onkeypress="return checkEnter(this, event);"  class="form-control input-lg aa-input col-md-offset-0 col-xs-offset-1" autocapitalize="off" autocorrect="off" required="" placeholder="Eg. 600" value="" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="both" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" style="position: relative; vertical-align: top;" dir="auto">
+              <span class="aa-dropdown-menu" style="position: absolute; top: 100%; z-index: 100; left: 0px; right: auto; display: none;" role="listbox" id="algolia-autocomplete-listbox-0">
+                <div class="aa-dataset-1"></div>
+              </span>
+            </span>
+          </div>
+          <div class="form-group col-md-offset-0 col-xs-offset-1">
+            <div id="call-buttons" class="call-buttons hide" style="padding-left: 2%">
+              <button id="transfer" type="button" class="btn btn-round btn-default">
+                <i class="fa fa-exchange"></i>
+              </button>
+              <button id="toggleaudio" type="button" class="btn btn-round btn-default">
+                <i class="fa fa-microphone text-success"></i>
+              </button>
+              <button id="togglehold" type="button" class="btn btn-round btn-default">
+                <i class="fa fa-pause-circle-o"></i>
+              </button>
+              <button id="create_case" type="button" class="btn btn-round btn-default" onclick="createCaseFromCall();">
+                <i class="fa fa-ticket"></i>
+              </button>
+              <br>
+            </div>
+            <div id="dialpad" style="padding-left: 30px">
+              <button type="button" class="btn btn-round-xxl btn-digit" value="1">1</button><button type="button" class="btn btn-round-xxl btn-digit" value="2">2</button><button type="button" class="btn btn-round-xxl btn-digit" value="3">3</button><br><button type="button" class="btn btn-round-xxl btn-digit" value="4">4</button><button type="button" class="btn btn-round-xxl btn-digit" value="5">5</button><button type="button" class="btn btn-round-xxl btn-digit" value="6">6</button><br><button type="button" class="btn btn-round-xxl btn-digit" value="7">7</button><button type="button" class="btn btn-round-xxl btn-digit" value="8">8</button><button type="button" class="btn btn-round-xxl btn-digit" value="9">9</button><br><button type="button" class="btn btn-round-xxl btn-digit" value="*">*</button><button type="button" class="btn btn-round-xxl btn-digit" value="0">0</button><button type="button" class="btn btn-round-xxl btn-digit" value="#">#</button>
+              <div id="phone_tools" style="padding-left: 13px;">
+                <button aria-label="Clear last digit"  type="button" class="btn btn-round-big btn-default btn-clearleft">
+                  <i class="fa fa-long-arrow-left"></i>
+                </button>
+                <button id="call" aria-label="Start an audio call" type="button" class="btn btn-round-xxl btn-success">
+                  <i class="fa fa-phone"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="dialer-config" class="hide">
+          <div class="hide">
+            {% if queue_form %}
+            {% crispy queue_form %}
+            {% endif %}
+          </div>
+          <div class="col-md-4">
+            {% if schedule_table %}
+            <strong>{{ schedule_message }}</strong>
+            <p class="text-muted">
+              {% render_table schedule_table %}
+            </p>
+            {% endif %}
+            <hr/>
+            <strong>Mute Incoming Ringtones</strong>
+            <p class="text-muted">
+              <button id="toggleringenabled" aria-label="Mute incoming ringtones" type="button" class="btn btn-round-big btn-default" title="Mute Incoming Ringtones">
+                <i class="fa fa-bell-o"></i>
+              </button>
+            </p>
+            <hr/>
+            <div class="form-group">
+                <label>{% trans "Select Outbound Caller ID" %}</label>
+                <button type="button" class="btn btn-primary btn-xs" onclick="getOutboundCID();">{% trans "Reload numbers" %}<i class="fa fa-fw fa-refresh" id="reload_dids"></i></button>
+                <select class="form-control" onchange="changeOutboundCID(this);" id="outbound_caller_id_list">
+                </select>
+            </div>
+            <!-- Destination if user is unavailable -->
+            <div class="form-group hidden">
+                <label>{% trans "Select distination if unreachable" %}</label>
+                <select class="form-control" onchange="changeChanunavail_dest(this);" id="chanunavail_dest">
+                    <option value="">default</option>
+                    {% for schedule in schedules %}
+                    <option value="{{ schedule.service.extension }}">{{ schedule.service.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- End destination if user is unavailable -->
+            <hr/>
+            <div class="col-md-8">
+              <button onclick="send_invite();" type="button" class="btn btn-block btn-info btn-lg">Invite People</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <div class="phone_footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hide" id="sipcall">
+      <div class="">
+        <div class="">
+          <div class="hide" id="login">
+            <div class="input-group margin-bottom-sm">
+              <span class="input-group-addon"><i class="fa fa-cloud-upload fa-fw"></i></span>
+              <input class="form-control" type="text" placeholder="SIP Registrar (e.g., sip:host:port)" autocomplete="off" id="server" onkeypress="return checkEnter(this, event);" value="sip:{{ sip_server_config.sip_host }}:{{ sip_server_config.sip_port }}" /><input id="sip_domain" type="hidden" value="{{ sip_server_config.sip_domain }}">
+            </div>
+            <div class="input-group margin-bottom-sm">
+              <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+              <input class="form-control" type="text" placeholder="SIP Identity (e.g., sip:goofy@example.com)" autocomplete="off" id="username" onkeypress="return checkEnter(this, event);" value="sip:{{ hot_desk.extension }}@{{ sip_server_config.sip_host }}"/>
+            </div>
+          </div>
+          <p></p>
+        </div>
+        <div>
+          <div id="videos" class="hide">
+            <div class="">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">You</h3>
+                </div>
+                <div class="panel-body" id="videoleft"></div>
+              </div>
+            </div>
+            <div class="">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Remote UA</h3>
+                </div>
+                <div class="panel-body" id="videoright"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /SIP Call -->
+
+    </div>
+    <!-- /.box-body-->
+  </div>
+  <div class="box-footer">
+    <button id="dialer-config-back-btn" type="button" class="pull-left btn bg-default margin hide">
+      <i class="fa fa-long-arrow-left"></i>
+      {% trans "BACK" %}
+    </button>
+    <small id="loading" class="hidden">
+    </small>
+    <small id="connection_message" class="hidden">
+      <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>{% trans "Connection lost. Retry in" %}  <b id="reconnect_timer"></b> {% trans "seconds" %}
+    </small>
+    <div class="pull-right">
+      <i class="fa fa-clock-o"></i> <span id="clock"></span>
+    </div>
+  </div>
+  <!-- /.box -->
+</div>
+
+<script type="text/javascript">
+  function queue_leave(queue=null) {
+    console.log("Leave queue clicked!");
+
+    if (queue){
+      $('#id_queue').val(queue);
+    }
+    $.ajax({
+      url : "{% url 'queue_leave' %}",
+      headers: {'X-CSRFToken': csrftoken},
+      type : "POST",
+      data : {'queue': queue, 'extension': $('#you').text()},
+
+      // handle a sucessful response
+      success : function(json){
+        console.log("Queue leave " + json.message.Response);
+        if(json.message.Response == "failed"){
+          // show error message and remove py-Asterisk prefix from message
+          toastr.warning(json.message.Message.replace("py-Asterisk",""), json.message.Response);
+          $('#queue_status_' + queue).html("");
+        }else{
+          toastr.success(json.message.Message, json.message.Response);
+          $('#queue_status_' + queue).html("");
+        }
+      },
+
+      //handle a non-sccessful response
+      error : function(xhr,errmsg,err) {
+        toastr.error("{% trans 'Could not leave queue' %}.");
+        console.log(xhr.status + ": " + xhr.resposeText);
+      }
+    });
+  };
+
+</script>
+
+<script type="text/javascript">
+  function updateClock() {
+    var d = new Date();
+    var n = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    document.getElementById("clock").innerHTML = n;
+  }
+
+function getOutboundCID() {
+    var extension = $("#you").val();
+    $("#reload_dids").addClass("fa-spin");
+
+    $.ajax({
+        url: "{% url 'get_outbound_caller_id' %}",
+        type: "GET",
+        data: extension,
+        success: function(data) {
+            if (data){
+                console.log("GOT DID " + data.did);
+                $("#reload_dids").removeClass("fa-spin");
+                $('#outbound_caller_id_list').empty();
+                $('#outbound_caller_id_list').append(
+                    '<option value="">{% trans "default" %}</option>'
+                    );
+                data.did.forEach(addOutboundDID);
+                $('#outbound_caller_id_list').val(data.extension.json.results[0].callerid_override.outbound);
+            }
+            function addOutboundDID(value, index, arrary){
+                $('#outbound_caller_id_list').append(
+                    '<option value="' + value + '">'+ value + '</option>'
+                    );
+            }
+        },
+        error: function () {
+            console.log("Could not get DIDs");
+        }
+    });
+}
+</script>
+<script type="text/javascript">
+  $(".btn-digit").on('click', function() {
+    var num = ($(this).val());
+    $("#peer").val($("#peer").val() + num.trim());
+  });
+
+$('.btn-clearleft').on('click', function() {
+  $('#peer').val(function(index, value){
+    return value.substr(0, value.length - 1);
+  })
+});
+</script>
+<script type="text/javascript">
+  // Toggle dialer config view
+  configviewenabled = true;
+$('#toggle_dialer_config,#dialer-config-back-btn').unbind('click').bind('click',
+  function() {
+
+    configviewenabled = !configviewenabled;
+    if(configviewenabled){
+      $('#dialer-config').addClass('hide');
+      $('#dialer-config-back-btn').addClass('hide');
+      $('#phone').removeClass('hide');
+      $('#toggle_dialer_config').removeClass('btn-warning');
+
+
+    } else {
+      $('#phone').addClass('hide');
+      $('#dialer-config').removeClass('hide');
+      $('#dialer-config-back-btn').removeClass('hide');
+      $('#toggle_dialer_config').addClass('btn-warning');
+      getOutboundCID();
+
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  // Togle Auto Answer
+  auto_answer_enabled = true;
+$('#toggle_auto_answer_btn').unbind('click').bind('click',
+  function() {
+
+    auto_answer_enabled = !auto_answer_enabled;
+    if(auto_answer_enabled){
+      $('#toggle_auto_answer_btn').removeClass('btn-warning');
+      $('#toggle_auto_answer_btn').html('Off');
+
+
+    } else {
+      $('#toggle_auto_answer_btn').addClass('btn-warning');
+      $('#toggle_auto_answer_btn').html('On');
+
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  // Toggle Auto Dialer
+  auto_dialer_enabled = true;
+        function sendLoginAgentAjaxRequest() {
+          var url = '{% url "agent_login" %}';
+          var data = {
+            'action': 'login',
+          };
+
+          $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+              // Request successful, handle the response here
+              console.log(response);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+              // Request error, handle the error here
+              console.error('An error occurred while sending the request.');
+            }
+          });
+        }
+  $('#toggle_auto_dialer_btn').unbind('click').bind('click',
+    function() {
+
+      auto_dialer_enabled = !auto_dialer_enabled;
+      if(auto_dialer_enabled){
+        $('#toggle_auto_dialer_btn').removeClass('btn-warning');
+        $('#toggle_auto_dialer_btn').html('Off');
+        $('#toggle_auto_answer_btn').removeClass('btn-warning');
+        $('#toggle_auto_answer_btn').html('Off');
+
+      } else {
+        $('#toggle_auto_dialer_btn').addClass('btn-warning');
+        $('#toggle_auto_dialer_btn').html('On');
+        $('#toggle_auto_answer_btn').addClass('btn-warning');
+        $('#toggle_auto_answer_btn').html('On');
+        sendLoginAgentAjaxRequest();
+      }
+    });
+
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#peer').tooltip({title: "{% trans 'Double click to redial' %}", trigger: "hover"});
+    $('#create_ticket').tooltip({title: "{% trans 'Create a ticket' %}", trigger: "hover"});
+    $('#toggle_auto_answer_btn').tooltip({title: "{% trans 'Auto Answer' %}", trigger: "hover"});
+    $('#toggle_auto_dialer_btn').tooltip({title: "{% trans 'Auto Dialer' %}", trigger: "hover"});
+    setInterval(function () {
+      // Clear slow link notification
+      $('#phone-status').removeClass("bg-yellow");
+      updateClock();
+    }, 3000);
+  });
+</script>
+
+<script type="text/javascript">
+function doRedial() {
+  var redial_peer = localStorage.lastCall;
+  if(redial_peer){
+    $('#peer').val(redial_peer);
+    $('#call').click();
+  } else {
+    toastr.info('No number to redial');
+  }
+}
+
+function createCaseFromCall() {
+  var peer = $('#peer').val();
+//  var nameParts = peer.split("@");
+//  var name = nameParts.length==2 ? nameParts[0] : null;
+//  if (name){
+//  var peerParts = name.split(":");
+//  var dialed = peerParts.length==2 ? peerParts[1] : null;
+//  } else {
+//    var dialed = name;
+//  }
+bootbox.prompt({
+    title: "Select a service to assign this call to "+ peer,
+    inputType: 'select',
+    inputOptions: [
+      {% for schedule in schedules %}
+    {
+      text: '{{ schedule.service.name }}',
+        value: '{{ schedule.service.id }} ',
+    },
+      {% endfor %}
+    ],
+    callback: function (result) {
+        console.log(result);
+        createCase(service=result, peer=peer);
+    }
+});
+}
+
+function createCase(service=null, peer=null) {
+    var values = {
+      'csrfmiddlewaretoken': '{{ csrf_token }}',
+      'service': service,
+      'telephone': peer
+    }
+    $.ajax({
+      url: "{% url 'outbound_create_case' %}",
+      type: "GET",
+      data: values,
+      success: function(data) {
+        if (!(data['success'])) {
+          // Here we replace the form, for the
+          // $(contact_form).replaceWith(data['form_html']);
+          toastr.success("{% trans 'Case not created' %}");
+          console.log(data);
+        }
+        else {
+          toastr.success("{% trans 'Case created' %}");
+          //setTimeout(check_call,2000); // run check_call after 2 seconds
+          // PJAX wasnt' working here
+          // document.getElementById('dashboard_home_link').click();
+          console.log(data);
+          //$.pjax({url : "{% url "dashboard_home"  %}", container: '#pjax-container', timeout: 10000});
+
+
+        }
+      },
+      error: function () {
+        toastr.error("Could not create case");
+      }
+    });
+}
+
+function changeOutboundCID(param){
+    var outbound_caller_id = document.getElementById("outbound_caller_id_list").value
+    $.ajax({
+        url: "{% url 'set_outbound_caller_id' %}",
+        type: "POST",
+        data: {'outbound_caller_id': outbound_caller_id},
+        success: function(data) {
+            if (!(data['success'])) {
+                toastr.error("Changing CID Failed." + outbound_caller_id);
+            }
+            else{
+                toastr.success("{% trans 'Change will take a few minutes to apply' %}", "{% trans 'Outbound CID will be' %} " + outbound_caller_id);
+            }
+        },
+        error: function() {
+            $("#error-message").html("Error");
+        }
+    });
+}
+
+</script>
+
+<script type="text/javascript" src="{% static "helpline/js/sipprod.js" %}"></script>

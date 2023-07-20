@@ -1,0 +1,268 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load static %}
+
+{% block content %}
+<script>
+  dataGraph = Array();
+graph = Array();
+</script>
+<!--main content start-->
+<section id="main-content" class="content" style="margin-left: 0px;">
+  <div class="row">
+    <div class="col-lg-12 main-chart">
+
+      <div class="row"><!-- row general data-->
+        {% include 'helpline/row_general_data.html' %}
+      </div><!-- /row general data-->
+      
+      <!-- campaign -->
+      <div class="row">
+        <div class="border-head">
+          <h1><i class="fa fa-angle-right"></i> {{ _('Campaigns') }}</h1>
+        </div>
+
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">{{ _('Campaigns') }}</h3>
+							<div class="box-tools">
+								<div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+									<input type="text" id="campaign_table_search" name="campaign_table_search" class="form-control pull-right" placeholder="Search">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="box-body table-responsive no-padding">
+							<table id="campaigns_table" class="table table-hover display nowrap dataTable dtr-inline collapsed">
+								<thead>
+									<tr>
+										<th></th>
+										<th>ID</th>
+										<th>Name</th>
+										<th>Total Calls</th>
+										<th>Successful Calls</th>
+										<th>Talk Time</th>
+										<th>Hold Time</th>
+										<th>Placed Calls</th>
+										<th>Status</th>
+										<th>Progress</th>
+										<th>% Complete</th>
+										<th>Monitor</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{% for campaign in campaigns %}
+									<tr>
+										<td class="details-control" id="{{ campaign.key }}"></td>
+										<td>
+                      <a href="https://{{ campaigns_host }}/index.php?menu=campaign_out&action=edit_campaign&id_campaign={{ campaign.id }}"  target="_blank">
+                      {{ campaign.id }}
+                      </a>
+                    </td>
+                    <td><a href="{{ campaign.link }}">{{ campaign.name }}<a></td>
+										<td>{{ campaign.total_calls|default_if_none:"0"  }}</td>
+										<td>{{ campaign.successful_calls|default_if_none:"0"  }}</td>
+										<td>{{ campaign.talk_time|default_if_none:"0"  }}</td>
+										<td>{{ campaign.hold_time|default_if_none:"0"  }}</td>
+										<td>{{ campaign.placed_calls|default_if_none:"0"  }}</td>
+                    <td>
+                      <span class="label label-{% if campaign.estatus == "T" %}success{% else %}warning{% endif %}">
+                        {% if campaign.estatus == "T" %}
+                        Finished
+                        {% elif campaign.estatus == "A" %}
+                        Running
+                        {% elif campaign.estatus == "I" %}
+                        Inactive
+                        {% elif campaign.estatus == "Z" %}
+                        Uploading
+                        {% elif campaign.estatus == "NA" %}
+                        NA
+                        {% endif %}
+                      </span>
+                    </td>
+										<td>
+											<div class="progress progress-xs progress-striped active">
+												<div class="progress-bar progress-bar-success" style="width: {% widthratio campaign.placed_calls campaign.total_calls 100 %}%"></div>
+											</div>
+										</td>
+										<td>
+											<span class="badge bg-green">
+												{% widthratio campaign.placed_calls campaign.total_calls 100 %}%
+											</span>
+										</td>
+                    <td>
+                      <a href="https://{{ campaigns_host }}/index.php?menu=campaign_monitoring#/details/outgoing/{{ campaign.id }}" target="_blank">
+                        Link
+                        <i class="fa fa-external-link"></i>
+                      </a>
+                    </td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</div>
+              Generated in: {{ campaigns_data.execution_time }} sec
+
+
+      </div><!-- /row -->
+      <!-- /campaign -->
+      <div class="hide">
+
+      <div class="row">
+        <div class="border-head">
+          <h1><i class="fa fa-angle-right"></i> {{ _('Queues') }}</h1>
+        </div>
+        {% for queue in queues %}
+        <div class="col-md-4" id="queue_card_{{ queue }}">
+          <div class="box box-default" onclick="">
+            <div class="box-header with-border">
+              <h3 class="box-title"><a href="{% url 'queue' queue %}">{{ queue }}</a></h3> <span id="strategy"></span>
+              <div class="box-tools pull-right">
+                <i class="fa fa-users fa-2x"> <span id="queue_{{ queue }}_queue_users">{{ queue.members | length }} </span></i>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="row data" id="data-{{ queue }}">
+
+                <div class="col-sm-6 col-xs-6">
+                  <h5>{{ _('Answered') }}: <span id="queue_completed">{{ queue.Completed }}</span></h5>
+                  <h5>{{ _('Abandoned') }}: <span id="queue_abandoned">{{ queue.Abandoned }} </span></h5>
+                  <h5>{{ _('Incoming') }}: <span id="queue_incoming">{{ queue.Calls }} </span></h5>
+                  {% if show_service_level %}
+                  <h5>{{ _('Service Level') }}: <span id="queue_servicelevel">{{ queue.ServicelevelPerf }}%</span></h5>
+                  {% endif %}
+                </div>
+                <div class="col-sm-6 col-xs-6">
+                  <h5><span id="queue_unavailable"></h5>
+                  <h5><span id="queue_busy"></h5>
+                  <h5><span id="queue_free"></h5>
+                </div>
+              </div>
+              <div class="row centered"  style="margin-top: -20px;">
+                <h2>{{ _('Abandoned:') }} <span id="{{ queue }}-percent_abandoned">0</span>%</h2>
+              </div>
+
+
+            </div>
+          </div><!--/col-md-4 -->
+        </div>
+        {% endfor %}
+      </div><!-- /row -->
+
+      </div>
+      
+    </div><!-- /row -->
+  </div><!-- /row -->
+</section>
+
+{% endblock %}
+
+
+{% block script_end %}
+{% include 'helpline/panel_global_js.html' %}
+<script type="text/javascript">
+
+  var optionsNoAnimation = {
+    animation : false,
+  }
+function updateGraph(name, data_queue) {
+  dataGraph[name] = [
+    {
+      value: parseInt(data_queue.Abandoned),
+      color: "#FF6B6B",
+      label: LABELS.Abandoned
+    },
+    {
+      value: parseInt(data_queue.Completed),
+      color: "#5cb85c",
+      label: LABELS.Answered
+    }
+  ];
+}
+
+</script>
+
+<script type="text/javascript">
+	var table = $('#campaigns_table').DataTable({
+    retrieve: true,
+		order: [[1, 'desc']],
+    dom: 'Blrtip',
+    stateSave: true,
+	});
+
+function format ( key ) {
+    var div = $('<div/>')
+        .addClass( 'loading' )
+        .text( 'Loading...' );
+
+    $.ajax( {
+        url: '{% url "ajax_campaign_json" %}',
+        data: {
+            key: key,
+        },
+        dataType: 'json',
+        success: function ( json ) {
+          queue_card_id =  '#queue_card_' + json.data.campaign.queue;
+          var queue_card = $(queue_card_id).detach();
+            div
+                .append( queue_card )
+                .removeClass( 'loading' );
+        }
+    } );
+
+    return div;
+}
+
+$('#campaigns_table tbody').on('click', 'td.details-control', function () {
+	var tr = $(this).closest('tr');
+	var row = table.row( tr );
+  var key = $(this).attr('id');
+
+	if ( row.child.isShown() ) {
+		row.child.hide();
+		tr.removeClass('shown');
+	}
+	else {
+		row.child( format(key) ).show();
+		tr.addClass('shown');
+	}
+} );
+
+function filterGlobal() {
+	$('#campaigns_table')
+		.DataTable()
+		.search($('#campaign_table_search').val())
+		.draw();
+}
+
+$('#campaign_table_search').on('keyup click', function () {
+	filterGlobal();
+});
+
+$('#campaign_table_search tbody').on('click', 'td.details-control', function () {
+  var tr = $(this).closest('tr');
+	var row = table.row( tr );
+  var key = $(this).attr('id');
+
+	if ( row.child.isShown() ) {
+		row.child.hide();
+		tr.removeClass('shown');
+	}
+	else {
+		row.child( format(key) ).show();
+		tr.addClass('shown');
+	}
+} );
+
+</script>
+{% endblock%}
+

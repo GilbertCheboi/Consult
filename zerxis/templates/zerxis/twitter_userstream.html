@@ -1,0 +1,182 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load avatar_tags %} 
+{% load humanize %}
+{% block content %}
+
+{% if twitter_user %}
+<div class="row">
+	<div class="col-md-8">
+		<!-- Widget: user widget style 1 -->
+		<div class="box box-widget widget-user">
+			<!-- Add the bg color to the header using any of the bg-* classes -->
+			<div class="widget-user-header" style="background: url('{{ twitter_user.profile_background_image_url_https }}') center center; background-color: #{{ twitter_user.profile_background_color }}; color: #{{ twitter_user.profile_text_color }};">
+				<h3 class="widget-user-username">{{ twitter_user.name }}{% if twitter_user.verified %}<i class="fa fa-check" aria-hidden="true"></i>{% endif %}</h3>
+				<h5 class="widget-user-desc">{{ twitter_user.description }}</h5>
+			</div>
+			<div class="widget-user-image">
+				<img class="img-circle" src="{{ twitter_user.profile_image_url_https }}" alt="User Avatar">
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-4 border-right">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.friends_count|intcomma }}</h5>
+							<span class="description-text">FOLLOWING</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-4 border-right">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.followers_count|intcomma }}</h5>
+							<span class="description-text">FOLLOWERS</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-4">
+						<div class="description-block">
+							<h5 class="description-header">{{ twitter_user.statuses_count|intcomma }}</h5>
+							<span class="description-text">TWEETS</span>
+						</div>
+						<!-- /.description-block -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+        <div class="row">
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ twitter_user.location }}</h5>
+              <span class="description-text"><i class="fa fa-map-marker"></i></span>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <h5 class="description-header">{{ twitter_user.created_at|naturalday }}</h5>
+              <span class="description-text"><i class="fa fa-calendar"></i>Joined</span>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+          <div class="col-sm-4 border-right">
+            <div class="description-block">
+              <a href="{{ twitter_user.entities.url.urls.0.expanded_url }}" target="_blank"><i class="fa fa-link"></i>{{ twitter_user.entities.url.urls.0.display_url }}</a>
+              <h5 class="description-header"></h5>
+            </div>
+						<!-- /.description-block -->
+          </div>
+					<!-- /.col -->
+        </div>
+			</div>
+		</div>
+		<!-- /.widget-user -->
+	</div>
+	<!-- /.col -->
+	<div class="col-md-4">
+		<!-- Widget: user widget style 1 -->
+		<div class="box box-widget widget-user-2">
+			<!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="widget-user-header bg-aqua-active">
+				<div class="widget-user-image">
+					<img class="img-circle" src="{{ twitter_user.profile_image_url_https }}" alt="User Avatar">
+				</div>
+				<!-- /.widget-user-image -->
+        <h3 class="widget-user-username">{{ twitter_user.name }}</h3>
+				<h5 class="widget-user-desc">{{ twitter_user.description }}</h5>
+			</div>
+			<div class="box-footer no-padding">
+
+
+				<ul class="nav nav-stacked">
+					<li><a href="#">Tweets <span class="pull-right badge bg-blue">{{ twitter_user.statuses_count|intcomma }}</span></a></li>
+					<li><a href="#" onclick="getTwitterUserFollowers();">Followers <span class="pull-right badge bg-aqua">{{ twitter_user.followers_count|intcomma }}</span></a></li>
+					<li><a href="#" onclick="getTwitterUserFriends();">Following <span class="pull-right badge bg-green">{{ twitter_user.friends_count|intcomma }}</span></a></li>
+					<li><a href="#">Likes<span class="pull-right badge bg-red">{{ twitter_user.favourites_count|intcomma }}</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.widget-user -->
+	</div>
+	<!-- /.col -->
+</div>
+{% endif %}
+
+<div class="row">
+{% include 'zerxis/twitter_tweet_row.html' %}
+  <div class="col-md-4">
+          <div class="btn-group">
+            {# hide follow button if profile matches current user #}
+            {% if twitter_user.id_str != uid %}
+            {% if twitter_user.following == True %}
+            <button class="btn btn-danger">
+              <i class="fa fa-twitter"></i>{% trans "Unfollow" %}
+            </button>
+            {% else %}
+            <button class="btn btn-twitter">
+              <i class="fa fa-twitter"></i>{% trans "Follow" %}
+            </button>
+            {% endif %}
+            {% endif %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Create Ticket</a></li>
+              <li><a href="#">Copy Profile URL</a></li>
+            </ul>
+          </div>
+  </div>
+</div>
+
+{% block statuses %}
+<div class="row" id="statuses_row">
+
+	<div class="col-md-8">
+		<!-- Box Comment -->
+        <ul class="timeline">
+	{% for s in statuses %}
+        {% include 'zerxis/twitter_tweet.html' %}
+		{% endfor %}
+        </ul>
+	</div>
+
+</div>
+
+{% endblock statuses %}
+{% block detailspanel %}{% endblock detailspanel %}
+{% include 'zerxis/twitter_js.html' %}
+<script type="text/javascript">
+updateCount();
+</script>
+<script type="text/javascript">
+
+function getTwitterUserFriends() {
+  $.get("{% url "twitter_user_friends" twitter_user.screen_name uid %}",function(data){
+    if(data.twitter_users_html){
+      $('#statuses_row').html(data.twitter_users_html);
+    } else if (!(data.hasOwnProperty("#twitter_users_html"))) {
+      console.log('{% trans "List not found" %}');
+    } else if (data.timeline_html == 'Connect a twitter account..') {
+      console.log("Connect to twitter please");
+    }
+  });
+}
+
+function getTwitterUserFollowers() {
+  $.get("{% url "twitter_user_followers" twitter_user.screen_name uid %}",function(data){
+    if(data.twitter_users_html){
+      $('#statuses_row').html(data.twitter_users_html);
+    } else if (!(data.hasOwnProperty("#twitter_users_html"))) {
+      console.log('{% trans "List not found" %}');
+    } else if (data.timeline_html == 'Connect a twitter account..') {
+      console.log("Connect to twitter please");
+    }
+  });
+}
+</script>
+
+{% endblock content %}

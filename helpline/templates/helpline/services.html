@@ -1,0 +1,6 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load django_tables2 %}
+{% block content %}
+{% render_table services_table %}
+{% endblock content %}

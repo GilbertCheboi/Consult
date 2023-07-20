@@ -1,0 +1,52 @@
+{% extends "helpline/base.html" %}
+{% load static %}
+{% load avatar_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-lg-4 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-aqua">
+			<div class="inner">
+				<h3>Regular</h3>
+
+				<p>A regular number allows both inbound and outbound calls. The caller gets charged at normal telco charges</p>
+			</div>
+			<a href="#" class="small-box-footer">
+				Show list <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-4 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-green">
+			<div class="inner">
+				<h3>Toll free</h3>
+				<p>A toll free number allows only inbound calls. The owner of the toll-free number gets charged at normal telco charges</p>
+			</div>
+			<a href="#" class="small-box-footer">
+				Show list <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-4 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-yellow">
+			<div class="inner">
+				<h3>Premium</h3>
+				<p>A premium number allows only inbound calls. The caller gets charged at a premium</p>
+				<p></p>
+			</div>
+			<a href="#" class="small-box-footer">
+				Show list <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div>
+
+</div>
+
+{% endblock content %}

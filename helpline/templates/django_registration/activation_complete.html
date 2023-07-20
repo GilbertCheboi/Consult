@@ -1,0 +1,37 @@
+{% extends "helpline/helpline_base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="col-md-12">
+      <div class="login-box">
+
+        <div class="login-logo">
+          <a href="#"><img src="{% static 'helpline/images/logo.png' %}" height="150" /></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+          <p class="login-box-msg">
+        <div class="alert alert-success">
+          <h4><i class="icon fa fa-check"></i> Success!</h4>
+          Account activated.
+        </div>
+        </p>
+          Your account has been activated.<a href="{% url 'two_factor:login' %} ">Log in</a>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+{% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}

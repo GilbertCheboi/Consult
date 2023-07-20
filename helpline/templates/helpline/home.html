@@ -1,0 +1,54 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load django_tables2 %}
+
+{% block content %}
+<div id="home_dashboard">
+   . 
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    getHomeDashboard({{ page }});
+});
+</script>
+{% endblock content %}
+
+{% block script_end %}
+
+<script type="text/javascript">
+
+chartviewenabled = true;
+$('#toggle_chart_outbound,#chart-outbound-back-btn').unbind('click').bind('click',
+  function() {
+
+    chartviewenabled = !chartviewenabled;
+    if(chartviewenabled){
+
+      $('#call_history_chart_container').addClass('hide');
+//      $('#chart-view-config').removeClass('hide');
+      $('#call_history_table_container').removeClass('hide');
+      $('#toggle_chart_outbound').removeClass('btn-warning');
+
+
+    } else {
+      $('#call_history_table_container').addClass('hide');
+//      $('#chart-view-config-back-btn').addClass('hide');
+      $('#call_history_chart_container').removeClass('hide');
+      $('#toggle_chart_outbound').addClass('btn-warning');
+
+    }
+  });
+
+
+</script>
+
+<script type="text/javascript">
+// Get the queue data on page load
+$(document).ready(function(){
+     getDataQueues();
+});
+</script>
+
+{% endblock script_end %}

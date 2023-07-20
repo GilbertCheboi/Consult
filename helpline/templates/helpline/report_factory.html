@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load django_tables2 %}
+<div class="col-md-4">
+  {% for format in table.export_formats %}
+  <a class="btn btn-app"  onclick="window.open('{% querystring '_export'=format %}');">
+    <i class="fa fa-save"></i> <strong>{% trans "Export" %} .{{ format }}</strong>
+  </a>
+  {% endfor %}
+  <a class="btn btn-app">
+    <i class="fa fa-envelope-o"></i> <strong>{% trans "Email Report" %}</strong>
+  </a>
+</div>
+
+{% if table %}
+{% render_table table %}
+{% endif %}

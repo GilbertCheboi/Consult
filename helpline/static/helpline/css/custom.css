@@ -1,0 +1,27 @@
+
+/* button remove agent from queue like a tag */
+.remove-queue:hover{
+    color: #23527c;
+    text-decoration: none;
+    outline: none;
+}
+.remove-queue {
+    background: none;
+    border: none;
+    display: inline;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    outline-offset: 0;
+    color: #337ab7;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+///designed for the helpline
+.login-page{
+    background: #d2d6de;
+    background-size: cover;
+    background-image: url(static/helpline/images/315382.jpg);
+}

@@ -1,0 +1,107 @@
+        <div class="container-fluid">
+          <div class="row justify-content-center home-pallete">
+            <div class="col-lg-2 col-md-6 col-sm-6 palette-item">
+              <div class="color-palete-set">
+                <div class="card-header card-header-success card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="total_calls">-</span></h3>
+                </div>
+                <div class="card-footer bg-blue color-palette">
+                  <div class="stats">
+                    {{ _('Total Calls') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-6 palette-item">
+              <div class="color-palete-set">
+                <div class="card-header card-header-success card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_answered">-</span></h3>
+                </div>
+                <div class="card-footer bg-green color-palette">
+                  <div class="stats">
+                    {{ _('Answered') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-6 palette-item">
+              <div class="card card-stats color-palette-set">
+                <div class="card-header card-header-danger card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_abandoned">-</span></h3>
+                </div>
+                <div class="card-footer bg-red color-palette">
+                  <div class="stats">
+                    {{ _('Abandoned') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hide col-lg-2 col-md-6 col-sm-6 palette-item">
+              <div class="card card-stats color-palette-set">
+                <div class="card-header card-header-warning card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_incoming">-</span></h3>
+
+                </div>
+                <div class="card-footer bg-yellow color-palette">
+                  <div class="stats">
+                    {{ _('Incoming') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% if show_service_level and not is_freeswitch %}
+            <div class="col-lg-2 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_servicelevel"></span></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    {{ _('Service Level') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if not is_freeswitch %}
+            <div class="col-lg-2 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_av_time">-</span></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    {{ _('Average time') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                  <p class="card-category"></p>
+                  <h3 class="card-title"><span id="queue_av_wait">-</span></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    {{ _('Average Wait') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+

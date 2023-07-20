@@ -1,0 +1,13 @@
+{% extends 'error_base.html' %}
+{% load i18n %}
+{% block content %}
+<h3>
+	{% trans "502 Error" %}
+</h3>
+
+
+{% trans "The request to the server timed out. Please try again." %}
+<p>
+If this persist contact support@zerxis.com
+</p>
+{% endblock %}

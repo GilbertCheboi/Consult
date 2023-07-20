@@ -1,0 +1,38 @@
+{% extends "socialaccount/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Social Network Login Failure" %}{% endblock %}
+
+{% block content %}
+
+
+<div class="wrappyer" style="height: auto; min-height: 100%;">
+  <div class="col-md-12">
+    <div class="login-box">
+
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <div class="callout callout-danger">
+          <h4>{% trans "Social Network Login Failure" %}</h4>
+          <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  {% endblock %}
+
+  {% block javascript %}
+
+  <script>
+    {% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+  </script>
+
+</div>
+
+{% endblock %}

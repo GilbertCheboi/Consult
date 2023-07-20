@@ -1,0 +1,388 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Call Center Africa | Features</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="{% static "index/images/favicon.ico" %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700,900">
+    <link rel="stylesheet" href="{% static "index/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/fonts.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/style.css" %}" id="main-styles-link">
+    <!--[if lt IE 10]>
+      <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+
+      <header class="section page-header">
+
+        <div class="rd-navbar-wrap rd-navbar-absolute">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-device-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+
+                <div class="rd-navbar-panel">
+
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+
+                  <div class="rd-navbar-brand">
+                    <a class="brand" href="{% url "dashboard_home" %}"><img class="brand-logo-dark" src="https://zerxis.com/assets/img/logo.png" alt="" width="200" />
+                      <img class="brand-logo-light" src="{% static "helpline/zerxis_logo_small.png" %}" alt="" width="200" /></a>
+                  </div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url "dashboard_home" %}">Home</a>
+                      </li>
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="{% url "features" %}">Features</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">Jobs</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">Contacts</a>
+                      </li>
+                      {% if request.user.is_authenticated %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Dashboard</a>
+                      </li>
+                      {% else %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'two_factor:login' %}">Login</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+
+                  <div class="rd-navbar-search">
+                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
+                    <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                      <div class="form-wrap">
+                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
+                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
+                      </div>
+                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section section-bredcrumbs">
+        <div class="container context-light breadcrumb-wrapper">
+          <h1>Features</h1>
+          <ul class="breadcrumbs-custom">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">Features</li>
+          </ul>
+        </div>
+      </section>
+      <section class="section section-lg">
+        <div class="container text-center">
+          <div class="row no-gutters justify-content-center">
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-decor-top">
+                <div class="title">BASIC</div>
+                <p class="exeption">This option is perfect if you need to start a simple call center for your corporate or personal needs and want to save money on call center solutions.<br>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-1-primary">
+                <div class="title">BUSINESS</div>
+                <p class="exeption">This offer provides you with extended support, Reports and API inegration for your future call center as well as fair pricing and more useful features for your call center projects.<br>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="price-box-1 price-box-decor-bottom">
+                <div class="title">ENTERPRISE</div>
+                <p class="exeption">For partnership, vision and transformation or your organization - choose this plan if you need to operate a powerful call center with lots of features, extended support, and dedicated resources. </p>
+              </div>
+            </div>
+          </div>
+          <div class="row row-offset-1" style=" margin-top:10px;">
+            <div class="col-lg-12 col-xxl-12">
+              <div class="table-custom-responsive">
+                <table class="table-custom table-custom-bordered">
+                  <thead>
+                    <tr>
+                      <th style="background-color:#f4f7ff; text-align:center;">BASIC</th>
+                      <th style="background-color:#437fec; color:#FFF;text-align:center;">BUSINESS</th>
+                      <th style="background-color:#f4f7ff; text-align:center;">ENTERPRISE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td valign="top">
+                        <ol class="list-marked">
+                          <li>Outbound Per-Minute Call Cost KES 4.0</li>
+                          <li>Inbound Per-Minute Call Cost KES 0</li>
+                          <li>Safaricom Number</li>
+                          <li>Telkom Number 020</li>
+                          <li>Campaign Management</li>
+                          <li>Outbound and Inbound Calls </li>
+                          <li>Reports and Statistics</li>
+                          <li>Voice Recording </li>
+                          <li>Telecommunications Services</li>
+                          <li>Predictive Dialer</li>
+                          <li>User Right Management</li>
+                          <li>Web Integration</li>
+                          <li>Transfers</li>
+                          <li>Timezone handling</li>
+                          <li>Intelligent IVR</li>
+                          <li>Support</li>
+                        </ol>
+                      </td>
+                      <td valign="top" style="background-color:#437fec; color:#FFF;">
+                        <ol class="list-marked">
+                          <li>Outbound Per-Minute Call Cost KES 4.0</li>
+                          <li>Inbound Per-Minute Call Cost KES 0</li>
+                          <li>Safaricom Number</li>
+                          <li>Telkom Number 020</li>
+                          <li>Campaign Management</li>
+                          <li>Outbound and Inbound Calls </li>
+                          <li>Reports and Statistics</li>
+                          <li>Voice Recording </li>
+                          <li>Telecommunications Services</li>
+                          <li>Predictive Dialer</li>
+                          <li>User Right Management</li>
+                          <li>Web Integration</li>
+                          <li>Transfers</li>
+                          <li>Intelligent IVR</li>
+                          <li>Quality Control</li>
+                          <li>Unique Statistics</li>
+                          <li>API</li>
+                          <li>Text-to-speech</li>
+                          <li>Higher Level of Security</li>
+                          <li>Additional Phone Numbers</li>
+                          <li>System Training</li>
+                          <li>Support</li>
+                        </ol>
+                      </td>
+                      <td valign="top">
+                        <ol class="list-marked">
+                          <li>Outbound Per-Minute Call Cost <br>
+                            less than KES 4.0</li>
+                          <li>Inbound Per-Minute Call Cost KES 0</li>
+                          <li>Safaricom Number</li>
+                          <li>Telkom Number 020</li>
+                          <li>Campaign Management</li>
+                          <li>Outbound and Inbound Calls </li>
+                          <li>Reports and Statistics</li>
+                          <li>Voice Recording </li>
+                          <li>Telecommunications Services</li>
+                          <li>Predictive Dialer</li>
+                          <li>Internal Chat</li>
+                          <li>Automated E-mails</li>
+                          <li>User Right Management</li>
+                          <li>Web Integration</li>
+                          <li>Transfers</li>
+                          <li>Timezone handling</li>
+                          <li>Intelligent IVR</li>
+                          <li>Quality Control</li>
+                          <li>Expanded Data Handling</li>
+                          <li>Unique Statistics</li>
+                          <li>Wallboard</li>
+                          <li>Advanced API</li>
+                          <li>Text-to-speech</li>
+                          <li>Dashboards</li>
+                          <li>Real-time Quality Management</li>
+                          <li>Personal Consultant</li>
+                          <li>WhatsApp integration</li>
+                          <li>Facebook Messenger integration</li>
+                          <li>Ticket-based Case Handling</li>
+                          <li>Higher Level of Security</li>
+                          <li>Additional Phone Numbers</li>
+                          <li>Toll Free Phone Number</li>
+                          <li>Premium Customer Care</li>
+                          <li>Support</li>
+                          <li>System Training</li>
+                          <li>Customer Service Training</li>
+                          <li>Voice Blasts</li>
+                        </ol>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td style="background-color:#f4f7ff; font-weight:bold; text-align:center;">BASIC</td>
+                      <td style="background-color:#437fec; color:#FFF; font-weight:bold; text-align:center;">BUSINESS</td>
+                      <td style="background-color:#f4f7ff; font-weight:bold; text-align:center;">ENTERPRISE</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lg bg-default">
+        <div class="container">
+          <div class="row row-30 row-offset-1">
+            <div class="col-12">
+              <div class="grid-demonstration-item">
+                <p>It’s designed to handle incoming and outgoing call campaigns through an easy-to-use agent console and call management interface.</p>
+                <p>It allows the collaboration in real time and improves the productivity of the agents and supervisors through Unified Communications.</p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="list-icon">
+                <div class="list-icon-title"><span class="icon-item fa-bar-chart-o"></span>
+                  <div class="title">Statistical Reports</div>
+                </div>
+                <ol class="list-marked">
+                  <li>Report of breaks</li>
+                  <li>Call detail</li>
+                  <li>Calls per hour</li>
+                  <li>Calls by agent</li>
+                  <li>Standby</li>
+                  <li>Login and logout time</li>
+                  <li>Successful incoming calls</li>
+                  <li>Monitoring of agents</li>
+                  <li>Monitoring incoming calls</li>
+                  <li>Agent information</li>
+                  <li>General report: Agent connection time per day</li>
+                  <li>Report of used trunks per hour in the day</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="list-icon">
+                <div class="list-icon-title"><span class="icon-item fa-line-chart"></span>
+                  <div class="title">Real-Time Reports</div>
+                </div>
+                <ol class="list-marked">
+                  <li>Monitoring of agents</li>
+                  <li>Monitoring incoming calls</li>
+                  <li>Monitoring campaign</li>
+                  <li>Agent number</li>
+                  <li>Type of call</li>
+                  <li>Answered calls</li>
+                  <li>Duration and average</li>
+                  <li>Longer call</li>
+                  <li>Initial, final date. Total login</li>
+                  <li>Incoming and outgoing calls</li>
+                  <li>Time in calls, service</li>
+                  <li>Status</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="list-icon">
+                <div class="list-icon-title"><span class="icon-item fa-gears"></span>
+                  <div class="title">Functions</div>
+                </div>
+                <ol class="list-marked">
+                  <li>Automated attendant</li>
+                  <li>Predictive Marker, Preview</li>
+                  <li>IVR - Interactive Voice Response</li>
+                  <li>Automatic call distribution</li>
+                  <li>Reports and statistics</li>
+                  <li>Support for Blending</li>
+                  <li>Recording calls by interface</li>
+                  <li>Associate text "scripts" to campaigns</li>
+                  <li>Multiple interface languages</li>
+                  <li>Support for Do-Not-Call List</li>
+                  <li>“Whispering”</li>
+                  <li>Silent monitoring</li>
+                  <li>Outbound and inbound campaigns</li>
+                  <li>Supervision in Real-Time and historical</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="list-icon">
+                <div class="list-icon-title">
+                </div>
+                <ol class="list-marked">
+                  <li>Care groups by campaigns</li>
+                  <li>Handling calls in a queue</li>
+                  <li>Campaign Forms (Web Wizard)</li>
+                  <li>Web administration</li>
+                  <li>Agent Console</li>
+                  <li>Support for various types of Breaks</li>
+                  <li>Call Scoring</li>
+                  <li>SMS Outbound Module</li>
+                  <li>Call Recording Module</li>
+                  <li>Integration with Existing Applications</li>
+                  <li>Chat module, web mode and Smartphone mode</li>
+                  <li>Advanced reporting</li>
+                  <li>Integration to CRM (Web Services)</li>
+                  <li>Integration to databases: Oracle: MSSQL, MySQL, Postgresql</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <a class="button button-lg button-secondary" href="#" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Request Quotation</a>
+        </div>
+      </section>
+      <section class="section section-lg bg-gray-100 bg-light-figure">
+        <div class="container">
+          <div class="row row-20 justify-content-center justify-content-lg-between">
+            <div class="col-md-6 col-lg-6">
+              <div class="grid-demonstration-item">
+                <h5>Outbound Campaigns</h5>
+                <ol class="list-marked">
+                  <li>Generate calls from a phone list</li>
+                  <li>The calls are assigned to the agents to intercommunicate with the clients</li>
+                  <li>Predictive dialer generates calls seeking the highest efficiency</li>
+                  <li>
+                    The operator receives information from the user and enters it into the database through forms</li>
+                  <li>The information can be exported to spreadsheets</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <div class="grid-demonstration-item">
+                <h5>Inbound Campaigns</h5>
+                <ol class="list-marked">
+                  <li>Contact Center receives calls and assigns them to agents through queues.</li>
+                  <li>You can feed a base of telephone numbers and customers to know who is generating the call and provide better customer service.</li>
+                </ol>
+              </div>
+            </div>
+            <a class="button button-lg button-secondary" href="#" data-caption-animate="fadeInUp" data-caption-delay="150" style="margin-left:30px;">Request Quotation</a>
+          </div>
+        </div>
+      </section>
+
+      {% include "helpline/index_footer.html" %}
+
+    </div>
+
+    <div class="snackbars" id="form-output-global"></div>
+
+    <script src="{% static "index/js/core.min.js" %}"></script>
+    <script src="{% static "index/js/script.js" %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-199244690-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-199244690-1');
+    </script>
+  </body>
+</html>

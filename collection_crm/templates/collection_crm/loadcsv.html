@@ -1,0 +1,177 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<div class="container-fluid" style="background-color:#FFF;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+
+				<td valign="top">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tbody><tr>
+								<td valign="top" width="75%"><div style="padding-left:20px; padding-right:10px;">
+										<h1>Upload Leads </h1>
+
+
+
+
+										<div class="formCon">
+
+											<div class="formConInner">
+
+												<h3>File Details</h3>
+												<form action="/collection_crm/admin/loadcsv.php?" method="POST" enctype="multipart/form-data" name="form1" id="form1">
+													<table width="80%" border="0" style="margin-left:40px;" cellspacing="0" cellpadding="0">
+
+														<tbody><tr>
+																<td>&nbsp;</td>
+															</tr>
+															<tr>
+																<td></td>
+															</tr>
+															<tr>
+                                <td><a onclick="window.open('{% static "upload_template/Leads_Template_Version_5.csv" %}')" target="_blank">DOWNLOAD CSV UPLOAD TEMPLATE HERE »</a></td>
+																<td>&nbsp;</td>
+																<td>&nbsp;</td>
+															</tr>
+															<tr>
+																<td colspan="2"><strong>Template format preview</strong><br>
+																	<img src="{% static "images/template_view_version_3.jpg" %}" alt=""></td>
+																<td>&nbsp;</td></tr>
+															<tr>
+
+
+																<td>
+
+
+																</td></tr><tr>
+																	<td height="92"><p>
+																		<label for="call_user"></label>
+																		<select required="" name="call_user" id="call_user">
+																			<option value="">Select User</option>
+																			<option value="ALL">----ALL AGENTS----</option>
+																			<option value="atieno.opidi">Atieno Opidi</option>
+																			<option value="austin.kamau">Austin Kamau</option>
+																			<option value="charles.wasonga">Charles Wasonga</option>
+																			<option value="christine.onsumu">Christine Onsumu</option>
+																			<option value="hariet.kapkarich">Hariet Kapkarich</option>
+																			<option value="elizabeth.wainaina">Kelvin Kungu</option>
+																			<option value="patrick">Patrick Mithamo</option>
+																			<option value="paul.nyatochi">Paul Nyachoti</option>
+																			<option value="roman.hinga">Roman Hinga</option>
+																			<option value="stephanie.wainaina">Stephanie Wainaina</option>
+																			<option value="rose.ruguru">Teresa Amigo</option>
+																			<option value="victoria.maweu">Victoria Maweu</option>
+																		</select>
+																		</p>
+																		<p>&nbsp;</p>
+																		<p>
+																		<label for="batch">Batch Name</label>
+																		<input autocomplete="off" required="required" type="text" name="batch" id="batch">
+																		</p></td>
+																		<td><input type="hidden" name="account_number" id="account_number">
+																			<br>                                                                    <br></td>
+																		<td>&nbsp;</td></tr>
+
+																<tr>
+																	<td height="92">Client
+																		<br>
+																		<select name="client" id="client">
+																			<option value="">Select Client</option>
+																			<option value="1">Equity</option>
+																			<option value="4">NCBA</option>
+																			<option value="3">Safaricom</option>
+																			<option value="2">Sidian</option>
+																		</select></td>
+																		<td>&nbsp;</td>
+																		<td>&nbsp;</td>
+																</tr>
+
+																<tr>
+																	<td height="92">Campaign
+																		<br>
+																		<select name="campaign_id" id="campaign_id">
+																			<!-- <option value="">Select Campaign</option> -->
+																			<option value="">Loader found no data!</option>
+																		</select></td>
+																		<td>&nbsp;</td>
+																		<td>&nbsp;</td>
+																</tr>
+
+																<tr>
+																	<td height="54" valign="bottom" style="padding-bottom:3px;"><label>Select CSV File to Upload
+																			<input name="filename" required="required" type="file" id="csv" onchange="ValidateSingleInput(this);">
+																		</label></td>
+																		<td>&nbsp;</td>
+																</tr>
+
+																<tr><td height="41">&nbsp;</td>
+																	<td>&nbsp;</td>
+																	<td>&nbsp;</td></tr>
+																<tr>
+																	<td><input name="submit" type="submit" id="save" style=" padding:0px 20px;
+																																																 background:url({% static "images/fbut-bg.png" %}) repeat-x;
+																																																 height:37px;
+																																																 -webkit-border-radius: 4px;
+																																																 -moz-border-radius: 4px;
+																																																 border-radius: 4px;
+																																																 border:1px #b58530 solid;
+																																																 color:#633c15;
+																																																 font-size:13px;
+																																																 cursor:pointer;
+																																																 " value="Upload File"></td>
+
+
+																</tr>
+
+
+
+
+
+														</tbody></table>
+														<input type="hidden" name="MM_insert" value="form1">
+												</form>
+												<div style=" margin-left:300px;">
+													<form id="client_form" name="client_form" method="POST" action="/collection_crm/admin/loadcsv.php?">
+														<table width="434" border="0" cellpadding="0" cellspacing="0">
+															<tbody><tr>
+																	<td><strong>Clients</strong></td>
+																</tr>
+																<tr>
+																	<td><input type="text" name="client" id="client" autocomplete="off">
+																		<input type="submit" name="button" id="button" value="Add To List"></td>
+																</tr>
+																<tr>
+																	<td>1. Equity</td>
+																</tr>
+																<tr>
+																	<td>2. NCBA</td>
+																</tr>
+																<tr>
+																	<td>3. Safaricom</td>
+																</tr>
+																<tr>
+																	<td>4. Sidian</td>
+																</tr>
+															</tbody></table>
+															<input type="hidden" name="MM_insert" value="client_form">
+													</form>
+												</div>
+											</div></div></div></td></tr><tr>
+
+
+
+
+
+
+
+
+											</tr>
+
+						</tbody></table>
+				</td>
+			</tr>
+
+		</tbody></table>
+</div>
+{% endblock content %}

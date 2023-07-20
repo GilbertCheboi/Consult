@@ -1,0 +1,735 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+{% load humanize %}
+{% load i18n %}
+
+    {% block content %}
+  <div class="invoice">
+	  <div class="row">
+		  <div class="col-xs-12">
+			  <h2 class="page-header">
+                  <i class="fa fa-globe"></i>
+                  <span id="servicename">{{ data.data.name }} | {{ service.extension }}</span>
+              {% if form %}
+                      <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#servicename-modal"><i class="fa fa-edit"></i>{% trans "Edit" %}</a>
+              {% endif %}
+				  <small class="pull-right">
+					{{ _('Agents') }}: <span id="queue_total_agent" class="label label-default"></span>
+				  </small>
+			  </h2>
+		  </div>
+
+	  </div>
+
+
+    <div class="main-panel">
+
+      <div class="content">
+        <div class="row">
+        {% include 'helpline/queue_row_general_data.html' %}
+       </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">
+                </h4>
+                <div class="box-tools pull-right">
+                  <button type="button" data-action="add_queue_memeber" onclick="addQueueMember('{{ name }}');" class="btn btn-block btn-primary">
+                      {% trans "Add Member" %}
+                      <i class="fa fa-plus" id="add_queue_member_icon"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table" id="agents">
+                    <thead class=" text-primary">
+                      <th>
+                        {{ _('Name') }}
+                      </th>
+                      <th>
+                        {{ _('Interface') }}
+                      </th>
+                      <th>
+                        {{ _('Status') }}
+                      </th>
+                      <th>
+                        {{ _('Calls') }}
+                      </th>
+                      <th>
+                        {{ _('Last call at') }}
+                      </th>
+                      <th>
+                        {{ _('Actions') }}
+                      </th>
+                    </thead>
+                    <tbody>
+
+                    {% for agent_id, agent in data.members.items %}
+                      <tr id="agent-{{ agent_id }}">
+                        <td>{{ agent.Name }}</td>
+                        <td>{{ agent.StateInterface }}</td>
+                        <td class="status">
+                          <span class="badge badge-info state">
+                            {{ agent.Status }}
+                           </span>
+                        </td>
+                        <td class="calls">
+                          {{ agent.CallsTaken }}
+                          <td class="last_call">{{ agent.LastCall }} {{agent.last_outbound_call }}</td>
+                        <td class="actions" data-channel="{{ agent.StateInterface }}">
+                            <button type="button" data-action="spy" class="btn btn-success btn-sm">{{ _('Spy')}}</button>
+                            <button type="button" data-action="whisper" class="btn btn-warning btn-sm">{{_('Whisper') }}</button>
+                            <button type="button" data-action="barge" class="btn btn-info btn-sm">{{ _('Barge') }}</button>
+                            <button type="button" data-queue="{{ name }}" class="remove-queue btn btn-danger btn-sm">{{ _('Remove from queue') }}</button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">
+                    {{ _('Callers') }}: <span id="total_callers" class="label label-default"></span>
+                </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table" id="callers">
+                    <thead class=" text-primary">
+                      <th>
+                        {{ _('Id Name') }}
+                      </th>
+                      <th>
+                        {{ _('Id Number') }}
+                      </th>
+                      <th>
+                        {{ _('Position') }}
+                      </th>
+                      <th>
+                        {{ _('Wait') }}
+                      </th>
+                      <th></th>
+                   </thead>
+                    <tbody>
+
+                    {% for key, caller in data.entries.items %}
+                      <tr id="caller-{{ caller.Uniqueid }}" data-uniqueid="{{ caller.Uniqueid }}">
+                        <td>{{ caller.CallerIDName }}</td>
+                        <td>{{ caller.CallerIDNum }}</td>
+                        <td>{{ caller.Position }}</td>
+                        <td class="wait">{{ caller.Wait }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-xs stop-call">
+                                <i class="fa fa-ban"></i>
+                            </button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">
+                  {{ _('Outgoing Call History') }}: <span id="call_history" class="label label-default"></span>
+                  <div class="box-tools pull-right" id="call_history_action">
+                    <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                      <input type="text" id="cdr_table_search" name="cdr_table_search" class="form-control pull-right" placeholder="Search">
+                      <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive col-md-12">
+                  {% if call_history_table %}
+                  {% render_table call_history_table %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal spy and whisper -->
+        <div id="spy_whisperk" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="swModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+              </div>
+              <div class="col-lg-2">
+                <h4><i class="fa fa-headphones fa-5x"></i> </h4>
+              </div>
+              <div class="col-lg-10">
+                <br/>
+                <p>{{ _('Insert where  you listen the call, example: <i>SIP/1001</i>')}}</p>
+                <div class="input-group">
+                  <input id="to_exten" type="text" class="form-control" value="">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" id="execute-action" data-action="" data-channel=""  title="{{_('Listen ')}}"></button>
+                  </span>
+                </div>
+                <div class="input-group">
+                  <label class="modal-message"></label>
+                </div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal spy and whisper -->
+
+        <!-- Service name edit modal -->
+        <div class="modal fade" id="servicename-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i>{% trans "Update" %}</h4>
+                    </div>
+                    <form id="frmUpdate" action="{% url "queue" name %}" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                {{ form|crispy  }}
+                            </div>
+                            <div class="modal-footer clearfix">
+
+                                <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal"><i class="fa fa-times"></i>{% trans "Discard" %}</button>
+
+                                <button type="submit" id="updateService" name="updateService" class="btn btn-primary btn-lg pull-left"><i class="fa fa-save"></i> {% trans "Save" %}</button>
+                            </div>
+                            {% csrf_token %}
+                        </div><!-- /.modal-content -->
+                    </form>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+        <!-- END Service name edit modal -->
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <script type="application/javascript">
+        $(document).ready(function () {
+            getDataQueue(); //load data on page ready :)
+            handleEventButtons();
+            setInterval(function () {
+                getDataQueue();
+            }, 3600);
+        });
+        // parse data and put values on view
+        function parseDataQueue(data){
+            if (data == null) {
+                return 0;
+            }
+          $('#total_talk_time').html(parseInt(data.total_talk_time).toString().toMMSS());
+          $('#queue_answered').html(data.Completed);
+          $('#queue_abandoned').html(data.Abandoned);
+          $('#queue_incoming').html(data.Calls);
+          if (typeof data.Strategy !== 'undefined'){
+            $('#servicename').html(data.name + " | " + data.Strategy);
+          } else {
+            $('#servicename').html(data.name);
+          }
+          $('#queue_av_wait').html(parseInt(data.Holdtime).toString().toMMSS());
+          $('#queue_av_time').html(parseInt(data.TalkTime).toString().toMMSS());
+
+          {% if show_service_level %}
+          $("#queue_servicelevel").html(data.ServicelevelPerf + '%');
+          {% endif %}
+          total_calls = parseInt(data.Completed) + parseInt(data.Abandoned);
+
+          //agents
+          var agents_ids = Array();
+          for (agent in data.members) {
+            agent_id_div = clean_div_name(agent);
+            calls_taken = data.members[agent].CallsTaken;
+            if (calls_taken == null) {
+              calls_taken = 0;
+            }
+            outbound_calls_count = data.members[agent].outbound_calls_count;
+            if (outbound_calls_count == null) {
+              outbound_calls_count = 0;
+            }
+            total_calls_count = parseInt(calls_taken) + parseInt(outbound_calls_count);
+            total_calls = total_calls + outbound_calls_count;
+            $('#agent-' + agent_id_div + ' .calls').html(total_calls_count);
+
+            str_time_ago = ''
+            last_outbound_call = data.members[agent].last_outbound_call;
+            if (last_outbound_call == "1970-01-01 00:00:00") {
+              last_outbound_call = '';
+            } else {
+              if (last_outbound_call > 0) {
+                last_outbound_call = moment(last_outbound_call).fromNow();
+              }
+
+            }
+
+            if (data.members[agent].LastCall > 0) {
+               str_time_ago = data.members[agent].LastCallAgo;
+            }
+            if (str_time_ago > last_outbound_call) {
+              last_call_string = str_time_ago;
+            } else {
+              last_call_string = last_outbound_call;
+            }
+            $('#agent-' + agent_id_div + ' .last_call').html(last_call_string)
+
+            $('#agent-' + agent_id_div + ' .status .state').html(data.members[agent].Status.toStrStatusAgent())
+            addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+
+            if (data.members[agent].Paused == true) {
+                // reason pause introduced in https://goo.gl/Njm6H5
+                // if dont have feature in your Asterisk
+                // check directory patches
+                var reason = '';
+                if (data.members[agent].PausedReason){
+                    reason = ": {reason}".format({'reason': data.members[agent].PausedReason});
+                }
+                var last_pause_time = '';
+                if (parseInt(data.members[agent].LastPauseAgo.split(" ")[0]) > 0){
+                    last_pause_time = " {{ _('was') }} {last_pause} {{_('ago') }}".format({'last_pause': data.members[agent].LastPauseAgo});
+                }
+
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+                $('#agent-'+ agent_id_div +' .status .state')
+                   .after(' <span class="label label-success label-mini pause">{{ _('paused') }}'+ reason + last_pause_time + '</span>');
+            } else {
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+            }
+
+
+            if ($('#agent-' + agent_id_div).length == 0) {
+
+                var tr = '<tr id="agent-'+agent_id_div+'"><td>'
+                         + data.members[agent].Name + '</td>'
+                         + '<td>'+data.members[agent].StateInterface + '</td>'
+                         + '<td class="status"> <span class="badge badge-info state">'
+                         + data.members[agent].Status.toStrStatusAgent()
+                         + '</span></td>'
+                         + '<td class="calls">'+ data.members[agent].CallsTaken +'</td>'
+                         + '<td class="last_call"></td>'
+                         + '<td class="actions" data-channel="' + data.members[agent].StateInterface + '">'
+                         +      '<button type="button" data-action="spy" class="btn btn-success btn-sm">{{ _('Spy') }}</button> '
+                         +      '<button type="button" data-action="whisper" class="btn btn-warning btn-sm">{{ _('Whisper') }}</button> '
+                         +      '<button type="button" data-action="barge" class="btn btn-info btn-sm">{{ _('Barge') }}</button> '
+                         +      '<button type="button" data-queue="{{ name }}" class="remove-queue btn btn-danger btn-sm">{{ _('Remove from queue') }}</button>'
+                         + '</td>'
+                         + '</tr>';
+
+                if ($('#agents tbody tr:last').length > 0){
+                    $('#agents tbody tr:last').after(tr);
+                } else {
+                    $('#agents tbody').append(tr);
+                }
+                addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+                handleEventButtons();
+            }
+
+            agents_ids.push(agent_id_div);
+          }
+          $('#queue_total_agent').html("{total}".format({total:  Object.keys(data.members).length}));
+          $('#total_calls').html(total_calls);
+
+          //callers
+          var uniques_ids = Array();
+          for (caller in data.entries) {
+            c = data.entries[caller];
+
+            if ($("[id='caller-"+ c.Uniqueid + "']").length == 0) {
+              console.log('add:' + c.Uniqueid);
+
+              var tr = '<tr id="caller-' + c.Uniqueid + '" data-uniqueid="' + c.Uniqueid + '"><td>'
+                        + c.CallerIDName + '</td>'
+                        + '<td>' + c.CallerIDNum + '</td>'
+                        + '<td class="position">'  + c.Position + '</td>'
+                        + '<td class="wait">' + c.WaitAgo + '</td>'
+                        + '<td>'
+                        +    '<button class="btn btn-danger btn-xs stop-call">'
+                        +       '<i class="fa fa-ban"></i>'
+                        +     '</button>'
+                        + '</td>'
+                        + '</tr>'
+
+
+              if ($('#callers tbody tr:last').length > 0){
+                $('#callers tbody tr:last').after(tr);
+              } else {
+                $('#callers tbody').append(tr);
+              }
+            }
+
+            $("[id='caller-"+ c.Uniqueid + "'] .wait").html(c.WaitAgo);
+            $("[id='caller-"+ c.Uniqueid + "'] .position").html(c.Position);
+            uniques_ids.push(c.Uniqueid);
+          }
+          $.each($("[id^='caller-']"), function( index, value ) {
+            uid = $(value).data('uniqueid');
+            if (uniques_ids.indexOf(uid.toString()) == -1) {
+              console.log('removed: ' + uid);
+              $("[id='caller-"+ uid +"']").remove();
+            }
+          });
+          $('#queue_total_callers').html("{total}".format({total:  Object.keys(data.entries).length}));
+          $.each($("[id^='agent-']"), function( index, value ) {
+            uid = $(value).attr('id').substring(6);
+            if (agents_ids.indexOf(uid.toString()) == -1) {
+              console.log('removed: ' + uid);
+              $("[id='agent-"+ uid +"']").remove();
+            }
+          });
+
+          $('#strategy').html(data.Strategy);
+        }
+
+        function getDataQueue() {
+            var result;
+            var r = $.ajax({
+                type: 'GET',
+                url: '{% url 'queue_json' name %}'
+            });
+            r.done(function (response) {
+                if (response) {
+                    result = response.data;
+                    parseDataQueue(result);
+                }
+            });
+            r.fail(function (response) {
+            });
+
+            r.always(function () {
+            });
+        }
+
+
+        //handle show modal for Spy and Whisper
+        function handleEventButtons() {
+            $('.actions* button').not('.remove-queue').on('click', function() {
+                var action = $(this).data('action');
+                channel = $(this.closest('td')).data('channel');
+                $('#spy_whisperk #execute-action').data('channel', channel);
+                $('#spy_whisperk #execute-action').data('action', action);
+                $('#spy_whisperk #execute-action').html(action);
+                to_exten.value = 'SIP/' + $('#you').text();
+                $('#spy_whisperk .modal-header h4').html('{{_('Execute a ')}}' + action);
+                $('#spy_whisperk').modal();
+            });
+        $('.remove-queue').unbind().click(function() {
+            var tr = $(this).closest("tr");
+            var queue = $(this).data('queue');
+            var agent = $(this.closest('td')).data('channel');
+
+            console.log('remove agent %s from %s', agent, queue);
+            button = $(this);
+            $('.message-hangup').remove();
+
+            var r = $.ajax({
+                type: 'post',
+              headers: {'X-CSRFToken': csrftoken},
+                url: '{% url 'remove_from_queue' %}',
+              headers: {'X-CSRFToken': csrftoken},
+                data: {agent: agent, queue: queue}
+            });
+            r.done(function (response) {
+                if (response) {
+                    console.log(response);
+                    console.log(response.Message);
+                    msg = '<span class="btn btn-xs message-hangup">'
+                        + response.Message + '</span>';
+
+                    $(button).after(msg);
+                    toastr.success(response.Message, response.Messsage);
+                    var status = response.Response;
+                    console.log(status);
+                    if (status == 'failed') {
+                        $('.message-hangup').addClass('btn-danger');
+                    } else {
+                        $('.message-hangup').addClass('btn-success');
+                        setTimeout(function() { tr.remove(); }, 1000);
+                        var total_agents = (parseInt($('#queue_total_agent').html()) - 1);
+                        $('#queue_total_agent').html("{total}".format({total:  total_agents}));
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+        });
+        }
+
+        var r=null;
+        $('#execute-action').on('click', function() {
+            var to_exten = $('#spy_whisperk  #to_exten').val();
+            if (to_exten == "") {
+                $('.modal-message').html('{{_('Insert where you listen from')}}');
+                $('.modal-message').addClass('has-error')
+                return 0;
+            }
+
+            $('.modal-message').removeClass('has-error');
+            $('.modal-message').html('{{_('Try...')}}');
+
+            var channel = $(this).data('channel');
+            var action = $(this).data('action');
+
+            console.log("do a %s to channel %s", action, channel);
+
+            var url_action = ''
+            if (action == 'spy') {
+                url_action = '{% url 'spy' %}';
+            } else if (action == 'whisper') {
+                url_action = '{% url 'whisper' %}';
+            } else if (action == 'barge') {
+                url_action = '{% url 'barge' %}';
+            }
+            var r = $.ajax({
+                type: 'post',
+                url: url_action,
+              headers: {'X-CSRFToken': csrftoken},
+                data: {channel: channel, to_exten: to_exten}
+            });
+            r.done(function (response) {
+                if (response) {
+                    var status = response.Response;
+                    if (status == 'failed') {
+                        $('.modal-message').html("Failed:" +  response.Message);
+                        $('.modal-message').addClass('has-error')
+                    } else {
+                        $('.modal-message').html(response.Message);
+                        $('.modal-message').removeClass('has-error')
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+            r.always(function () {
+                $('#execute-action').prop("disabled", false);
+            });
+        });
+
+
+
+        $('.stop-call').on('click', function() {
+            var tr = $(this).closest("tr");
+            var uniqueid = tr.data('uniqueid');
+            console.log('stop call %s...', uniqueid );
+            button = $(this);
+            $('.message-hangup').remove();
+
+            var r = $.ajax({
+                type: 'post',
+              headers: {'X-CSRFToken': csrftoken},
+                url: '/hangup',
+                data: {channel: uniqueid}
+            });
+            r.done(function (response) {
+                if (response) {
+                    console.log(response.Response);
+                    msg = '<span class="btn btn-xs message-hangup">'
+                        + response.Message + '</span>';
+
+                    $(button).after(msg);
+                    var status = response.Response;
+                    console.log(status);
+                    if (status == 'failed') {
+                        $('.message-hangup').addClass('btn-danger');
+                    } else {
+                        $('.message-hangup').addClass('btn-success');
+                        setTimeout(function() { tr.remove(); }, 1000);
+                        var total_callers = (parseInt($('#queue_total_callers').html()) - 1);
+                        $('#queue_total_callers').html("{total}".format({total:  total_callers}));
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+        });
+
+
+
+    </script>
+
+  <script type="text/javascript">
+    function addQueueMember(queue){
+      console.log(queue);
+        $("#add_queue_member_icon").removeClass("fa-plus");
+        $("#add_queue_member_icon").addClass("fa-refresh");
+        $("#add_queue_member_icon").addClass("fa-spin");
+
+      get_backend_extensions = '{% url "get_backend_extensions" %}';
+      $.ajax({
+        url: get_backend_extensions,
+        type: "GET",
+        success: function(data){
+
+            if (data.success){
+                $("#add_queue_member_icon").removeClass("fa-refresh");
+                $("#add_queue_member_icon").addClass("fa-plus");
+                $("#add_queue_member_icon").removeClass("fa-spin");
+
+          bootbox.prompt({
+            title: "Select user to add to queue",
+            inputType: 'select',
+            multiple: true,
+            inputOptions: data.extension_list,
+            callback: function(result){
+              console.log(result);
+              if (result == null) {
+                console.log("Dismissed add to queue");
+              } else {
+                console.log("Adding to queue " + queue);
+                for(let i = 0; i < result.length; i++) {
+                  console.log("ADDING " + result[i]);
+                  $.ajax({
+                    url : "{% url 'add_user_to_queue' %}",
+                    headers: {'X-CSRFToken': csrftoken},
+                    type : "POST",
+                    data : {'queue': queue, 'extension': result[i]},
+
+                    // handle a sucessful response
+                    success : function(json){
+                      console.log(json);
+                      if(json.message.Response == "failed"){
+                        // show error message and remove py-Asterisk prefix from message
+                        toastr.warning(json.message.Message.replace("py-Asterisk",""), json.message.Response);
+                      }else{
+                          console.log("Added " + result[i] + " TO QUEUE " + queue);
+                        toastr.success(json.message.Message, json.message.Response);
+                      }
+                    },
+
+                    //handle a non-sccessful response
+                    error : function(xhr,errmsg,err) {
+                      toastr.error("Could not add to queue.");
+                      console.log(xhr.status + ": " + xhr.resposeText);
+                    }
+                  });
+                }
+              }
+            }
+          });
+            } else {
+                toastr.error(
+                    data.message,
+                    "{% trans 'Backend server error' %}"
+                );
+            }
+        }
+      }) }
+  </script>
+
+  {% endblock %}
+
+
+  {% block script_end %}
+  {% include 'helpline/panel_global_js.html' %}
+
+  <script type="text/javascript">
+    var table = $('#cdr_table').DataTable({
+      retrieve: true,
+      dom: 'Blrtip',
+      stateSave: false,
+    });
+
+    function format ( key ) {
+      var div = $('<div/>')
+        .addClass( 'loading' )
+        .text( 'Loading...' );
+
+      $.ajax( {
+        url: '{% url "ajax_campaign_json" %}',
+        data: {
+          key: key,
+        },
+        dataType: 'json',
+        success: function ( json ) {
+          queue_card_id =  '#queue_card_' + json.data.campaign.queue;
+          var queue_card = $(queue_card_id).detach();
+          div
+            .append( queue_card )
+            .removeClass( 'loading' );
+        }
+      } );
+
+      return div;
+    }
+
+    $('#cdr_table tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      var key = $(this).attr('id');
+
+      if ( row.child.isShown() ) {
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        row.child( format(key) ).show();
+        tr.addClass('shown');
+      }
+    } );
+
+    function filterGlobal() {
+      $('#cdr_table')
+        .DataTable()
+        .search($('#cdr_table_search').val())
+        .draw();
+    }
+
+    $('#cdr_table_search').on('keyup click', function () {
+      filterGlobal();
+    });
+
+    $('cdr_table_search tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      var key = $(this).attr('id');
+
+      if ( row.child.isShown() ) {
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        row.child( format(key) ).show();
+        tr.addClass('shown');
+      }
+    } );
+
+  </script>
+
+    {% endblock %}

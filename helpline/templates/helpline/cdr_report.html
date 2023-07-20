@@ -1,0 +1,258 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+{% load humanize %}
+{% load i18n %}
+
+
+    {% block content %}
+
+  <div class="invoice">
+
+    <div class="main-panel">
+
+      <div class="content">
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="card">
+							<div class="form-group">
+								<label>Date range button:</label>
+								<div class="input-group">
+									<button type="button" class="btn btn-default pull-right" id="daterange-btn">
+										<span>
+											<i class="fa fa-calendar"></i> Date range picker
+										</span>
+										<i class="fa fa-caret-down"></i>
+									</button>
+								</div>
+							</div>
+
+              <form id="search-form" method="get">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" name="q" value="{{ query }}">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                  </span>
+                </div>
+              </form>
+
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">
+                  {{ _('Outgoing Call History') }}: <span id="call_history" class="label label-default"></span>
+                  <div class="box-tools pull-right" id="call_history_action">
+                    <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                      <input type="text" id="cdr_table_search" name="cdr_table_search" class="form-control pull-right" placeholder="Search">
+                      <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive col-md-12">
+                  {% if call_history_table %}
+                  {% render_table call_history_table %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal spy and whisper -->
+        <div id="spy_whisperk" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="swModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+              </div>
+              <div class="col-lg-2">
+                <h4><i class="fa fa-headphones fa-5x"></i> </h4>
+              </div>
+              <div class="col-lg-10">
+                <br/>
+                <p>{{ _('Insert where  you listen the call, example: <i>SIP/1001</i>')}}</p>
+                <div class="input-group">
+                  <input id="to_exten" type="text" class="form-control" value="">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" id="execute-action" data-action="" data-channel=""  title="{{_('Listen ')}}"></button>
+                  </span>
+                </div>
+                <div class="input-group">
+                  <label class="modal-message"></label>
+                </div>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal spy and whisper -->
+
+        <!-- Service name edit modal -->
+        <div class="modal fade" id="servicename-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i>{% trans "Update" %}</h4>
+                    </div>
+                    <form id="frmUpdate" action="{% url "queue" name %}" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                {{ form|crispy  }}
+                            </div>
+                            <div class="modal-footer clearfix">
+
+                                <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal"><i class="fa fa-times"></i>{% trans "Discard" %}</button>
+
+                                <button type="submit" id="updateService" name="updateService" class="btn btn-primary btn-lg pull-left"><i class="fa fa-save"></i> {% trans "Save" %}</button>
+                            </div>
+                            {% csrf_token %}
+                        </div><!-- /.modal-content -->
+                    </form>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+        <!-- END Service name edit modal -->
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}
+
+
+  {% block script_end %}
+  {% include 'helpline/panel_global_js.html' %}
+  <script>
+    $(document).ready(function() {
+      $('#search-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent form from submitting
+
+        // Get search query from input field
+        var query = $('input[name="q"]').val();
+
+        // Set action URL with search query
+        $(this).attr('action', '?q=' + query);
+
+        // Submit form with updated action URL
+        this.submit();
+      });
+    });
+  </script>
+
+
+  <script type="text/javascript">
+
+		//Date range as a button
+		$('#daterange-btn').daterangepicker(
+			{
+				ranges   : {
+					'Today'       : [moment(), moment()],
+					'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+					'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				},
+				startDate: moment().subtract(29, 'days'),
+				endDate  : moment()
+			},
+			function (start, end) {
+				$('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+			}
+		)
+
+
+    var table = $('#cdr_table').DataTable({
+      retrieve: true,
+      dom: 'Blrtip',
+      stateSave: false,
+    });
+
+    function format ( key ) {
+      var div = $('<div/>')
+        .addClass( 'loading' )
+        .text( 'Loading...' );
+
+      $.ajax( {
+        url: '{% url "ajax_campaign_json" %}',
+        data: {
+          key: key,
+        },
+        dataType: 'json',
+        success: function ( json ) {
+          queue_card_id =  '#queue_card_' + json.data.campaign.queue;
+          var queue_card = $(queue_card_id).detach();
+          div
+            .append( queue_card )
+            .removeClass( 'loading' );
+        }
+      } );
+
+      return div;
+    }
+
+    $('#cdr_table tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      var key = $(this).attr('id');
+
+      if ( row.child.isShown() ) {
+        row.child.hide();
+        tr.removeClass('shown');
+				wavesurfer.stop();
+      }
+      else {
+        //row.child( format(key) ).show();
+        tr.addClass('shown');
+
+				var audioSrc = $(this).data('src');
+				// Load audio file
+				wavesurfer.load(audioSrc);
+				// Play audio
+				wavesurfer.play();
+
+      }
+    } );
+
+    function filterGlobal() {
+      $('#cdr_table')
+        .DataTable()
+        .search($('#cdr_table_search').val())
+        .draw();
+    }
+
+    $('#cdr_table_search').on('keyup click', function () {
+      filterGlobal();
+    });
+
+    $('#cdr_table_search tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      var key = $(this).attr('id');
+
+      if ( row.child.isShown() ) {
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        row.child( format(key) ).show();
+        tr.addClass('shown');
+      }
+    } );
+
+  </script>
+  <div class="hide">
+    {{ error }} {{ execution_time }} {{ from_cache }}
+    TS "{{ test_execution_time }}"
+  </div>
+
+    {% endblock %}

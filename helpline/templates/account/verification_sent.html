@@ -1,0 +1,21 @@
+{% extends "helpline/helpline_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+
+{% block content %}
+<div class="wrappyer" style="height: auto; min-height: 100%;">
+  <div class="col-md-12">
+    <div class="login-box">
+
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+    <h1>{% trans "Verify Your E-mail Address" %}</h1>
+
+    <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.{% endblocktrans %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

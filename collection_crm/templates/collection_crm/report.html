@@ -1,0 +1,479 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+{% include "collection_crm/collection_crm_global_js.html" %}
+<div class="container-fluid" style="background-color:#FFF;
+                     min-height:800px;
+                     margin-left:0px auto 0px auto;
+                     padding:0px;
+                     -webkit-border-top-left-radius: 3px;
+                     -webkit-border-top-right-radius: 3px;
+                     -moz-border-radius-topleft: 3px;
+                     -moz-border-radius-topright: 3px;
+                     border-top-left-radius: 3px;
+                     border-top-right-radius: 3px;
+                     box-shadow:  0px 1px 1px #000;
+                     -moz-box-shadow: 0px 1px 1px #000;
+                     -webkit-box-shadow: 0px 1px 1px #000;
+                     box-shadow: 0px 8px 18px #1c1c1c;
+                     -moz-box-shadow: 0px 8px 18px #1c1c1c;
+                     -webkit-box-shadow: 0px 8px 18px #1c1c1c;"><br>
+
+
+                               
+
+<h1>Main Report</h1>
+
+                    <div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <form id="form1" name="form1" method="get" action="index.php"></form>
+
+
+
+
+                                    </tr><tr>
+                                        <td>From:</td>
+                                        <td><input autocomplete="off" name="fromdate" type="text" id="fromdt" value=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                      <tr>
+                                        <td>To:</td>
+                                        <td><input autocomplete="off" name="todate" type="text" id="todt" value=""></td>
+                                      </tr>
+    <tr>
+    <td height="51">Disposition </td>
+    <td><select name="disposition" id="disposition">
+      <option value="">Disposition</option>
+            <option value="Already paid">Already paid</option>
+            <option value="Call back later">Call back later</option>
+            <option value="Cleared">Cleared</option>
+            <option value="Client Call Back">Client Call Back</option>
+            <option value="Debt Cleared">Debt Cleared</option>
+            <option value="Debter Called Back">Debter Called Back</option>
+            <option value="Debtor Being Traced">Debtor Being Traced</option>
+            <option value="Debtor Called Back">Debtor Called Back</option>
+            <option value="Debtor Hung Up">Debtor Hung Up</option>
+            <option value="Debtor Picked">Debtor Picked</option>
+            <option value="Debtor Picked and Went Silent">Debtor Picked and Went Silent</option>
+            <option value="Deceased">Deceased</option>
+            <option value="Did not pick up">Did not pick up</option>
+            <option value="Did not speak/Hung up">Did not speak/Hung up</option>
+            <option value="Disconnected">Disconnected</option>
+            <option value="Disputing">Disputing</option>
+            <option value="Disputing Debt">Disputing Debt</option>
+            <option value="Guarantor Contacted">Guarantor Contacted</option>
+            <option value="Inability to Pay">Inability to Pay</option>
+            <option value="Negotiation in Progress">Negotiation in Progress</option>
+            <option value="No Contacts Provided">No Contacts Provided</option>
+            <option value="Non-Committal">Non-Committal</option>
+            <option value="Out of coverage">Out of coverage</option>
+            <option value="Phone Busy">Phone Busy</option>
+            <option value="Phone Switched Off">Phone Switched Off</option>
+            <option value="Promise To Pay">Promise To Pay</option>
+            <option value="PTP Reminder">PTP Reminder</option>
+            <option value="Relative/Spouse Contacted">Relative/Spouse Contacted</option>
+            <option value="Relative/Wife/Husband">Relative/Wife/Husband</option>
+            <option value="Ringing No Response">Ringing No Response</option>
+            <option value="Sick">Sick</option>
+            <option value="Skip Trace Case">Skip Trace Case</option>
+            <option value="Spouse Contacted">Spouse Contacted</option>
+            <option value="Sued Bank">Sued Bank</option>
+            <option value="Switched off">Switched off</option>
+            <option value="Temporarily Out of Service">Temporarily Out of Service</option>
+            <option value="Unable to Trace Debtor">Unable to Trace Debtor</option>
+            <option value="Unwell">Unwell</option>
+            <option value="Will not pay">Will not pay</option>
+            <option value="Will pay">Will pay</option>
+            <option value="Wrong Number">Wrong Number</option>
+      <option value="Deceased">Deceased</option>
+    </select></td>
+  </tr>
+<tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+              </tr>
+              <tr><td>&nbsp;</td><td><label>
+                                            <input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+                                                   background-color:#F27F22;
+                                                   height:25px;
+                                                   -webkit-border-radius: 4px;
+                                                   -moz-border-radius: 4px;
+                                                   border-radius: 4px;
+                                                   border:1px #b58530 solid;
+                                                   color:#633c15;
+                                                   font-size:15px;
+                                                   cursor:pointer;
+
+                                                   font-weight:bold;">
+                                        </label> </td>
+
+
+
+                                <td>
+                                    <form action="getCSV.php" method="post"> <label>
+                                            <input type="hidden" name="csv_text" id="csv_text">
+                                                <input type="submit" alt="Submit Form" value="Download to Excel" onclick="getCSVData()" style=" padding:0px 20px;
+                                                       background-color:#F27F22;
+                                                       height:25px;
+                                                       -webkit-border-radius: 4px;
+                                                       -moz-border-radius: 4px;
+                                                       border-radius: 4px;
+                                                       border:1px #b58530 solid;
+                                                       color:#633c15;
+                                                       font-size:15px;
+                                                       cursor:pointer;
+                                                       font-weight:bold;">
+                                        </label>
+                                    </form>
+                                    <script>
+                                        function getCSVData() {
+                                            var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+                                            $("#csv_text").val(csv_value);
+                                        }
+                                    </script>
+                                </td>
+
+                            </tr>
+                        </tbody></table>
+
+                    </div>
+
+                    <div class="">
+
+                        <div class="clear"></div>
+
+
+                        <div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">
+                            <div class="pagecon" style="float:center; margin-left:10px;">
+
+                            </div>
+                            <div id="files">
+                                <table width="100%" id="csvdownload" border="0" cellspacing="0" cellpadding="5">
+                                    <tbody><tr class="tablebx_topbg">
+                                        <td class="tblRB">#</td>
+                                        <td class="tblRB">Customer Name</td>
+                                        <td class="tblRB">ID Number</td>
+                                        <td class="tblRB">Account Number</td>
+                                        <td class="tblRB">Mobile</td>
+                                        <td class="tblRB">Other Mobile</td>
+                                        <td class="tblRB">Region</td>
+                                        <td class="tblRB">Branch</td>
+                                        <td class="tblRB">CF_ID</td>
+                                        <td class="tblRB">Email</td>
+                                        <td class="tblRB">Balance</td>
+                                        <td class="tblRB">Priority</td>
+                                        <td class="tblRB">Enumerator</td>
+                                        <td class="tblRB">Call Status</td>
+
+                                        <td class="tblRB">Call Start Time</td>
+                                        <td class="tblRB">Call Handling Time</td>
+                                        <td class="tblRB">Call End Time</td>
+                                        <td>Date Of Payment</td>
+
+                                      <td>System Remarks</td>
+                                       <td>Tentative date/time of payment</td>
+                                       <td>Amount Paid</td>
+                                       <td>PTP Amount</td>
+                                        <td>Call Back Time</td>
+                                        <td>Comment</td>
+                                        <td>Survey Disposition</td>
+                                        <td>Secondary number</td>
+                                                <!--                                        <td>Call Back Date & Time</td>
+
+                                                                                        <td>Disposition Comments</td>-->
+
+                                        <td>Date</td>
+                                        <td>Batch</td>
+                                        <td>Status</td>
+
+                                    <!--                                        <td>Batch</td>-->
+                                    </tr>
+
+                                                                            <tr class="">
+                                            <td class="tblR">1</td>
+
+                                            <td class="tblR">FLORENCE A. ODUOL</td>
+                                            <td class="tblR">20307969</td>
+                                            <td class="tblR">1919090017</td>
+                                            <td class="tblR">0703757502</td>
+                                            <td class="tblR">0704943466,0712106740
+
+</td>
+                                            <td class="tblR">Overdrafts</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">1919090017</td>
+                                            <td class="tblR">0</td>
+                                            <td class="tblR">8338.85</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose.ruguru</a></td>
+                                            <td class="tblR">Reachable</td>
+        <!--                                            <td class="tblR"></td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"></td>-->
+
+                                            <td class="tblR">2022-08-05 08:54:08</td>
+
+                                            
+											<td class="tblR">00:00:36</td>
+                                          
+        <!--                                             <td class="tblR"></td>-->
+                                            <td class="tblR">2022-08-05 08:54:44</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Wrong Number</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">wrong number                                            </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 08:54:08</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                                                            <tr class="">
+                                            <td class="tblR">2</td>
+
+                                            <td class="tblR">KELVIN</td>
+                                            <td class="tblR">2XXXXXXX</td>
+                                            <td class="tblR">713XXXXXXX</td>
+                                            <td class="tblR">2547XXXXXXXX</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">Overdrafts</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">71XXXXXXX</td>
+                                            <td class="tblR">example@exmaple.com</td>
+                                            <td class="tblR">19583.35</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose</a></td>
+                                            <td class="tblR">Reachable</td>
+                                            <td class="tblR">2022-08-05 08:55:50</td>
+
+                                            
+											<td class="tblR">00:00:51</td>
+                                          
+        <!--                                             <td class="tblR"></td>-->
+                                            <td class="tblR">2022-08-05 08:56:41</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Ringing No Response</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">phone ringing but there is no response                                            </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 08:55:50</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                                                            <tr class="">
+                                            <td class="tblR">3</td>
+
+                                            <td class="tblR">Maurice</td>
+                                            <td class="tblR">1XXXXX</td>
+                                            <td class="tblR">707XXXXXXXX</td>
+                                            <td class="tblR">254722XXXXXXXXX</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">Personal Unsecured Loans</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">707XXXXXXX</td>
+                                            <td class="tblR">0</td>
+                                            <td class="tblR">535870.82</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose.ruguru</a></td>
+                                            <td class="tblR">Reachable</td>
+                                            <td class="tblR">2022-08-05 09:33:31</td>
+                                            
+											<td class="tblR">00:00:42</td>
+                                          
+                                            <td class="tblR">2022-08-05 09:34:13</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Negotiation in Progress</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">promise to pay after election                                            </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 09:33:31</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                                                            <tr class="">
+                                            <td class="tblR">4</td>
+
+                                            <td class="tblR">ANTONY</td>
+                                            <td class="tblR">2XXXXXXXXXX</td>
+                                            <td class="tblR">3XXXXXXXX</td>
+                                            <td class="tblR">254711XXXXXXX</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">Personal Unsecured Loans</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">33XXXXXXX</td>
+                                            <td class="tblR">EXAMPLE@EXAMPLE.COM</td>
+                                            <td class="tblR">311624.28</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose.ruguru</a></td>
+                                            <td class="tblR">Reachable</td>
+                                            <td class="tblR">2022-08-05 09:36:21</td>
+
+                                            
+											<td class="tblR">00:00:31</td>
+                                          
+                                            <td class="tblR">2022-08-05 09:36:52</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Ringing No Response</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">phone ringing but there is no response                                            </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 09:36:21</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                                                            <tr class="">
+                                            <td class="tblR">5</td>
+
+                                            <td class="tblR">Stan</td>
+                                            <td class="tblR">24XXXXXXXXXX</td>
+                                            <td class="tblR">3XXXXXXXXX</td>
+                                            <td class="tblR">2547XXXXXXXXX</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">Digital Loans</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">37XXXXXXX</td>
+                                            <td class="tblR">EXAMPLE@EXAPLE.COM</td>
+                                            <td class="tblR">72831.14</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose.ruguru</a></td>
+                                            <td class="tblR">Reachable</td>
+                                            <td class="tblR">2022-08-05 13:02:12</td>
+
+                                            
+											<td class="tblR">00:00:37</td>
+                                          
+        <!--                                             <td class="tblR"></td>-->
+                                            <td class="tblR">2022-08-05 13:02:49</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Negotiation in Progress</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">promise to pay before end of the day                                             </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 13:02:12</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                                                            <tr class="">
+                                            <td class="tblR">6</td>
+
+                                            <td class="tblR">ABDUL</td>
+                                            <td class="tblR">22XXXXXXX</td>
+                                            <td class="tblR">232XXXXXX</td>
+                                            <td class="tblR">254725XXXXXXXX</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">Overdrafts</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">2328200013</td>
+                                            <td class="tblR">example1@examle.com</td>
+                                            <td class="tblR">47667.06</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR"><a href="">rose.ruguru</a></td>
+                                            <td class="tblR">Reachable</td>
+                                            <td class="tblR">2022-08-05 12:37:51</td>
+
+                                            
+											<td class="tblR">00:00:30</td>
+                                          
+        <!--                                             <td class="tblR"></td>-->
+                                            <td class="tblR">2022-08-05 12:38:21</td>
+                                            <td><span class="tblR"></span></td>
+
+                                            <td><span class="tblR">Ringing No Response</span></td>
+                                             <td><span class="tblR">08:00:00</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                              <td><span class="tblR">0</span></td>
+                                            <td><span class="tblR"> </span></td>
+                                            <td><span class="tblR">phone ringing but there is no response                                            </span></td>
+                                            <td>Reachable</td>
+                                            <!--END OF SMS PART REPORT -->
+        <!--                                            <td> </td>
+
+                                            <td ></td>-->
+                                            <td></td>
+                                            <td>2022-08-05 12:37:51</td>
+                                            <td>Written Off</td>
+                                            <td></td>
+                                            <!-- <td></td>-->
+        <!--                                            <td>Written Off</td>-->
+                                        </tr>
+                                    
+                                </tbody></table>
+                            </div>
+                            <div class="pagecon">
+
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+{% endblock content %}

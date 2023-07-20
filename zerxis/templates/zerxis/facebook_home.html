@@ -1,0 +1,94 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load avatar_tags %} 
+{% load django_tables2 %}
+
+{% block content %}
+<section class="content-header">
+  <h1>
+    Facebook
+    <small>Home</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{% url 'social_dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Social</a></li>
+    <li class="active">Facebook</li>
+  </ol>
+</section>
+<div class="stream-container">
+
+  <div class="col-md-4" id="facebook_home_timeline">
+  </div>
+
+  <div class="col-md-4" id="facebook_mentions_timeline">
+  </div>
+
+  <div class="col-md-4" id="facebook_user_timeline">
+  </div>
+</div>
+
+<script type="text/javascript">
+// Get and render home, mentions and user facebook timelines
+$(document).ready(function(){
+  $('#facebook_home_timeline').html("Loading..");
+  $('#facebook_mentions_timeline').html("Loading..");
+  $('#facebook_user_timeline').html("Loading..");
+  setTimeout(() => { getFacebookHomeTimeline(); }, 2000);
+  setTimeout(() => { getFacebookMentionsTimeline(); }, 4000);
+  setTimeout(() => { getFacebookUserTimeline(); }, 5000);
+//  getFacebookHomeTimeline();
+//  getFacebookMentionsTimeline();
+//  getFacebookUserTimeline();
+});
+
+function getFacebookHomeTimeline() {
+  $.get("{% url "facebook_home_timeline" %}",function(data){
+    if(data.timeline_html){
+      $('#facebook_home_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#facebook_home_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    }
+  });
+}
+
+function getFacebookMentionsTimeline(){
+  $.get("{% url "facebook_mentions_timeline" %}",function(data){
+    if(data.timeline_html){
+      $('#facebook_mentions_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#facebook_mentions_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    }
+  });
+}
+
+function getFacebookUserTimeline(){
+  $.get("{% url "facebook_user_timeline" %}",function(data){
+    if(data.timeline_html){
+      $('#facebook_user_timeline').html(data.timeline_html);
+    } else if (!(data.hasOwnProperty("#facebook_user_timeline"))) {
+      console.log('{% trans "Timeline not found" %}');
+    }
+  });
+}
+
+</script>
+
+{% endblock content %}
+{% block script_end %}
+
+<script type="text/javascript">
+
+  /*
+  * Custom Label formatter
+   * ----------------------
+   */
+function labelFormatter(label,series) {
+  return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+    + label
+    + "<br>"
+    + Math.round(series.percent) + "%</div>";
+}
+</script>
+{% endblock script_end %}

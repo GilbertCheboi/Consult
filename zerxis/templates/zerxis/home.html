@@ -1,0 +1,52 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load django_tables2 %}
+{% load account %}
+
+{% block content %}
+
+CONNECTED SOCIAL ACCOUNTS
+
+{% user_display user %}
+
+{% user_display user as user_display %}
+{% blocktrans %}{{ user_display }} has logged in...{% endblocktrans %}
+
+
+{% get_social_accounts user as accounts %}
+
+<a href="{% provider_login_url "openid" openid="https://www.google.com/accounts/o8/id" next="/success/url/" %}">Google</a>
+<a href="{% provider_login_url "twitter" %}">Twitter</a>
+
+<a href="{% provider_login_url "twitter" process="connect" %}">Connect a Twitter account</a>
+
+{% providers_media_js %}
+
+{{accounts.twitter}} -- a list of connected Twitter accounts
+{{accounts.twitter.0}} -- the first Twitter account
+{% if accounts %} -- if there is at least one social account
+
+{% get_providers as socialaccount_providers %}
+
+END SOCAL ACCOUNTS
+
+{% endblock content %}
+
+{% block script_end %}
+
+<script type="text/javascript">
+
+  /*
+  * Custom Label formatter
+   * ----------------------
+   */
+function labelFormatter(label,series) {
+  return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+    + label
+    + "<br>"
+    + Math.round(series.percent) + "%</div>";
+}
+</script>
+{% endblock script_end %}

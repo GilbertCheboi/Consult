@@ -1,0 +1,163 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<div class="captionWrapper">
+	<!--                        <ul>
+
+
+	 <li><a href="crm_vs_ameyo.php?fromdate=2017-01-01&todate=2022-08-08"><h2 class="curr">CRM VS AMEYO</h2></a></li>
+	 <li><a href="ameyo.php?fromdate=2017-01-01&todate=2022-08-08"><h2 class="curr">AMEYO ONLY</h2></a></li>
+	 <li><a href="crm_capture.php?fromdate=2017-01-01&todate=2022-08-08"><h2 class="curr">CRM DATA CAPTURE</h2></a></li>
+	 <li><a href="ameyo_uploadcsv.php"<h2 class="curr">AMEYO Upload CSV</h2></a></li>
+
+
+	 </ul>-->
+</div> 
+
+<h1>Not Contacted</h1>                          
+
+<div class="formCon" style="float:center; width:40%; margin-left:10px;margin-right:10px;padding:10px">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+				<form id="form1" name="form1" method="get" action="not_contacted.php"></form>
+
+
+
+
+			</tr><tr>
+				<td>Date Loaded:</td>
+				<td><input autocomplete="off" name="fromdate" type="text" id="fromdt"></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr><td>&nbsp;</td><td><label>
+						<input type="submit" name="Submit" value="Get Reports" style=" padding:0px 20px;
+																							background-color:#F27F22;
+																							height:25px;
+																							-webkit-border-radius: 4px;
+																							-moz-border-radius: 4px;
+																							border-radius: 4px;
+																							border:1px #b58530 solid;
+																							color:#633c15;
+																							font-size:15px;
+																							cursor:pointer;
+
+font-weight:bold;">
+					</label> </td>
+
+
+
+					<td>
+						<form action="getCSV.php" method="post"> <label>
+								<input type="hidden" name="csv_text" id="csv_text">
+								<input type="submit" alt="Submit Form" value="Download 2 Excel" onclick="getCSVData()" style=" padding:0px 20px;
+																											background-color:#F27F22;
+																											height:25px;
+																											-webkit-border-radius: 4px;
+																											-moz-border-radius: 4px;
+																											border-radius: 4px;
+																											border:1px #b58530 solid;
+																											color:#633c15;
+																											font-size:15px;
+																											cursor:pointer;
+																											font-weight:bold;">
+							</label> 	
+						</form>
+					</td><td>
+						<form action="delete_notcontacted.php" method="post"> <label>
+								<input type="hidden" name="csv_text" id="csv_text">
+								<input type="submit" alt="Submit Form" value="Delete all Not Contacted" onclick="return confirm('Are you sure you want to delete!!! This action may be irreversible');" style=" padding:0px 20px;
+																											background-color:#FF0000;
+																											height:30px;
+																											-webkit-border-radius: 4px;
+																											-moz-border-radius: 4px;
+																											border-radius: 4px;
+																											border:1px #b58530 solid;
+																											color:#000000;
+																											font-size:20px;
+																											cursor:pointer;
+																											font-weight:bold;">
+							</label> 	
+						</form>
+					</td>
+					<script>
+						function getCSVData() {
+							var csv_value = $('#csvdownload').table2CSV({delivery: 'value'});
+							$("#csv_text").val(csv_value);
+						}
+					</script>
+					<script>
+						function show_alert() {
+							alert("Are you sure you want to delete. This action may be irreversible");
+						}
+
+var el = document.getElementById('myCoolForm');
+
+el.addEventListener('submit', function () {
+	return confirm('Are you sure you want to delete. This action may be irreversible');
+
+}, false);
+					</script>
+
+
+			</tr>
+		</tbody></table>
+
+</div>
+
+<div class="">
+
+	<div class="clear"></div>
+
+
+	<div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">  
+		<div class="pagecon" style="float:center; margin-left:10px;">
+
+		</div>     
+		<div id="files">									  
+			<table width="34%" id="csvdownload" border="0" cellspacing="0" cellpadding="5">
+				<tbody><tr class="tablebx_topbg">
+						<td width="4%" class="tblRB">#</td>
+						<td width="12%" class="tblRB">Customer Name</td>
+						<td width="11%" class="tblRB">Account Number</td>
+						<td width="10%" class="tblRB">Mobile</td>
+						<td width="9%" class="tblRB">Priority</td>
+						<td width="11%" class="tblRB">Remarks</td>
+						<td width="17%" class="tblRB">AGENT</td>
+						<td width="26%" class="tblRB">Status</td>
+
+						<!--                                        <td class="tblRB">Q3_d</td>-->
+
+						<!--                                        <td class="tblRB">Q3_2</td>-->
+
+
+
+					</tr>
+<tr class="">
+                                            <td class="tblR">1</td>
+
+                                            <td class="tblR">JOHN DOE</td>
+                                            <td class="tblR">167056</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">1</td>
+                                            <td class="tblR"></td>
+                                            <td class="tblR">ARCHIVED</td>
+                                            <td class="tblR">NOT CONTACTED</td>
+
+                                        </tr>
+			</table>
+
+		</div>
+		<div class="pagecon">
+
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{% endblock content %}

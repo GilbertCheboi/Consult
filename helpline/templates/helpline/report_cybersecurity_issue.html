@@ -1,0 +1,240 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Report Cybersecurity Issue | Call Center Africa</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="{% static "index/images/favicon.ico" %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,700,900">
+    <link rel="stylesheet" href="{% static "index/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/fonts.css" %}">
+    <link rel="stylesheet" href="{% static "index/css/style.css" %}" id="main-styles-link">
+    <!--[if lt IE 10]>
+      <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container">
+          <div class="cssload-speeding-wheel"></div>
+        </div>
+        <p>Loading...</p>
+      </div>
+    </div>
+    <div class="page">
+
+      <header class="section page-header">
+
+        <div class="rd-navbar-wrap rd-navbar-absolute">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-device-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+
+                <div class="rd-navbar-panel">
+
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+
+                  <div class="rd-navbar-brand">
+                    <a class="brand" href="{% url "dashboard_home" %}"><img class="brand-logo-dark" src="https://zerxis.com/assets/img/logo.png" alt="" width="200" />
+                      <img class="brand-logo-light" src="{% static "helpline/zerxis_logo_small.png" %}" alt="" width="200" /></a>
+                  </div>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url "dashboard_home" %}">Home</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url "features" %}">Features</a>
+                      </li>
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="#">Security</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="#">Contacts</a>
+                      </li>
+                      {% if request.user.is_authenticated %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'dashboard_home' %}">Dashboard</a>
+                      </li>
+                      {% else %}
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="{% url 'two_factor:login' %}">Login</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+
+                  <div class="rd-navbar-search">
+                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
+                    <form class="rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
+                      <div class="form-wrap">
+                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
+                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
+                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
+                      </div>
+                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section section-bredcrumbs">
+        <div class="container context-light breadcrumb-wrapper">
+          <h1>Report a Cybersecurity Issue</h1>
+          <ul class="breadcrumbs-custom">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">Report a Cybersecurity Issue</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Security Content -->
+      <section class="section section-lg">
+
+        <div class="container">
+          <main class="main-content col" id="content" role="main">
+            <section class="section">
+              <a id="main-content" tabindex="-1"></a>
+
+              <div id="block-iom2021-content" class="block block-system block-system-main-block">
+
+                <div class="content">
+                  <div data-history-node-id="133891" class="layout layout--onecol">
+                    <div class="layout__region layout__region--content">
+
+                      <div class="col px-md-3 px-lg-5 mb-md-3 mb-lg-5 mt-md-3 mt-lg-5">
+
+                        <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p paraeid="{62e9027f-81ec-4776-8a24-471d418a95a9}{133}" paraid="1579782056"><strong>Call Center Africa Responsible Vulnerability Disclosure Program (VDP)&nbsp;</strong></p>
+                          <p>To improve the protection of its Information and Communication Technologies (ICT) systems and assets, Call Center Africa encourages the public to assist with its efforts by disclosing vulnerabilities in Call Center Africa’s publicly accessible information systems and assets as well as reporting cybersecurity issues.&nbsp;</p>
+                          <p><strong>What to Report to&nbsp;Call Center Africa&nbsp;</strong></p>
+                          <p>The public is invited to report cybersecurity issues, incidents, and details of vulnerabilities associated with publicly accessible Call Center Africa ICT systems, including websites.&nbsp;</p>
+                          <p><strong>Information on Vulnerability Reporting&nbsp;</strong></p>
+                          <p>The following should be noted when reporting vulnerabilities and cybersecurity issues and incidents to Call Center Africa:&nbsp;</p>
+                          <ul role="list"><li aria-setsize="-1" data-aria-level="1" data-aria-posinset="1" data-font="Symbol" data-leveltext="" data-listid="20" role="listitem">
+                              <p>The vulnerability and/or cybersecurity issue or incident should not already be publicly disclosed.&nbsp;</p>
+                            </li>
+                            <li aria-setsize="-1" data-aria-level="1" data-aria-posinset="2" data-font="Symbol" data-leveltext="" data-listid="20" role="listitem">
+                              <p>The vulnerability and/or cybersecurity issue or incident should be reported to Call Center Africa as quickly as possible after its discovery.&nbsp;</p>
+                            </li>
+                            <li aria-setsize="-1" data-aria-level="1" data-aria-posinset="3" data-font="Symbol" data-leveltext="" data-listid="20" role="listitem">
+                              <p>The reporter is expected to keep the vulnerability findings confidential for at least 90 days following the date the vulnerability or cybersecurity issue or incident was reported to Call Center Africa or until public disclosure of the vulnerability has been made on this website.&nbsp;</p>
+                            </li>
+                          </ul><ul role="list"><li aria-setsize="-1" data-aria-level="1" data-aria-posinset="1" data-font="Symbol" data-leveltext="" data-listid="20" role="listitem">
+                              <p>The severity of a vulnerability finding is assessed by Call Center Africa at its own discretion.&nbsp;</p>
+                            </li>
+                            <li aria-setsize="-1" data-aria-level="1" data-aria-posinset="2" data-font="Symbol" data-leveltext="" data-listid="20" role="listitem">
+                              <p>The name and contact information of the reporter may be disclosed to the affected technology vendor(s) unless otherwise requested by the reporter. · Call Center Africa reserves the right to accept or reject any security vulnerability or cybersecurity issue, or incident disclosure report at its discretion.&nbsp;</p>
+                            </li>
+                          </ul><p>If you believe you have found a vulnerability or issue and would like to report it, we ask that you submit a detailed description of the issue to us, including the steps that we can take to reproduce the issue and/or a proof-of-concept:&nbsp;</p>
+                          <ul role="list"><li aria-setsize="-1" data-aria-level="1" data-aria-posinset="3" data-font="Symbol" data-leveltext="" data-listid="21" role="listitem">
+                              <p>The findings, including contact details, should fill out the <a href="https://forms.gle/i4bJVPnKuhnbP5F99">submission form.</a></p>
+                            </li>
+                          </ul><p>As much information as possible regarding the finding should be communicated to Call Center Africa to enable the organization to reproduce and verify the vulnerability, issue, or incident to implement appropriate remediation actions.&nbsp;</p>
+                          <p>Once you submit a report to Call Center Africa, please allow the information security team a reasonable amount of time to respond to your report and correct the issue.&nbsp;</p>
+                          <p>If more information is required regarding a reported finding, Call Center Africa may contact the reporter; therefore, it is important to provide valid contact details, including email address and/or telephone number.&nbsp;</p>
+                          <p>Upon receipt of the report, Call Center Africa will verify the existence of the vulnerability, notify affected parties, and implement actions to mitigate the vulnerability.&nbsp;</p>
+                          <p>Once the vulnerability has been removed, the reporter will be acknowledged unless he/she wishes to remain anonymous and listed (at his or her own discretion) on this page with a short description of the vulnerability reported. By reporting vulnerability findings to the Call Center Africa, the reporter accepts that such reporting is provided pro bono and without expectation of financial or other compensation. The reporter also affirms that neither he/she nor any entity that he/she represents is complicit in human rights abuses, tolerates forced or compulsory&nbsp;labour&nbsp;or uses child&nbsp;labour, is involved in the sale or manufacture of anti-personnel mines or their components, or does not meet the purposes and principles of the United Nations.&nbsp;</p>
+                          <p><strong>Call Center Africa Information Security Hall of Fame&nbsp;</strong></p>
+                          <p>Call Center Africa is grateful to the following individuals and organizations that have helped the Organization to improve the security of its information systems, data, and ICT resources by reporting security issues and discovered vulnerabilities.</p>
+                          <div class="table-responsive">
+                            <table aria-rowcount="3" border="1" data-tablelook="1184" data-tablestyle="MsoNormalTable" class="table"><tbody><tr aria-rowindex="1" role="row">
+                                  <td data-celllook="69905" role="rowheader">
+                                    <p>
+                                    <strong>Reporter&nbsp;</strong>
+                                    </p>
+                                  </td>
+                                  <td role="columnheader">
+                                    <p><strong>Cyber Security Issue&nbsp;</strong></p>
+                                  </td>
+                                  <td role="columnheader">
+                                    <p><strong>Date&nbsp;</strong></p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td data-celllook="4369" role="rowheader">Gaurang Maheta</td>
+                                  <td data-celllook="4369">Temporary denial of service of Anti-virus or privacy functionality </td>
+                                  <td data-celllook="4369">09 October 2022</td>
+                                </tr>
+                                <tr aria-rowindex="2" role="row">
+                                  <td data-celllook="4369" role="rowheader">
+                                    <p>Gaurang&nbsp;Maheta&nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>Website with no valid SSL Certificate&nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>03 October 2021&nbsp;</p>
+                                  </td>
+                                </tr>
+                                <tr aria-rowindex="3" role="row"><td data-celllook="4369" role="rowheader">
+                                    <p>Gaurang&nbsp;Maheta&nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>Generic token &nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>18 August 2022&nbsp;</p>
+                                  </td>
+                                </tr>
+                                <tr aria-rowindex="3" role="row"><td data-celllook="4369" role="rowheader">
+                                    <p>Gaurang&nbsp;Maheta&nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>Git repository found&nbsp;</p>
+                                  </td>
+                                  <td data-celllook="4369">
+                                    <p>18 August 2022&nbsp;</p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <p>&nbsp;</p>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </section>
+          </main>
+        </div>
+
+
+        <!-- Security Content -->
+      </section>
+
+      {% include "helpline/index_footer.html" %}
+
+    </div>
+
+    <div class="snackbars" id="form-output-global"></div>
+
+    <script src="{% static "index/js/core.min.js" %}"></script>
+    <script src="{% static "index/js/script.js" %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-199244690-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-199244690-1');
+    </script>
+  </body>
+</html>

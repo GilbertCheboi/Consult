@@ -1,0 +1,64 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		</td>
+
+		<td valign="top">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td valign="top" width="100%">
+
+
+						<div id="ajaxLeads">
+
+							<div style="padding-left:20px; padding-right:10px;">
+								<div>
+
+
+									<h1>Allocation:
+
+										<a href="searchAllocation.php?show_todays_allocations=1" style='text-decoration:underline;' >Todays Allocations</a> (0)
+
+										<a href="searchAllocation.php?show_all_allocations=1"  >All My Allocations</a> (0) 
+
+										<a href="searchAllocation.php?show_team_allocations=1"  >Team</a> (0) </h1>
+									<form name="form" id="form" style="padding-left:10px; margin-bottom:30px; margin-top:30px;">
+										Filter by Disposition: 
+										<select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu('parent',this,0)">
+											<option  selected='selected'  value="searchAllocation.php?show_todays_allocations=1"></option>
+											<option  value="searchAllocation.php?sort_by=PTP&show_todays_allocations=1">PTP</option>
+											<option  value="searchAllocation.php?sort_by=PTP_reminder&show_todays_allocations=1">PTP reminder</option>
+											<option  value="searchAllocation.php?sort_by=Negotiation_in_Progress&show_todays_allocations=1">Negotiation in Progress</option>
+										</select>
+									</form>
+								</div>
+
+								<div>
+
+
+
+
+
+
+								</div>
+								<div style="padding:20px; border:1px #FFCC00; background:#FF9; border:1px solid #F90;">
+
+									<strong>No Records Found</strong></div>
+							</div>
+
+						</div>
+					</td>
+				</tr>
+			</table><!--Second Last table-->
+
+		</td>
+
+	</tr>
+
+
+
+</table><!--Last Table-->
+{% endblock content %}

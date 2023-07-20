@@ -1,0 +1,96 @@
+{% extends "collection_crm/base.html"|pjax:request %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<br>
+
+<h1>User Manager</h1>
+<div class="box-tools pull-right">
+  <a type="button" href="{% url "collection_crm:create_new_user" %}"  class="btn btn-block btn-primary">
+    {% trans "Add User" %}
+    <i class="fa fa-plus"></i>
+  </a>
+</div>
+
+<div class="">
+
+  <div class="clear"></div>
+
+
+  <div class="tablebx" style="float:center; margin-left:10px;margin-right:10px;">  
+    <div class="pagecon" style="float:center; margin-left:10px;">
+
+    </div>                                         
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" class="custom_table">
+      <tbody>
+        <tr class="tablebx_topbg">
+          <td class="tblRB">#</td>
+          <td class="tblRB"> Name </td>
+          <td class="tblRB">User Name </td>
+          <td class="tblRB">User Level </td>
+          <td class="tblRB"><strong>Telephony</strong> <strong>Access</strong></td>
+          <td class="tblRB"><strong>Systems Access</strong></td>
+          <td class="tblRB"><strong>Email</strong></td>
+          <td class="tblRB"><strong>Assign Queue</strong></td>
+          <td class="tblRB">Account Status</td>
+          <td class="tblRB">Action</td>
+        </tr>
+        {% for collection_user in collection_users %} 
+        {% cycle 'odd' 'even' as rowcolors silent %}
+        {% cycle rowcolors %}
+        <tr class="{{ rowcolors }}">
+          <td class="tblR">{{ forloop.counter }}</td>
+          <td class="tblR">{{ collection_user.user.get_full_name }}</td>
+          <td class="tblR">{{ collection_user.user.username }}</td>
+          <td class="tblR">{{ collection_user.level }}</td>
+          <td class="tblR">{{ collection_user.telephony }}</td>
+          <td class="tblR">{{ collection_user.system_access }}</td>
+          <td class="tblR">{{ collection_user.user.email }}</td>
+          <td class="tblR"></td>
+          <td class="tblR">{{ collection_user.status }}</td>
+          <td>
+            <div align="center"><a rel="facebox" href="update_user.php?id=198"></a>
+              <table width="200" border="0" cellspacing="0" cellpadding="0">
+                <tbody><tr>
+                    <td><a rel="facebox" href="{% url "collection_crm:user_profile" collection_user.user.username %}">Edit Account</a></td>
+                  </tr>
+                </tbody></table>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody></table>
+      <div class="pagecon">
+
+      </div>
+      <div class="clear"></div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+  $(function(){
+    $('#fromdt').datepicker({
+      dateFormat: 'yy-mm-dd',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+
+    $('#todt').datepicker({
+      dateFormat: 'yy-mm-dd',
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+    });
+  });
+</script>
+{% endblock content %}

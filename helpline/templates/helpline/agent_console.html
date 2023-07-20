@@ -1,0 +1,9 @@
+{% extends 'helpline/base.html'|pjax:request %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+    {% block content %}
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe src="{{ helpline_agent_console_url }}" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
+    </div>
+    {% endblock %}

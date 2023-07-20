@@ -1,0 +1,794 @@
+{% extends "helpline/wallboard_base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+{% block head %} <meta http-equiv="refresh" content="300" /> {% endblock head %}
+
+{% block content %}
+<style>
+tr:nth-child(even) {
+  background-color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: #EDF1F0;
+}
+.info-box-text {
+	font-size:16px;
+}
+.description-text{
+	font-size:16px;
+}
+.info-box-number
+{
+	font-size:24px;
+}
+.description-header
+{
+	font-size:24px;
+}
+.content .row .col-md-12 .box .box-body .row .col-sm-3.col-xs-6 .description-block .description-header {
+	font-size: 24px;
+}
+
+.color-palette-set
+{
+	text-transform: uppercase;
+}
+</style>
+
+<!-- Left side column. contains the logo and sidebar -->
+
+
+<!-- Content Wrapper. Contains page content -->
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+  <h1 style="text-align:right;">
+    <script>
+      function date_time(id)
+      {
+        date = new Date;
+        year = date.getFullYear();
+        month = date.getMonth();
+        months = new Array('Jan,', 'Feb,', 'Mar,', 'Apr,', 'May,', 'Jun,', 'Jul,', 'Aug,', 'Sep,', 'Oct,', 'Nov,', 'Dec,');
+        d = date.getDate();
+        day = date.getDay();
+        days = new Array('Sun,', 'Mon,', 'Tue,', 'Wed,', 'Thur,', 'Fri,', 'Sat,');
+        h = date.getHours();
+        if(h<10)
+        {
+          h = "0"+h;
+        }
+        m = date.getMinutes();
+        if(m<10)
+        {
+          m = "0"+m;
+        }
+        s = date.getSeconds();
+        if(s<10)
+        {
+          s = "0"+s;
+        }
+        result = ''+days[day]+' '+months[month]+' '+d+', '+year+' '+h+':'+m+':'+s;
+        document.getElementById(id).innerHTML = result;
+        setTimeout('date_time("'+id+'");','1000');
+        return true;
+      }
+
+
+
+    </script>
+      <a href="{% url "dashboard_home" %}" >
+          <i class="fa fa-home"></i>
+      </a>
+    </h1>
+  </section>
+
+
+  <!-- Main content -->
+  <section class="content" style="border:solid thin #0BE3F4; background:#EAFAFD; margin:5px;">
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-blue"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total <br /> Calls</span> 
+            <span class="info-box-number">{{ dashboard_stats.total_call }} {{ outbound_call_count }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Busy or<br />Abandoned</span>
+            <span class="info-box-number">{{ dashboard_stats.abandoned_calls }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <!-- fix for small devices only -->
+      <div class="clearfix visible-sm-block"></div>
+
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Calls <br /> Answered</span>
+            <span class="info-box-number">{{ dashboard_stats.answered_calls }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">No<br />Answer</span>
+            <span class="info-box-number">{{ dashboard_stats.voice_mails }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Calls <br /> In Queue</span>
+            <span class="info-box-number" id="total_callers"></span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><i class="ion ion-ios-telephone-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Call Answer<br /> Rate</span>
+            <span class="info-box-number">{% if dashboard_stats.total_calls %}{% widthratio dashboard_stats.answered_calls dashboard_stats.total_calls 100 %}%{% endif %}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+
+
+    <div class="box box-info" style="border-radius:0px; padding-right:5px;">
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row">
+          <div class="col-sm-8 col-xs-12">
+            <h3 class="box-title">{% trans "Agents Online" %}</h3>
+            
+            <div class="table-responsive">
+              <table class="table no-margin" id="agents">
+                <thead>
+                  <tr style="background: white;">
+                    <th><i class="fa fa-user"></i> {% trans "Name" %}</th>
+                    <th><i class="fa fa-plug"></i> {% trans "Interface" %}</th>
+                    <th><i class=" fa fa-question-circle "></i>{% trans "Status" %}</th>
+                    <th><i class="fa fa-bookmark"></i> {% trans "Calls" %}</th>
+                    <th><i class="fa fa-clock-o"></i> {% trans "Last Outbound Call" %}</th>
+                    <th><i class="fa fa-clock-o"></i> {% trans "Outbound Talk Time" %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <div class="col-sm-4 col-xs-12" style="border-left:solid thin #0CF;">
+            <div class="row">
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <!--div class="bg-light-blue disabled color-palette"><span>Disabled</span></div-->
+                  <div class="bg-purple color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;" id="av_time"> </span><br />{% trans "Average Talk" %}</div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <!--div class="bg-light-blue disabled color-palette"><span>Disabled</span></div-->
+                  <div class="bg-teal color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;" id="av_wait"> </span><br />{% trans "Average Wait" %}</div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <!--div class="bg-light-blue disabled color-palette"><span>Disabled</span></div-->
+                  <div class="bg-primary color-palette" align="center" style="padding-right:2px; margin-top:10px; padding-left:2px;"><span style="font-size:50px; font-weight:800;">{{ dashboard_stats.total_cases }} </span><br />{% trans "Total Cases" %}</div>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <div class="bg-yellow color-palette" align="center" style="padding-right:2px; margin-top:10px; padding-left:2px;"><span style="font-size:50px; font-weight:800;">{{ dashboard_stats.open_cases }} </span><br />{% trans "Pending Cases" %}</div>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; margin-top:10px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <div class="bg-green color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;">{{ dashboard_stats.closed_cases }} </span><br />{% trans "Closed Cases" %}</div>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; margin-top:10px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <div class="bg-red color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;">{{ dashboard_stats.referred_cases }} </span><br />{% trans "Escalated Cases" %}</div>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; margin-top:10px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <div class="bg-aqua color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;">{{ dashboard_stats.transferred_cases }} </span><br />{% trans "Total Transferred" %}</div>
+                </div>
+              </div>
+              <!-- /.col -->
+              <!-- /.col -->
+              <div class="col-sm-6 col-md-6" style="padding-right:2px; margin-top:10px; padding-left:2px;">
+                <div class="color-palette-set">
+                  <!--div class="bg-light-blue disabled color-palette"><span>Disabled</span></div-->
+                  <div class="bg-aqua color-palette" align="center" style="border-radius:5px; padding-right:5px; padding-bottom:5px;"><span style="font-size:50px; font-weight:800;" id="servicelevel"> </span><br />{% trans "Service Level" %}</div>
+                  <!--div class="bg-light-blue-active color-palette"><span>Active</span></div-->
+                </div>
+              </div>
+              <!-- /.col -->
+
+            </div>
+          </div>
+
+        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Weekly Statistics</h3>
+
+          </div>
+          <!-- /.box-header -->
+
+          <!-- ./box-body -->
+          <div class="box-body bg-aqua" style="padding:0px;">
+            <div class="row" style="color:#FFF; margin:0px;">
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+
+                  <h5 class="description-header">{{ week_dashboard_stats.total_calls|add:week_dashboard_stats.total_cdr }}</h5>
+                  <span class="description-text">TOTAL Calls</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+
+                  <h5 class="description-header">{{ week_dashboard_stats.answered_calls|add:week_dashboard_stats.total_answered_cdr }}</h5>
+                  <span class="description-text">Answered Calls</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+
+                  <h5 class="description-header"> {{ week_dashboard_stats.abandoned_calls }}</h5>
+                  <span class="description-text">Abandoned Calls</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-xs-6">
+                <div class="description-block">
+
+                  <h5 class="description-header">{{ week_dashboard_stats.voice_mails }}</h5>
+                  <span class="description-text">Voice Mail</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+
+
+
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+</div>
+<!-- ./wrapper -->
+
+<script type="application/javascript">
+        $(document).ready(function () {
+            getDataQueue(); //load data on page ready :)
+            handleEventButtons();
+            setInterval(function () {
+                getDataQueue();
+            }, 3600);
+        });
+        // parse data and put values on view
+
+function minutesAgo(epochSeconds) {
+  var now = Date.now() / 1000; // get current epoch time in seconds
+  var secondsAgo = now - epochSeconds;
+  var minutesAgo = Math.round(secondsAgo / 60);
+  return minutesAgo;
+}
+
+        function parseDataQueue(data){
+            if (data == null) {
+                return 0;
+            }
+          $('#queue_answered').html(data.Completed);
+          $('#queue_abandoned').html(data.Abandoned);
+          $('#queue_incoming').html(data.Calls);
+          if (typeof data.extension !== 'undefined'){
+            $('#servicename').html(data.name + " | " + data.extension);
+          } else {
+            $('#servicename').html(data.name);
+          }
+          $('#queue_av_wait').html(parseInt(data.Holdtime).toString().toMMSS());
+          $('#queue_av_time').html(parseInt(data.TalkTime).toString().toMMSS());
+
+          {% if show_service_level %}
+          $("#queue_servicelevel").html(data.ServicelevelPerf + '%');
+          {% endif %}
+
+          //agents
+          var agents_ids = Array();
+
+          for (agent in data.members) {
+            if (data.members[agent].Status.toStrStatusAgent() == 'Online' || data.members[agent].Status.toStrStatusAgent() == 'In use' || data.members[agent].Status.toStrStatusAgent() == 'On Break') {
+
+              agent_id_div = clean_div_name(agent);
+              $('#agent-' + agent_id_div + ' .calls').html(data.members[agent].CallsTaken)
+
+              str_time_ago = ''
+              if (data.members[agent].last_outbound_call > '') {
+                str_time_ago = data.members[agent].last_outbound_call;
+              }
+              $('#agent-' + agent_id_div + ' .last_outbound_call').html(str_time_ago)
+
+              $('#agent-' + agent_id_div + ' .status .state').html(data.members[agent].Status.toStrStatusAgent())
+              addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+
+              if (data.members[agent].Paused == true) {
+                // reason pause introduced in https://goo.gl/Njm6H5
+                // if dont have feature in your Asterisk
+                // check directory patches
+                var reason = '';
+                if (data.members[agent].PausedReason){
+                  reason = ": {reason}".format({'reason': data.members[agent].PausedReason});
+                }
+                var last_pause_time = '';
+                if (parseInt(data.members[agent].LastPauseAgo.split(" ")[0]) > 0){
+                  last_pause_time = " {{ _('was') }} {last_pause} {{_('ago') }}".format({'last_pause': data.members[agent].LastPauseAgo});
+                }
+
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+                $('#agent-'+ agent_id_div +' .status .state')
+                  .after(' <span class="label label-success label-mini pause">{{ _('paused') }}'+ reason + last_pause_time + '</span>');
+              } else {
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+              }
+
+
+              if ($('#agent-' + agent_id_div).length == 0) {
+
+                var tr = '<tr id="agent-'+agent_id_div+'"><td>'
+                  + data.members[agent].Name + '</td>'
+                  + '<td>'+data.members[agent].StateInterface + '</td>'
+                  + '<td class="status"> <span class="badge badge-info state">'
+                  + data.members[agent].Status.toStrStatusAgent()
+                  + '</span></td>'
+                  + '<td class="calls">'+ data.members[agent].CallsTaken +'</td>'
+                  + '<td class="last_outbound_call">'+ data.members[agent].last_outbound_call +'</td>'
+                  + '<td class="talk_time">'+ Math.floor(data.members[agent].billsec / 60) +'</td>'
+                  + '</tr>';
+
+                if ($('#agents tbody tr:last').length > 0){
+                  $('#agents tbody tr:last').after(tr);
+                } else {
+                  $('#agents tbody').append(tr);
+                }
+                addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+                handleEventButtons();
+              }
+
+              agents_ids.push(agent_id_div);
+            } 
+          }
+
+          for (agent in data.members) {
+            if (data.members[agent].Paused == true) {
+
+              agent_id_div = clean_div_name(agent);
+              $('#agent-' + agent_id_div + ' .calls').html(data.members[agent].CallsTaken)
+
+              str_time_ago = ''
+              if (data.members[agent].last_outbound_call > 0) {
+                str_time_ago = data.members[agent].last_outbound_call;
+              }
+              $('#agent-' + agent_id_div + ' .last_outbond_call').html(str_time_ago)
+
+              $('#agent-' + agent_id_div + ' .status .state').html(data.members[agent].Status.toStrStatusAgent())
+              addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+
+              if (data.members[agent].Paused == true) {
+                // reason pause introduced in https://goo.gl/Njm6H5
+                // if dont have feature in your Asterisk
+                // check directory patches
+                var reason = '';
+                if (data.members[agent].PausedReason){
+                  reason = ": {reason}".format({'reason': data.members[agent].PausedReason});
+                }
+                var last_pause_time = '';
+                if (parseInt(data.members[agent].LastPauseAgo.split(" ")[0]) > 0){
+                  last_pause_time = " {{ _('was') }} {last_pause} {{_('ago') }}".format({'last_pause': data.members[agent].LastPauseAgo});
+                }
+
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+                $('#agent-'+ agent_id_div +' .status .state')
+                  .after(' <span class="label label-success label-mini pause">{{ _('paused') }}'+ reason + last_pause_time + '</span>');
+              } else {
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+              }
+
+
+              if ($('#agent-' + agent_id_div).length == 0) {
+
+                var tr = '<tr id="agent-'+agent_id_div+'"><td>'
+                  + data.members[agent].Name + '</td>'
+                  + '<td>'+data.members[agent].StateInterface + '</td>'
+                  + '<td class="status"> <span class="badge badge-info state">'
+                  + data.members[agent].Status.toStrStatusAgent()
+                  + '</span></td>'
+                  + '<td class="calls">'+ data.members[agent].CallsTaken +'</td>'
+                  + '<td class="last_outbound_call">'+ data.members[agent].last_outbound_call + '</td>'
+                  + '<td class="talk_time">'+ Math.floor(data.members[agent].billsec / 60) +'</td>'
+                  + '</tr>';
+
+                if ($('#agents tbody tr:last').length > 0){
+                  $('#agents tbody tr:last').after(tr);
+                } else {
+                  $('#agents tbody').append(tr);
+                }
+                addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+                handleEventButtons();
+              }
+
+              agents_ids.push(agent_id_div);
+            } 
+          }
+
+          for (agent in data.members) {
+            if (data.members[agent].Status.toStrStatusAgent() == 'Unavailable') {
+
+              agent_id_div = clean_div_name(agent);
+              $('#agent-' + agent_id_div + ' .calls').html(data.members[agent].CallsTaken)
+
+              str_time_ago = ''
+              if (data.members[agent].last_outbound_call> 0) {
+                str_time_ago = data.members[agent].last_outbound_call;
+              }
+              $('#agent-' + agent_id_div + ' .last__outbound_call').html(str_time_ago)
+
+              $('#agent-' + agent_id_div + ' .status .state').html(data.members[agent].Status.toStrStatusAgent())
+              addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+
+              if (data.members[agent].Paused == true) {
+                // reason pause introduced in https://goo.gl/Njm6H5
+                // if dont have feature in your Asterisk
+                // check directory patches
+                var reason = '';
+                if (data.members[agent].PausedReason){
+                  reason = ": {reason}".format({'reason': data.members[agent].PausedReason});
+                }
+                var last_pause_time = '';
+                if (parseInt(data.members[agent].LastPauseAgo.split(" ")[0]) > 0){
+                  last_pause_time = " {{ _('was') }} {last_pause} {{_('ago') }}".format({'last_pause': data.members[agent].LastPauseAgo});
+                }
+
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+                $('#agent-'+ agent_id_div +' .status .state')
+                  .after(' <span class="label label-success label-mini pause">{{ _('paused') }}'+ reason + last_pause_time + '</span>');
+              } else {
+                $('#agent-' + agent_id_div + ' .status .pause').remove();
+              }
+
+
+              if ($('#agent-' + agent_id_div).length == 0) {
+
+                var tr = '<tr id="agent-'+agent_id_div+'"><td>'
+                  + data.members[agent].Name + '</td>'
+                  + '<td>'+data.members[agent].StateInterface + '</td>'
+                  + '<td class="status"> <span class="badge badge-info state">'
+                  + data.members[agent].Status.toStrStatusAgent()
+                  + '</span></td>'
+                  + '<td class="calls">'+ data.members[agent].CallsTaken +'</td>'
+                  + '<td class="last_outbound_call"></td>'
+                  + '<td class="talk_time">'+ Math.floor(data.members[agent].billsec / 60) +'</td>'
+                  + '</tr>';
+
+                if ($('#agents tbody tr:last').length > 0){
+                  $('#agents tbody tr:last').after(tr);
+                } else {
+                  $('#agents tbody').append(tr);
+                }
+                addLabelDivStatusAgent($('#agent-' + agent_id_div + ' .status .state'));
+                handleEventButtons();
+              }
+
+              agents_ids.push(agent_id_div);
+            } 
+          }
+
+          $('#queue_total_agent').html("{total}".format({total:  Object.keys(data.members).length}));
+
+          //callers
+          var uniques_ids = Array();
+          for (caller in data.entries) {
+            c = data.entries[caller];
+
+            if ($("[id='caller-"+ c.Uniqueid + "']").length == 0) {
+              console.log('add:' + c.Uniqueid);
+
+              var tr = '<tr id="caller-' + c.Uniqueid + '" data-uniqueid="' + c.Uniqueid + '"><td>'
+                        + c.CallerIDName + '</td>'
+                        + '<td>' + c.CallerIDNum + '</td>'
+                        + '<td class="position">'  + c.Position + '</td>'
+                        + '<td class="wait">' + c.WaitAgo + '</td>'
+                        + '<td>'
+                        +    '<button class="btn btn-danger btn-xs stop-call">'
+                        +       '<i class="fa fa-ban"></i>'
+                        +     '</button>'
+                        + '</td>'
+                        + '</tr>'
+
+
+              if ($('#callers tbody tr:last').length > 0){
+                $('#callers tbody tr:last').after(tr);
+              } else {
+                $('#callers tbody').append(tr);
+              }
+            }
+
+            $("[id='caller-"+ c.Uniqueid + "'] .wait").html(c.WaitAgo);
+            $("[id='caller-"+ c.Uniqueid + "'] .position").html(c.Position);
+            uniques_ids.push(c.Uniqueid);
+          }
+          $.each($("[id^='caller-']"), function( index, value ) {
+            uid = $(value).data('uniqueid');
+            if (uniques_ids.indexOf(uid.toString()) == -1) {
+              console.log('removed: ' + uid);
+              $("[id='caller-"+ uid +"']").remove();
+            }
+          });
+          $('#queue_total_callers').html("{total}".format({total:  Object.keys(data.entries).length}));
+          $.each($("[id^='agent-']"), function( index, value ) {
+            uid = $(value).attr('id').substring(6);
+            if (agents_ids.indexOf(uid.toString()) == -1) {
+              console.log('removed: ' + uid);
+              $("[id='agent-"+ uid +"']").remove();
+            }
+          });
+
+          $('#strategy').html(data.Strategy);
+        }
+
+        function getDataQueue() {
+            var result;
+            var r = $.ajax({
+                type: 'GET',
+                url: '{% url 'queue_wallboard_data' name %}'
+            });
+            r.done(function (response) {
+                if (response) {
+                    result = response.data;
+                    parseDataQueue(result);
+                }
+            });
+            r.fail(function (response) {
+            });
+
+            r.always(function () {
+            });
+        }
+
+
+        //handle show modal for Spy and Whisper
+        function handleEventButtons() {
+            $('.actions* button').not('.remove-queue').on('click', function() {
+                var action = $(this).data('action');
+                channel = $(this.closest('td')).data('channel');
+                $('#spy_whisperk #execute-action').data('channel', channel);
+                $('#spy_whisperk #execute-action').data('action', action);
+                $('#spy_whisperk #execute-action').html(action);
+                to_exten.value = 'SIP/' + $('#you').text();
+                $('#spy_whisperk .modal-header h4').html('{{_('Execute a ')}}' + action);
+                $('#spy_whisperk').modal();
+            });
+        $('.remove-queue').unbind().click(function() {
+            var tr = $(this).closest("tr");
+            var queue = $(this).data('queue');
+            var agent = $(this.closest('td')).data('channel');
+
+            console.log('remove agent %s from %s', agent, queue);
+            button = $(this);
+            $('.message-hangup').remove();
+
+            var r = $.ajax({
+                type: 'post',
+              headers: {'X-CSRFToken': csrftoken},
+                url: '{% url 'remove_from_queue' %}',
+              headers: {'X-CSRFToken': csrftoken},
+                data: {agent: agent, queue: queue}
+            });
+            r.done(function (response) {
+                if (response) {
+                    console.log(response);
+                    console.log(response.Message);
+                    msg = '<span class="btn btn-xs message-hangup">'
+                        + response.Message + '</span>';
+
+                    $(button).after(msg);
+                    toastr.success(response.Message, response.Messsage);
+                    var status = response.Response;
+                    console.log(status);
+                    if (status == 'failed') {
+                        $('.message-hangup').addClass('btn-danger');
+                    } else {
+                        $('.message-hangup').addClass('btn-success');
+                        setTimeout(function() { tr.remove(); }, 1000);
+                        var total_agents = (parseInt($('#queue_total_agent').html()) - 1);
+                        $('#queue_total_agent').html("{total}".format({total:  total_agents}));
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+        });
+        }
+
+        var r=null;
+        $('#execute-action').on('click', function() {
+            var to_exten = $('#spy_whisperk  #to_exten').val();
+            if (to_exten == "") {
+                $('.modal-message').html('{{_('Insert where you listen from')}}');
+                $('.modal-message').addClass('has-error')
+                return 0;
+            }
+
+            $('.modal-message').removeClass('has-error');
+            $('.modal-message').html('{{_('Try...')}}');
+
+            var channel = $(this).data('channel');
+            var action = $(this).data('action');
+
+            console.log("do a %s to channel %s", action, channel);
+
+            var url_action = ''
+            if (action == 'spy') {
+                url_action = '{% url 'spy' %}';
+            } else if (action == 'whisper') {
+                url_action = '{% url 'whisper' %}';
+            } else if (action == 'barge') {
+                url_action = '{% url 'barge' %}';
+            }
+            var r = $.ajax({
+                type: 'post',
+                url: url_action,
+              headers: {'X-CSRFToken': csrftoken},
+                data: {channel: channel, to_exten: to_exten}
+            });
+            r.done(function (response) {
+                if (response) {
+                    var status = response.Response;
+                    if (status == 'failed') {
+                        $('.modal-message').html("Failed:" +  response.Message);
+                        $('.modal-message').addClass('has-error')
+                    } else {
+                        $('.modal-message').html(response.Message);
+                        $('.modal-message').removeClass('has-error')
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+            r.always(function () {
+                $('#execute-action').prop("disabled", false);
+            });
+        });
+
+
+
+        $('.stop-call').on('click', function() {
+            var tr = $(this).closest("tr");
+            var uniqueid = tr.data('uniqueid');
+            console.log('stop call %s...', uniqueid );
+            button = $(this);
+            $('.message-hangup').remove();
+
+            var r = $.ajax({
+                type: 'post',
+              headers: {'X-CSRFToken': csrftoken},
+                url: '/hangup',
+                data: {channel: uniqueid}
+            });
+            r.done(function (response) {
+                if (response) {
+                    console.log(response.Response);
+                    msg = '<span class="btn btn-xs message-hangup">'
+                        + response.Message + '</span>';
+
+                    $(button).after(msg);
+                    var status = response.Response;
+                    console.log(status);
+                    if (status == 'failed') {
+                        $('.message-hangup').addClass('btn-danger');
+                    } else {
+                        $('.message-hangup').addClass('btn-success');
+                        setTimeout(function() { tr.remove(); }, 1000);
+                        var total_callers = (parseInt($('#queue_total_callers').html()) - 1);
+                        $('#queue_total_callers').html("{total}".format({total:  total_callers}));
+                    }
+                }
+            });
+            r.fail(function (response) {
+                console.log(response);
+            });
+
+        });
+
+  </script>
+
+{% endblock %}

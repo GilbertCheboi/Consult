@@ -1,0 +1,136 @@
+.DS_Store
+# folder to hold csv files
+csvs
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+*.pyc
+db.sqlite3
+*.swp
+error_log.txt
+myhelpline/localsettings.py
+helpline/eccp/vendor/*
+components/bower_components/*
+*/bower_components/*
+onadata/static/bower_components/*
+config.ini
+error.log
+tmp/*
+
+# folder to hold csv files
+csvs
+
+# pip build dir
+build
+
+.~lock.*
+.idea
+.odk
+*.iml
+.project
+.pydevproject
+.sass-cache
+
+*.bak
+*.gz
+*.pyc
+*.sql
+*.sqlite3
+*~
+*orig
+celerybeat-schedule
+celerybeat.pid
+*.swp
+.venv
+.virtualenv
+*.ropeproject
+.noseids
+
+# ignore vagrant folder and files
+.vagrant
+Vagrantfile
+ansible
+
+# compile documentation
+docs/_build
+dev_https
+stunnel.pem
+
+# profiling temp files
+profile
+bob
+*.db
+*.egg-info
+
+# visual studio code
+.vscode/
+tags
+
+.bash_history
+.inputrc
+
+# media folder used by tests
+# TODO figure out a way to clean this up rather than ignore it.
+/onadata/test_media
+/onadata/media
+/onadata/static
+
+# folder to hold csv files
+csvs
+
+gunicorn_cfg.py
+run_gunicorn.sh
+/static
+celerybeat-schedule
+
+# bower
+/onadata/apps/main/static/bower_components
+custom_template
+/node_modules
+
+.coverage
+bower_components/
+
+# Translations
+*.mo
+*.pot
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+.env
+db.sqlite3
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so

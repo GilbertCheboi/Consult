@@ -1,0 +1,249 @@
+{% extends "helpline/wallboard_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load i18n two_factor %}
+{% load socialaccount %}
+
+{% block additional-javascript %}
+<script src="/static/helpline/js/asternic_cdr.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<section class="content-header">
+	<h1>
+		Stats
+		<small>Call Detail Record Statistics</small>
+	</h1>
+	<ol class="breadcrumb">
+    <li><a href="{% url "dashboard_home" %}"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Stats Home</li>
+	</ol>
+</section>
+
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">Todays Dashboard</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			</button>
+			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+		</div>
+	</div>
+
+	<div class="box-body">
+
+		<div id="asterniccontent">
+			<a name='0'></a>
+			<div id='asternicheader'>
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <ul id='primary' class ="nav">
+              <li class="nav-item"><a href="#" class="nav-link active"><span>Home</span></a></li>
+              {% if request.session.day1 and request.session.day2 and request.session.selected_extensions %}
+              <li class="nav-item"><a href="{% url "stats_report" 'outgoing' %}" class="nav-link"><span>Outgoing</span></a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+
+			</div>
+			<div id="asternicmain">
+				<div id="asterniccontents">
+					<form method='POST' name='asternic_cdr_form'>
+						<input type=hidden name=start>
+						<input type=hidden name=end>
+
+						<div id='topdash'>
+							<h2>
+								Today's Dashboard</h2>
+							<br/>
+
+							<div class="table-responsive">
+
+								<table class="table no-margin" width='99%' cellpadding=3 cellspacing=3 border=0>
+									<thead>
+										<tr>
+											<td valign=top width='50%'>
+												<table width='100%' border=0 cellpadding=0 cellspacing=0>
+													<caption>Call Counters</caption>
+													<tbody>
+														<tr>
+															<td>Total Calls:</td>
+                              <td>{{ totalcall }}</td>
+														</tr>
+										</tr>
+										<tr>
+											<td>Total Inbound Calls:</td>
+                      <td>{{ inbound }}</td>
+										</tr>
+										<tr>
+											<td>Total Outbound Calls:</td>
+                      <td>{{ outbound }}</td>
+										</tr>
+										<tr>
+											<td>Unique Callers:</td>
+                      <td>{{ callsfrom|length }}</td>
+										</tr>
+													</tbody>
+												</table>
+											</td>
+											<td valign=top width='50%'>
+												<table width='100%' border=0 cellpadding=0 cellspacing=0>
+													<caption>Call Duration</caption>
+													<tbody>
+														<tr> 
+															<td>Total Minutes:</td>
+                              <td>{{ totaltime }}</td>
+														</tr>
+														<tr>
+															<td>Total Inbound Minutes:</td>
+                              <td>{{ totalinboundtime }}</td>
+														</tr>
+														<tr>
+															<td>Total Outbound Minutes:</td>
+                              <td>{{ totaloutboundtime }} </td>
+														</tr>
+														<tr>
+															<td>Average Inbound Call Duration:</td>
+                              <td>{{ avgtimein }} minutes </td>
+														</tr>
+														<tr>
+															<td>Average Outbound Call Duration:</td>
+                              <td>{{ avgtimeout }} minutes </td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+											</tr>
+									</thead>
+								</table>
+
+							</div>
+
+						</div>
+						<br/>
+						<hr/>
+						<div id='left'>
+							<h2>
+								Select Extensions</h2>
+							<br/>
+
+							<table cellpadding=10 cellspacing=10 border=0>
+								<thead style='background-color:#dfedf3;'>
+									<tr>
+										<td>
+											Available<br/>
+											<select size=10 name="List_Extensions_available" multiple="multiple" id="myform_List_Extensions_from" style="height: 100px;width: 125px;" onDblClick="List_move_around('right',false);" >
+                        {% for extension in extension_list %}
+                        {% if not extension.dial in selected_extensions %}
+                        <option value="'{{ extension.dial }}'">{{ extension.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+											</select>
+										</td>
+										<td align="left">
+											<a href='#' onclick="List_move_around('right',false); return false;"><img src='{% static "helpline/stats/admin/images/asternic_go-next.png" %}' width=16 height=16 border=0></a>
+											<a href='#' onclick="List_move_around('left', false); return false;"><img src='{% static "helpline/stats/admin/images/asternic_go-previous.png" %}' width=16 height=16 border=0></a>
+											<br>
+											<br>
+											<a href='#' onclick="List_move_around('right', true); return false;"><img src='{% static "helpline/stats/admin/images/asternic_go-last.png" %}' width=16 height=16 border=0></a>
+											<a href='#' onclick="List_move_around('left', true); return false;"><img src='{% static "helpline/stats/admin/images/asternic_go-first.png" %}' width=16 height=16 border=0></a>
+										</td>
+										<td>
+											Selected<br/>
+											<select size=10 name="List_Extensions[]" multiple="multiple" style="height: 100px;width: 125px;" id="myform_List_Extensions_to" onDblClick="List_move_around('left',false);" >
+                        {% for extension in extension_list %}
+                        {% if extension.dial in selected_extensions %}
+                        <option value="'{{ extension.dial }}'">{{ extension.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+											</select>
+										</td>
+									</tr> 
+								</thead> 
+							</table>
+
+
+						</div>
+						<div id='right'>
+							<h2>Select Timeframe</h2>
+							<h3>Shortcuts</h3>
+              
+							<a href="javascript:setdates('{{ today|date:"Y-m-d 00:00:00" }}', '{{ today|date:"Y-m-d 23:59:59" }}')">Today</a> | <a href="javascript:setdates('{{ monday|date:"Y-m-d 00:00:00" }}', '{{ sunday|date:"Y-m-d 23:59:59" }}')">This Week</a> | <a href="javascript:setdates('{{ start_of_month|date:"Y-m-d 00:00:00" }}', '{{ end_of_month|date:"Y-m-d 23:59:59" }}')">This Month</a> | <a href="javascript:setdates('{{ three_months_ago|date:"Y-m-1 00:00:00" }}', '{{ end_of_month|date:"Y-m-d 23:59:59" }}')">Last three months</a><br/><br/>
+							<table cellpadding=10 cellspacing=10>
+								<thead style='background-color:#dfedf3;'>
+									<tr>
+										<td>Start Date</td>
+										<td>
+                      <select name="day1" size="1">
+                        {% for i in "x"|ljust:"31" %}
+                        <option value='{{ forloop.counter }}' {% if request.session.day1 == forloop.counter%}selected{% endif%}>{{ forloop.counter }}</option>
+                        {% endfor %}
+                      </select>
+
+											<select name="month1" size="1" onchange="dateChange('day1','month1','year1');">
+                        {% now "F" as current_month %}
+                        {% for month in months_choices %}
+                        <option value='{{ forloop.counter0 }}' {% if current_month == month %}selected{% endif %}>{{ month }}</option>
+                        {% endfor %}
+											</select>
+
+											<select name='year1' size='1' onchange="checkMore( this, 2017, 2022, 1967, 2027 );dateChange('day1','month1','year1');">
+												<option value="MWJ_DOWN">lower</option>
+												<option value='2017' >2017</option>
+												<option value='2018' >2018</option>
+												<option value='2019' >2019</option>
+												<option value='2020' >2020</option>
+												<option value='2021' >2021</option>
+												<option value='2022' selected >2022</option>
+												<option value="MWJ_UP">higher</option>
+											</select>
+										</td></tr>
+										<tr>
+											<td>End Date</td>
+											<td>
+                        <select name="day2" size="1">
+                          {% for i in "x"|ljust:"31" %}
+                          <option value='{{ forloop.counter }}' {% if request.session.day2 == forloop.counter%}selected{% endif%}>{{ forloop.counter }}</option>
+                          {% endfor %}
+                        </select>
+
+												<select name="month2" size="1" onchange="dateChange('day2','month2','year2');">
+                          {% for month in months_choices %}
+                          <option value='{{ forloop.counter0 }}' {% if current_month == month %}selected{% endif %}>{{ month }}</option>
+                          {% endfor %}
+												</select>
+
+												<select name='year2' size='1' onchange="checkMore( this, 2017, 2022, 1967, 2027 );dateChange('day2','month2','year2');">
+													<option value="MWJ_DOWN">lower</option>
+													<option value='2017' >2017</option>
+													<option value='2018' >2018</option>
+													<option value='2019' >2019</option>
+													<option value='2020' >2020</option>
+													<option value='2021' >2021</option>
+													<option value='2022' selected >2022</option>
+													<option value="MWJ_UP">higher</option>
+												</select>
+											</td></tr>
+								</thead>
+							</table>
+						</div>
+						<div style="clear: both;">&nbsp;</div>
+						<div id='rest'>
+							<br/>
+							<input type=submit name='runreport' value='Run Report' onClick='return envia();'>
+						</div> <!-- end div rest submit button -->
+					</form>
+				</div> <!-- end div asterniccontents green -->
+			</div> <!-- end div asternicmain red -->
+			<hr/>
+			<div id='asternicfooter'>
+				<div style='float:right;'><a href='#' border=0></a></div>
+			</div> <!-- end div asternicfooter -->
+		</div> <!-- end div asternic content -->
+
+	</div>
+</div>
+
+<div style='clear:both;'></div>
+{% endblock content %}

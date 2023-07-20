@@ -1,0 +1,198 @@
+# -*- coding: utf-8 -*-
+"""Helpline views """
+
+from django.conf.urls import include
+from django.contrib.auth import views as auth_views
+from django.urls import path, re_path
+
+import notifications.urls
+from organizations.backends import invitation_backend
+
+from helpline import views
+
+urlpatterns = [
+    re_path('^calendly/$', views.calendly_auth, name='calendly_auth'),
+    re_path('^callback/$', views.calendly_callback, name='calendly_callback'),
+    re_path('^events/$', views.get_user_events, name='get_user_events'),
+    re_path('^error/$', views.error_view, name='error_view'),
+    re_path('^success/$', views.error_view, name='success_view'),
+    re_path('^$', views.home, name='dashboard_home'),
+    re_path('^home_dashboard/$', views.home_dashboard, name='home_dashboard'),
+    re_path('^wall/$', views.wall, name='wall'),
+    re_path('^index/$', views.index, name='index'),
+    re_path('^cdr_report/$', views.cdr_report, name='cdr_report'),
+    re_path('^qa_form/$', views.qa_form, name='qa_form'),
+    re_path('^get_records/$', views.get_records, name='get_records'),
+    re_path('^stats/$', views.stats, name='stats_home'),
+    re_path('^hourly_call_distribution/$', views.hourly_call_distribution, name='hourly_call_distribution'),
+    re_path('^stats/(?P<report>\w+)/$', views.stats_report, name='stats_report'),
+    re_path('^features/$', views.features, name='features'),
+    re_path('^web_phone/$', views.web_phone, name='web_phone'),
+    re_path('^embeddable/$', views.embeddable, name='embeddable'),
+    re_path('^widget/$', views.widget, name='widget'),
+    re_path('^widget/(?P<client_id>\w+)/(?P<widget_id>\w+)/$', views.widget, name='widget'),
+    re_path('^voice_phone_numbers/$', views.voice_phone_numbers,
+            name='voice_phone_numbers'),
+    re_path('^chat/$', views.chat,
+            name='chat'),
+    re_path('^services/$', views.services, name='services'),
+    re_path('^phone/$', views.phone, name='phone'),
+    re_path('^schedule_list/$', views.schedule_list, name='schedule_list'),
+    re_path('^schedule_assignment/$', views.schedule_assignment, name='schedule_assignment'),
+    re_path('^leta/$', views.leta, name='leta'),
+    re_path('^call/$', views.call, name='call'),
+    re_path('^call/check/$', views.check_call, name='check_call'),
+    re_path('^call/check/json/$', views.check_call, name='check_call'),
+    re_path('^get-districts/$', views.get_districts, name='get_districts'),
+    re_path('^sources/$', views.sources, name='nosources'),
+    re_path('^sources/(?P<source>\w+)/$', views.sources, name='mysources'),
+    re_path('^myaccount/$', views.myaccount, name='myaccount'),
+    re_path('^myaccount/edit/$', views.edit_myaccount, name='edit_myaccount'),
+    re_path('^manageusers/$', views.manage_users, name='manageusers'),
+    re_path('^queue/(?P<name>.*).json$',
+            views.queue_wallboard_data, name='queue_json'),
+    re_path('^queue/(?P<name>.*)/$', views.queue, name='queue'),
+    re_path('^wallboard/(?P<name>.*)/$', views.queue_wallboard, name='queue_wallboard'),
+    re_path('^wallboard/(?P<name>.*).json$', views.queue_wallboard_data, name='queue_wallboard_data'),
+    re_path('^panel/$', views.panel_home, name='panel_home'),
+    re_path('^queue_list/$', views.queue_list, name='queue_list'),
+    re_path('^spy/$', views.spy, name='spy'),
+    re_path('^whisper/$', views.whisper, name='whisper'),
+    re_path('^barge/$', views.barge, name='barge'),
+    re_path('^remove_from_queue/$', views.remove_from_queue,
+            name='remove_from_queue'),
+    re_path('^leave/$', views.queue_leave, name='queue_leave'),
+    re_path('^log/$', views.queue_log, name='queue_log'),
+    re_path(r'^remove/(?P<auth>\w+)/$', views.queue_remove,
+            name='queue_remove'),
+    re_path('^ajax/get_breaks/$',
+            views.ajax_get_breaks, name='ajax_get_breaks'),
+    re_path('^ajax/hotdesk_makeprimary/$',
+            views.hotdesk_makeprimary, name='hotdesk_makeprimary'),
+    re_path('^ajax/get_outbound_caller_id/$',
+            views.get_outbound_caller_id, name='get_outbound_caller_id'),
+    re_path('^ajax/add_user_to_queue/$',
+            views.add_user_to_queue, name='add_user_to_queue'),
+    re_path('^pause/$', views.queue_pause, name='queue_pause'),
+    re_path('^unpause/$', views.queue_unpause, name='queue_unpause'),
+    re_path('^walkin/$', views.walkin, name='walkin'),
+    re_path('^call/$', views.callform, name='callform'),
+    re_path('^faq/$', views.faq, name='faq'),
+    re_path(r'^reports/(?P<report>\w+)/$', views.reports,
+            name='dashboardreports'),
+    re_path(r'^reports/(?P<report>\w+)/$', views.reports, name='adminreports'),
+    re_path(r'^reports/(?P<report>\w+)/(?P<casetype>\w+)/$', views.reports,
+            name='dashboardreports'),
+    re_path(r'^reports/(?P<report>\w+)/(?P<casetype>\w+)/$', views.reports,
+            name='adminreports'),
+    re_path(r'^charts/(?P<report>\w+)/$', views.report_charts,
+            name='report_charts'),
+    re_path(r'^charts/(?P<report>\w+)/(?P<casetype>\w+)/$',
+            views.report_charts,
+            name='report_charts'),
+    re_path(r'^reports/(?P<report>\w+)/$', views.reports, name='adminreports'),
+    re_path(r'^reports/(?P<report>\w+)/(?P<casetype>\w+)/$', views.reports,
+            name='dashboardreports'),
+    re_path(r'^form/(?P<form_name>\w+)/$', views.case_form, name='case_form'),
+    re_path('^ajax/get_subcategory/(?P<category>.+)/$',
+            views.ajax_get_subcategory,
+            name='get_subcategory'),
+    re_path('^ajax/get_sub_subcategory/(?P<category>.+)/$',
+            views.ajax_get_sub_subcategory, name='get_sub_subcategory'),
+    re_path('^ajax/save_contact/$', views.save_contact_form,
+            name='save_contact_form'),
+    re_path('^ajax/save_case_detail/$', views.save_case_detail,
+            name='save_case_detail'),
+    re_path('^ajax/contactcreatecase/$', views.contact_create_case,
+            name='contact_create_case'),
+    re_path('^ajax/outboundcreatecase/$', views.outbound_create_case,
+            name='outbound_create_case'),
+    re_path('^ajax/contactsearch/$', views.contact_search_form,
+            name='contact_search_form'),
+    re_path('^ajax/caseaction/$', views.save_case_action,
+            name='save_case_action'),
+    re_path('^ajax/dispose/$', views.save_disposition_form,
+            name='save_disposition_form'),
+    re_path('^ajax/set_outbound_caller_id/$', views.set_outbound_caller_id,
+            name='set_outbound_caller_id'),
+    re_path('^ajax/average/talktime/$', views.average_talk_time,
+            name='average_talk_time'),
+    re_path('^ajax/average/holdtime/$', views.average_talk_time,
+            name='average_hold_time'),
+    re_path(r'^ajax/report/factory/(?P<report>\w+)/$', views.ajax_admin_report,
+            name='ajax_admin_report'),
+    re_path(r'^ajax/report/factory/(?P<report>\w+)/(?P<casetype>\w+)/$',
+            views.ajax_admin_report, name='ajax_admin_report'),
+    re_path('^ajax/get_sip_details/$', views.get_sip_details, name='get_sip_details'),
+    re_path('^status/web/presence/$', views.web_presence, name='web_presence'),
+    re_path(r'^selectable/', include('selectable.urls')),
+    path('login', auth_views.LoginView.as_view(
+        template_name='helpline/login.html'), name='helpline_login'),
+    re_path('^logout/$', views.helpline_logout, name='helpline_logout'),
+    re_path('^invite/$', views.send_invite, name='send_invite'),
+    re_path('^my_invitations/$', views.my_invitations, name='my_invitations'),
+    re_path('^c2c/$', views.c2c, name='c2c'),
+    re_path('^team/$', views.get_team_schedule, name='get_team_schedule'),
+    re_path('^get_backend_extensions/$',
+            views.get_backend_extensions, name='get_backend_extensions'),
+    re_path(r'^accounts/', include('organizations.urls')),
+    re_path(r'^invitations/', include(invitation_backend().get_urls())),
+    re_path(r'^inbox/notifications/',
+            include(notifications.urls, namespace='notifications')),
+    re_path(r'^alert/(?P<auth>\w+)/(?P<dialstatus>\w+)/(?P<case_id>\w+)/$',
+            views.asterisk_alert, name='asterisk_alert'),
+]
+
+# Realtime Operator functions.
+
+urlpatterns += [
+    re_path('^queues/$', views.queues, name='queues'),
+]
+
+# Social URLs
+
+urlpatterns += [
+    re_path(r'^social/', include('zerxis.urls')),
+]
+
+# campaign
+urlpatterns += [
+    re_path('^campaign/update_inactive/$', views.campaign_update_inactive,
+            name='campaign_update_inactive'),
+    re_path('^campaign/update_finished/$', views.campaign_update_finished,
+            name='campaign_update_finished'),
+    re_path('^campaign/webhook/$', views.campaign_webhook,
+            name='campaign_webhook'),
+    re_path('^campaigns/$', views.campaigns, name='campaigns'),
+    re_path('^campaigns/calls/$', views.campaign_calls, name='campaign_calls'),
+    re_path('^campaign/(?P<key>.*)/$',
+            views.campaign, name='campaign'),
+
+    re_path('^agent_console/$', views.agent_console, name='agent_console'),
+    re_path('^agent_login/$', views.agent_login, name='agent_login'),
+    re_path('^stomp/$', views.stomp, name='stomp'),
+    re_path('^ajax/campaigns/$', views.ajax_campaigns, name='ajax_campaigns'),
+    re_path('^ajax/campaign/$',
+            views.ajax_campaign_json, name='ajax_campaign_json'),
+]
+
+# audio recordings
+urlpatterns += [
+    re_path('^record/$',
+            views.record, name='record'),
+    re_path('^record_play_create/$',
+            views.record_play_create, name='record_play_create'),
+    re_path('^recordings/$',
+            views.recordings, name='recordings'),
+    re_path('^recording/(?P<key>.*)/$',
+            views.recording_file, name='recording_file'),
+    re_path('^get_recording/$',
+            views.get_recording, name='get_recording'),
+    re_path('^monitoring/$',
+            views.monitoring, name='monitoring'),
+]
+
+
+urlpatterns += [
+    path("org/invite/", include(invitation_backend().get_urls())),
+]

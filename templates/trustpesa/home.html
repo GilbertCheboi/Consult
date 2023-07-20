@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Phone Number Verification</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Verify Phone Number</h1>
+  <p>Try our phone verification tool</p> 
+  {% if contact %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Verified!</h4>
+    <p>Phone number verified</p>
+    <hr>
+    {% for c in contact %}
+    {% if c.address.hl_names %}
+    <p class="mb-0">{{ c.address.hl_names }}</p>
+    {% else %}
+    <p class="mb-0">Name not given</p>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+  
+<div class="container">
+	<div class="row">
+		<div class="input-group">
+			<span class="input-group-addon">+254</span>
+      <input id="phone" type="text" class="form-control" name="phone" placeholder="0722XXXXXXX" value="{{ phone }}">
+			<span class="input-group-btn">
+				<button name="validatebtn" id="validatebtn" type="button"  class="btn btn-info btn-flat" onclick="validate()">Validate</button>
+			</span>
+		</div>
+	</div>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>What is phone validation and how does it work?</h3>
+      <p>Phone number validation is the process of checking if a phone number is accurate. It lets you find out if the phone number you have for a business contact or customer is active and able to receive calls.</p>
+      <p>There are two ways to verify phone numbers, depending on what information you need:</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Phone verification API</h3>
+      <p>An API service helps you validate phone numbers in real-time—think about when you are checking out online and you type your phone number into the field. This helps you keep fake numbers from ever entering your database.</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Bulk phone number validation</h3>        
+      <p>Automatically clean up your phone number list. You can set up recurring phone number list cleaning, or upload your phone number list for whenever you want.</p>
+    </div>
+  </div>
+</div>
+
+  <script>
+    function validate(){
+      phone = document.getElementById('phone').value;
+      window.location.href = "https://api.skypesa.co.ke/verify/phone/?phone="+phone;
+    }
+  </script>
+  <script>
+    // Get the input field
+    var input = document.getElementById("phone");
+
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("validatebtn").click();
+  }
+});
+  </script>
+
+</body>
+</html>
+
+

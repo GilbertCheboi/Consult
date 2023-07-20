@@ -1,0 +1,45 @@
+{% extends "helpline/helpline_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+    <div class="col-md-12">
+      <div class="login-box">
+        <div class="login-logo">
+          <a href="#"><img src="{% static 'helpline/images/logo.png' %}" height="150" /></a>
+        </div>
+        <!-- /.login-logo -->
+
+        <div class="login-box-body">
+          <p class="login-box-msg">
+        <div class="alert alert-success">
+          <h4><i class="icon fa fa-check"></i> Success!</h4>
+          Check your email for the activation link.
+        </div>
+        </div>
+
+        <a href="/">Go Home</a>
+        {% if next %}
+        {{ next }}
+        {% endif %}
+
+        <!-- /.login-logo -->
+      </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script>
+{% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}
