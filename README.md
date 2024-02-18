@@ -143,7 +143,7 @@ On /etc/asterisk/manager.conf set command permission for read and write, example
 
  go to project directory
  ```
-  git clone https://github.com/childhelpline/myhelpline.git
+  git clone https://github.com/GilbertCheboi/Consult.git
   cd myhelpline
   cp helpline/config.ini-dist helpline/config.ini
   cp myhelpline/localsettings.py-sample myhelpline/localsettings.py
